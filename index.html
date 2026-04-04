@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nationality Report Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0b0e13;
+  --surface: #111520;
+  --card:    #161b27;
+  --border:  #1e2535;
+  --border2: #2a3347;
+  --accent:  #e8b84b;
+  --accent2: #4b9fe8;
+  --green:   #3dd68c;
+  --red:     #e8504b;
+  --orange:  #e87c4b;
+  --text:    #dce4f0;
+  --muted:   #5a6680;
+  --muted2:  #8494b0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0f1420 0%, #111827 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 28px 40px 24px;
+  display: flex; align-items: flex-end; gap: 20px;
+  position: relative; overflow: hidden;
+}
+.header::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-title h1 { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 900; color: var(--accent); letter-spacing: -0.5px; line-height: 1; }
+.header-title p  { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted2); margin-top: 6px; letter-spacing: 1px; text-transform: uppercase; }
+.header-badge { margin-left: auto; background: rgba(232,184,75,0.1); border: 1px solid rgba(232,184,75,0.25); border-radius: 6px; padding: 6px 14px; font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; }
+
+/* LAYOUT */
+.main { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+
+/* STEP LABELS */
+.step-label { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #000; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-label h2 { font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); }
+
+/* CARDS */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 24px; }
+.card:hover { border-color: var(--border2); }
+
+/* TEXTAREA */
+textarea { width: 100%; height: 180px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.75rem; padding: 14px 16px; resize: vertical; outline: none; line-height: 1.6; transition: border-color 0.2s; }
+textarea:focus { border-color: rgba(232,184,75,0.4); }
+textarea::placeholder { color: var(--muted); }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.btn { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.82rem; border: none; border-radius: 8px; cursor: pointer; padding: 10px 22px; transition: all 0.18s; letter-spacing: 0.3px; }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { background: #f0c85a; transform: translateY(-1px); }
+.btn-ghost { background: transparent; border: 1px solid var(--border2); color: var(--muted2); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* STATS STRIP */
+.stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; position: relative; overflow: hidden; }
+.stat-box::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; }
+.stat-box.arrivals::after { background: var(--green); }
+.stat-box.rooms::after    { background: var(--accent2); }
+.stat-box.guests::after   { background: var(--accent); }
+.stat-box .num { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.stat-box.arrivals .num { color: var(--green); }
+.stat-box.rooms .num    { color: var(--accent2); }
+.stat-box.guests .num   { color: var(--accent); }
+.stat-box .lbl { font-size: 0.68rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
+
+/* DIAGNOSTICS */
+.diag-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.diag-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(232,184,75,0.06); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+.diag-header:hover { background: rgba(232,184,75,0.1); }
+.diag-title { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 600; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+.diag-badge { font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 400; }
+.badge-warn { background: rgba(232,124,75,0.2); color: var(--orange); border: 1px solid rgba(232,124,75,0.3); }
+.badge-ok   { background: rgba(61,214,140,0.15); color: var(--green);  border: 1px solid rgba(61,214,140,0.25); }
+.diag-chevron { color: var(--muted); font-size: 0.8rem; transition: transform 0.2s; }
+.diag-chevron.open { transform: rotate(180deg); }
+.diag-body { padding: 16px 18px; display: none; }
+.diag-body.open { display: block; }
+
+/* DIAG SECTIONS */
+.diag-section { margin-bottom: 20px; }
+.diag-section:last-child { margin-bottom: 0; }
+.diag-section-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
+/* DIAG ROWS */
+.diag-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 0.78rem; line-height: 1.5; }
+.diag-row:last-child { margin-bottom: 0; }
+.diag-row.warn  { background: rgba(232,124,75,0.07); border-left: 2px solid var(--orange); }
+.diag-row.info  { background: rgba(75,159,232,0.07); border-left: 2px solid var(--accent2); }
+.diag-row.ok    { background: rgba(61,214,140,0.06); border-left: 2px solid var(--green); }
+.diag-row.error { background: rgba(232,80,75,0.07);  border-left: 2px solid var(--red); }
+.diag-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+.diag-row-content { flex: 1; }
+.diag-row-content strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+.diag-row-content span { color: var(--muted2); font-family: 'DM Mono', monospace; font-size: 0.71rem; }
+
+/* TOTALS COMPARE */
+.totals-compare { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 8px; }
+.tc-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.tc-box .tc-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+.tc-box .tc-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; padding: 2px 0; }
+.tc-box .tc-key { font-size: 0.7rem; color: var(--muted2); }
+.tc-box .tc-val { font-family: 'DM Mono', monospace; font-size: 0.8rem; }
+.tc-box .tc-val.clr-green  { color: var(--green); }
+.tc-box .tc-val.clr-muted  { color: var(--muted2); }
+.tc-box .tc-val.clr-orange { color: var(--orange); }
+
+/* OUTPUT GRID */
+.output-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
+
+/* PREVIEW */
+.preview-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.preview-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+.preview-header span { font-size: 0.7rem; color: var(--muted2); font-family: 'DM Mono', monospace; }
+.preview-body { height: 420px; overflow-y: auto; }
+
+.preview-row { display: grid; grid-template-columns: 36px 1fr 54px 54px 54px; align-items: center; padding: 3px 12px; font-family: 'DM Mono', monospace; font-size: 0.72rem; transition: background 0.1s; }
+.preview-row:hover { background: rgba(255,255,255,0.03); }
+.preview-row.has-data { background: rgba(232,184,75,0.04); }
+.preview-row.has-data:hover { background: rgba(232,184,75,0.09); }
+.pr-rownum  { color: var(--muted); font-size: 0.63rem; }
+.pr-country { color: var(--muted2); font-size: 0.68rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+.pr-num     { text-align: right; }
+.pr-num.zero         { color: var(--muted); }
+.pr-num.val-arrivals { color: var(--green); }
+.pr-num.val-rooms    { color: var(--accent2); }
+.pr-num.val-guests   { color: var(--accent); }
+
+/* COPY PANEL */
+.copy-panel { display: flex; flex-direction: column; gap: 12px; }
+.copy-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+.copy-card-title { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted2); margin-bottom: 12px; }
+
+.btn-copy-main { width: 100%; padding: 14px; background: var(--green); color: #000; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.9rem; border: none; border-radius: 10px; cursor: pointer; letter-spacing: 0.5px; transition: all 0.18s; }
+.btn-copy-main:hover { background: #4de89e; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(61,214,140,0.25); }
+.btn-copy-main.copied { background: var(--accent2); }
+
+.copy-note { font-size: 0.7rem; color: var(--muted); line-height: 1.7; margin-top: 10px; font-family: 'DM Mono', monospace; }
+.copy-note strong { color: var(--muted2); }
+
+/* UNKNOWN BOX */
+.unknown-box { border: 1px solid rgba(232,124,75,0.3); background: rgba(232,124,75,0.05); border-radius: 8px; padding: 12px 14px; }
+.unknown-box .ub-title { font-size: 0.68rem; font-weight: 600; color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.unknown-box .ub-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.unknown-box .ub-row:last-of-type { border-bottom: none; }
+.ub-key { color: var(--muted2); }
+.ub-val { font-family: 'DM Mono', monospace; color: var(--orange); }
+
+.copy-small-note { font-size: 0.68rem; color: var(--muted); line-height: 1.6; margin-top: 8px; font-family: 'DM Mono', monospace; }
+
+/* SUMMARY CARD */
+.summary-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.sum-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 0.74rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.sum-row:last-child { border-bottom: none; }
+.sum-key { color: var(--muted2); }
+.sum-val { font-family: 'DM Mono', monospace; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* ANIMATE */
+@keyframes fadeSlideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.animate-in { animation: fadeSlideIn 0.3s ease forwards; }
+
+@media (max-width: 760px) {
+  .main { padding: 20px 16px; }
+  .header { padding: 20px 16px; flex-wrap: wrap; }
+  .output-grid { grid-template-columns: 1fr; }
+  .stats-strip { grid-template-columns: 1fr; }
+  .totals-compare { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-title">
+    <h1>🏨 Nationality Report</h1>
+    <p>Opera Cloud → Excel · Auto-match · Full Diagnostics</p>
+  </div>
+  <div class="header-badge">240 ROWS · EXCEL ROW 8–247</div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1 -->
+  <div class="step-label">
+    <div class="step-num">1</div>
+    <h2>Paste Your Opera Cloud Report</h2>
+  </div>
+
+  <div class="card">
+    <textarea id="inputData" placeholder="Open your Opera Cloud .txt file → Select All (Ctrl+A) → Copy (Ctrl+C) → Paste here (Ctrl+V)&#10;&#10;The file must start with the header row: VALUE_ORDER  VALUE_CODE  CHAR_MONTH_YEAR ...&#10;Make sure you downloaded it as: Delimited Data format from Opera Cloud."></textarea>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="processData()">⚡ Process Report</button>
+      <button class="btn btn-ghost"   onclick="clearAll()">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div id="outputSection" style="display:none;">
+
+    <!-- STEP 2 -->
+    <div class="step-label animate-in">
+      <div class="step-num">2</div>
+      <h2>Opera Totals</h2>
+    </div>
+
+    <div class="stats-strip animate-in">
+      <div class="stat-box arrivals">
+        <span class="num" id="statAPR">—</span>
+        <span class="lbl">New Guest Arrivals · Opera Grand Total</span>
+      </div>
+      <div class="stat-box rooms">
+        <span class="num" id="statRMS">—</span>
+        <span class="lbl">Room Nights · Opera Grand Total</span>
+      </div>
+      <div class="stat-box guests">
+        <span class="num" id="statPRS">—</span>
+        <span class="lbl">Guest Nights · Opera Grand Total</span>
+      </div>
+    </div>
+
+    <!-- DIAGNOSTICS -->
+    <div class="diag-panel animate-in">
+      <div class="diag-header" onclick="toggleDiag()">
+        <div class="diag-title">
+          🔍 Diagnostics &amp; Data Quality
+          <span class="diag-badge badge-warn" id="diagBadge">—</span>
+        </div>
+        <div class="diag-chevron open" id="diagChevron">▼</div>
+      </div>
+
+      <div class="diag-body open" id="diagBody">
+
+        <!-- TOTALS COMPARISON -->
+        <div class="diag-section">
+          <div class="diag-section-title">Totals Breakdown — Why the numbers might not perfectly match Opera</div>
+          <div class="totals-compare">
+            <div class="tc-box">
+              <div class="tc-label">New Guest Arrivals</div>
+              <div class="tc-row"><span class="tc-key">Opera Grand Total</span> <span class="tc-val clr-green"  id="tc_apr_opera">—</span></div>
+              <div class="tc-row"><span class="tc-key">Placed in 240 rows</span><span class="tc-val clr-muted"  id="tc_apr_mapped">—</span></div>
+              <div class="tc-row"><span class="tc-key">⚠ Gap (unallocated)</span><span class="tc-val clr-orange" id="tc_apr_gap">—</span></div>
+            </div>
+            <div class="tc-box">
+              <div class="tc-label">Room Nights</div>
+              <div class="tc-row"><span class="tc-key">Opera Grand Total</span> <span class="tc-val clr-green"  id="tc_rms_opera">—</span></div>
+              <div class="tc-row"><span class="tc-key">Placed in 240 rows</span><span class="tc-val clr-muted"  id="tc_rms_mapped">—</span></div>
+              <div class="tc-row"><span class="tc-key">⚠ Gap (unallocated)</span><span class="tc-val clr-orange" id="tc_rms_gap">—</span></div>
+            </div>
+            <div class="tc-box">
+              <div class="tc-label">Guest Nights</div>
+              <div class="tc-row"><span class="tc-key">Opera Grand Total</span> <span class="tc-val clr-green"  id="tc_prs_opera">—</span></div>
+              <div class="tc-row"><span class="tc-key">Placed in 240 rows</span><span class="tc-val clr-muted"  id="tc_prs_mapped">—</span></div>
+              <div class="tc-row"><span class="tc-key">⚠ Gap (unallocated)</span><span class="tc-val clr-orange" id="tc_prs_gap">—</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UNKNOWN GUESTS -->
+        <div class="diag-section">
+          <div class="diag-section-title">Unknown / Unassigned Guests (cause of the gap)</div>
+          <div id="unknownList"></div>
+        </div>
+
+        <!-- UNMATCHED OPERA COUNTRIES -->
+        <div class="diag-section">
+          <div class="diag-section-title">Opera Countries with No Matching Excel Row</div>
+          <div id="unmatchedList"></div>
+        </div>
+
+        <!-- HOW TO FIX -->
+        <div class="diag-section">
+          <div class="diag-section-title">How to Fix the Gap</div>
+          <div class="diag-row info">
+            <div class="diag-icon">💡</div>
+            <div class="diag-row-content">
+              <strong>Go to Opera → Guest Profiles → find guests with "Unknown" nationality</strong>
+              <span>Open each reservation that has no nationality assigned and update it with the correct country. Once updated, re-run this report and the gap will shrink or disappear completely.</span>
+            </div>
+          </div>
+          <div class="diag-row warn">
+            <div class="diag-icon">⚠️</div>
+            <div class="diag-row-content">
+              <strong>Your Excel Total row (row 248) will show the sum of the 240 rows — not Opera's grand total</strong>
+              <span>The difference equals the unallocated guests shown above. This is expected until Opera data is cleaned. The 240 country rows you paste are 100% correct based on what Opera has.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-label animate-in">
+      <div class="step-num">3</div>
+      <h2>Copy &amp; Paste into Excel</h2>
+    </div>
+
+    <div class="output-grid animate-in">
+
+      <!-- PREVIEW TABLE -->
+      <div class="preview-wrap">
+        <div class="preview-header">
+          <span>ROW · NATIONALITY · ARRIVALS · ROOMS · GUESTS</span>
+          <span style="color:var(--accent); font-family:'DM Mono',monospace; font-size:0.7rem;">240 rows</span>
+        </div>
+        <div class="preview-body" id="previewBody"></div>
+      </div>
+
+      <!-- COPY + INFO PANEL -->
+      <div class="copy-panel">
+
+        <div class="copy-card">
+          <div class="copy-card-title">📋 Copy to Excel</div>
+          <button class="btn-copy-main" id="copyBtn" onclick="copyNumbers()">Copy All 240 Rows</button>
+          <div class="copy-note">
+            After copying:<br>
+            <strong>1.</strong> Open your Excel sheet<br>
+            <strong>2.</strong> Click cell <strong>B8</strong> (New Guest Arrivals, row 8)<br>
+            <strong>3.</strong> Press Ctrl+V to paste<br>
+            <strong>4.</strong> All 3 columns fill automatically ✓
+          </div>
+        </div>
+
+        <div class="unknown-box">
+          <div class="ub-title">⚠ Unallocated Gap</div>
+          <div class="ub-row"><span class="ub-key">New Arrivals</span><span class="ub-val" id="unk_apr">—</span></div>
+          <div class="ub-row"><span class="ub-key">Room Nights</span> <span class="ub-val" id="unk_rms">—</span></div>
+          <div class="ub-row"><span class="ub-key">Guest Nights</span><span class="ub-val" id="unk_prs">—</span></div>
+          <div class="copy-small-note">Guests recorded in Opera with no nationality. Fix their profiles in Opera to eliminate this gap.</div>
+        </div>
+
+        <div class="summary-card">
+          <div class="copy-card-title" style="margin-bottom:8px;">Report Summary</div>
+          <div class="sum-row"><span class="sum-key">Countries with data</span>   <span class="sum-val" style="color:var(--green)"   id="sumActive">—</span></div>
+          <div class="sum-row"><span class="sum-key">Countries with zero</span>   <span class="sum-val" style="color:var(--muted)"   id="sumZero">—</span></div>
+          <div class="sum-row"><span class="sum-key">Unmatched in Opera</span>    <span class="sum-val" style="color:var(--red)"     id="sumUnmatched">—</span></div>
+          <div class="sum-row"><span class="sum-key">Unknown nationality</span>   <span class="sum-val" style="color:var(--orange)"  id="sumUnknown">—</span></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /outputSection -->
+</div><!-- /main -->
+
+<script>
+// ═══════════════════════════════════════════
+// MASTER EXCEL LIST — rows 8-247 exact order
+// ═══════════════════════════════════════════
+const EXCEL_COUNTRIES = [
+  "Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Antarctica","Antigua & Barbuda","Argentina",
+  "Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus",
+  "Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia-Herzegovina","Botswana","Brazil","British Indian Ocean Territory",
+  "British Virgin Islands","British West Indies","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon Republic","Canada","Cape Verde",
+  "Cayman Island","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (Republic of the Congo)","Congo, Dem. Rep. of (Zaire)","Cook Islands",
+  "Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Czechoslovakia","Denmark","Djibouti","Dominica",
+  "Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands (Malvinas)",
+  "Faroe Islands","Fiji","Finland","France","French Guiana","French Polynesia","Gabon","Gambia","Georgia","Germany",
+  "Ghana","Gibraltar","Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guinea","Guinea-Bissau",
+  "Guyana","Haiti","Holy See (Vatican City State)","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran",
+  "Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya",
+  "Kiribati","Korea, Democratic People's Republic of (North)","Korea, Republic of (South)","Kosovo","Kuwait","Kyrghyzstan","Laos","Latvia","Lebanon","Lesotho",
+  "Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia, Republic of","Madagascar","Malagasy Republic","Malawi",
+  "Malaysia","Maldives","Mali","Malta","Marshal Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico",
+  "Micronesia, Federated States","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar (Burma)","Namibia",
+  "Nauru","Nepal","Netherlands","Netherlands, Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norfolk Island",
+  "Northern Mariana Isl.","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru",
+  "Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saba",
+  "Saint Barthelemy","Saint Helena","Saint Kitts and Nevis","Saint Lucia","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino (in Italy)","Sao Tomé","Saudi Arabia",
+  "Scotland","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia Republic","Slovenia","Solomon Island","Somalia",
+  "South Africa","South Georgia and the South Sandwich Islands","South Sudan","Spain","Sri Lanka","Sudan","Surinam","Swaziland","Sweden","Switzerland",
+  "Syria","Tadjikistan","Taiwan","Tanzania","Thailand","Togo","Tokelau","Tonga","Trinidad & Tobaggo","Tunisia",
+  "Turkey","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay",
+  "Uzbekistan","Vanuatu","Venezuela","Vietnam","Virgin Islands, British","Virgin Islands, U.S.","Yemen","Yugoslavia","Zambia","Zimbabwe"
+];
+
+const EXCEL_LOWER = {};
+EXCEL_COUNTRIES.forEach(n => { EXCEL_LOWER[n.toLowerCase()] = n; });
+
+// ═══════════════════════════════════════════
+// NAME MAP: Opera name → Excel name
+// null = these are "unknown" type (discard from country rows but count in gap)
+// ═══════════════════════════════════════════
+const NAME_MAP = {
+  "United States":              "United States of America",
+  "Cameroon":                   "Cameroon Republic",
+  "Congo (Kinshasa)":           "Congo, Dem. Rep. of (Zaire)",
+  "Congo (Brazzaville)":        "Congo (Republic of the Congo)",
+  "South Korea":                "Korea, Republic of (South)",
+  "Korea, South":               "Korea, Republic of (South)",
+  "North Korea":                "Korea, Democratic People's Republic of (North)",
+  "Myanmar":                    "Myanmar (Burma)",
+  "Taiwan (Chinese Taipei)":    "Taiwan",
+  "Tajikistan":                 "Tadjikistan",
+  "Kyrgyzstan":                 "Kyrghyzstan",
+  "Kyrgyz Republic":            "Kyrghyzstan",
+  "Bosnia and Herzegovina":     "Bosnia-Herzegovina",
+  "Macedonia":                  "Macedonia, Republic of",
+  "North Macedonia":            "Macedonia, Republic of",
+  "Ivory Coast":                "Côte d'Ivoire",
+  "Cote d'Ivoire":              "Côte d'Ivoire",
+  "Palestine, State of":        "Palestine",
+  "Palestinian Territory":      "Palestine",
+  "Trinidad and Tobago":        "Trinidad & Tobaggo",
+  "Trinidad & Tobago":          "Trinidad & Tobaggo",
+  "Antigua and Barbuda":        "Antigua & Barbuda",
+  "Timor-Leste":                "East Timor",
+  "Sao Tome and Principe":      "Sao Tomé",
+  "Sao Tome":                   "Sao Tomé",
+  // These are unknown/invalid — count in gap, not in any row
+  "Unknown":                    null,
+  "DO NOT USE":                 null,
+};
+
+const UNKNOWN_TRIGGERS = new Set(["Unknown","DO NOT USE"]);
+
+function resolveCountry(name) {
+  if (!name) return { excel: null, isUnknown: true };
+  const t = name.trim();
+  if (NAME_MAP.hasOwnProperty(t)) {
+    const v = NAME_MAP[t];
+    return { excel: v, isUnknown: v === null };
+  }
+  const match = EXCEL_LOWER[t.toLowerCase()];
+  if (match) return { excel: match, isUnknown: false };
+  return { excel: null, isUnknown: false }; // truly unmatched
+}
+
+let outputData = [];
+let copyText   = '';
+
+function processData() {
+  const raw = document.getElementById('inputData').value.trim();
+  if (!raw) { alert('Please paste the Opera Cloud report first.'); return; }
+
+  const lines = raw.split('\n');
+  if (lines.length < 2) { alert('File looks empty. Make sure you copied the full .txt content.'); return; }
+
+  const headers = lines[0].split('\t');
+  const idx = {};
+  headers.forEach((h, i) => { idx[h.trim()] = i; });
+
+  const needed = ['VALUE_CODE','COUNTRY_CODE','COUNTRY_NAME','SUMVALUEPERCOUNTRY_CODE','SUMVALUEPERVALUE_CODE'];
+  const missing = needed.filter(k => idx[k] === undefined);
+  if (missing.length) {
+    alert(`Missing columns: ${missing.join(', ')}\n\nMake sure you used "Delimited Data" format from Opera Cloud.`);
+    return;
+  }
+
+  // Parse using SUMVALUEPERCOUNTRY_CODE (already aggregated per country per stat)
+  const seenKey  = new Set();
+  const operaRaw = {};  // opera_name -> {APR, RMS, PRS}
+  let grandAPR = 0, grandRMS = 0, grandPRS = 0;
+  let foundAPRTotal = false, foundRMSTotal = false, foundPRSTotal = false;
+
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split('\t');
+    if (parts.length < 22) continue;
+    const code = (parts[idx['VALUE_CODE']] || '').trim();
+    if (!['RMS','APR','PRS'].includes(code)) continue;
+
+    // Capture grand totals (SUMVALUEPERVALUE_CODE = total across ALL countries for this stat)
+    const gtot = parseInt(parts[idx['SUMVALUEPERVALUE_CODE']] || '0') || 0;
+    if (code === 'APR' && !foundAPRTotal && gtot > 0) { grandAPR = gtot; foundAPRTotal = true; }
+    if (code === 'RMS' && !foundRMSTotal && gtot > 0) { grandRMS = gtot; foundRMSTotal = true; }
+    if (code === 'PRS' && !foundPRSTotal && gtot > 0) { grandPRS = gtot; foundPRSTotal = true; }
+
+    const cc   = (parts[idx['COUNTRY_CODE']]            || '').trim();
+    const name = (parts[idx['COUNTRY_NAME']]            || '').trim();
+    const sum  = (parts[idx['SUMVALUEPERCOUNTRY_CODE']] || '').trim();
+
+    const key = cc + '|' + code;
+    if (seenKey.has(key) || !name) continue;
+    seenKey.add(key);
+
+    if (!operaRaw[name]) operaRaw[name] = { APR:0, RMS:0, PRS:0 };
+    operaRaw[name][code] = parseInt(sum) || 0;
+  }
+
+  // ── Classify each Opera country ──
+  const excelData     = {};  // excel_name -> {APR,RMS,PRS}
+  const unknownGuests = [];  // [{name, APR, RMS, PRS}] — null-mapped (Unknown/DO NOT USE)
+  const unmatchedOp   = [];  // [{name, APR, RMS, PRS}] — no Excel row found at all
+
+  for (const [opName, vals] of Object.entries(operaRaw)) {
+    const { excel, isUnknown } = resolveCountry(opName);
+
+    if (isUnknown) {
+      unknownGuests.push({ name: opName, ...vals });
+      continue;
+    }
+    if (excel === null) {
+      // Has data but no Excel row — truly unmatched
+      if (vals.APR || vals.RMS || vals.PRS) unmatchedOp.push({ name: opName, ...vals });
+      continue;
+    }
+    excelData[excel] = vals;
+  }
+
+  // ── Build 240 output rows ──
+  outputData = [];
+  let mappedAPR = 0, mappedRMS = 0, mappedPRS = 0, activeCount = 0;
+
+  EXCEL_COUNTRIES.forEach(country => {
+    const v = excelData[country] || { APR:0, RMS:0, PRS:0 };
+    outputData.push(v);
+    mappedAPR += v.APR; mappedRMS += v.RMS; mappedPRS += v.PRS;
+    if (v.APR || v.RMS || v.PRS) activeCount++;
+  });
+
+  const unkAPR = unknownGuests.reduce((s,x)=>s+x.APR,0) + unmatchedOp.reduce((s,x)=>s+x.APR,0);
+  const unkRMS = unknownGuests.reduce((s,x)=>s+x.RMS,0) + unmatchedOp.reduce((s,x)=>s+x.RMS,0);
+  const unkPRS = unknownGuests.reduce((s,x)=>s+x.PRS,0) + unmatchedOp.reduce((s,x)=>s+x.PRS,0);
+
+  // If Opera totals not found in file, calculate from sum
+  if (!grandAPR) grandAPR = mappedAPR + unkAPR;
+  if (!grandRMS) grandRMS = mappedRMS + unkRMS;
+  if (!grandPRS) grandPRS = mappedPRS + unkPRS;
+
+  const gapAPR = grandAPR - mappedAPR;
+  const gapRMS = grandRMS - mappedRMS;
+  const gapPRS = grandPRS - mappedPRS;
+
+  copyText = outputData.map(v => `${v.APR}\t${v.RMS}\t${v.PRS}`).join('\n');
+
+  // ── Update UI ──
+  document.getElementById('statAPR').textContent = grandAPR.toLocaleString();
+  document.getElementById('statRMS').textContent = grandRMS.toLocaleString();
+  document.getElementById('statPRS').textContent = grandPRS.toLocaleString();
+
+  // Totals comparison
+  ['apr','rms','prs'].forEach(k => {
+    const opera  = k==='apr' ? grandAPR  : k==='rms' ? grandRMS  : grandPRS;
+    const mapped = k==='apr' ? mappedAPR : k==='rms' ? mappedRMS : mappedPRS;
+    const gap    = k==='apr' ? gapAPR    : k==='rms' ? gapRMS    : gapPRS;
+    document.getElementById(`tc_${k}_opera`).textContent  = opera.toLocaleString();
+    document.getElementById(`tc_${k}_mapped`).textContent = mapped.toLocaleString();
+    document.getElementById(`tc_${k}_gap`).textContent    = gap > 0 ? `−${gap}` : '✓ 0';
+    document.getElementById(`tc_${k}_gap`).className = `tc-val ${gap>0?'clr-orange':'clr-green'}`;
+  });
+
+  // Unknown list
+  const unkList = document.getElementById('unknownList');
+  if (unknownGuests.length === 0 && unmatchedOp.length === 0) {
+    unkList.innerHTML = `<div class="diag-row ok"><div class="diag-icon">✅</div><div class="diag-row-content"><strong>No unknown guests this month — perfect!</strong><span>All guests in Opera have a valid nationality assigned.</span></div></div>`;
+  } else {
+    unkList.innerHTML = unknownGuests.map(u => `
+      <div class="diag-row warn">
+        <div class="diag-icon">⚠️</div>
+        <div class="diag-row-content">
+          <strong>"${u.name}" — ${u.APR} arrivals · ${u.RMS} room nights · ${u.PRS} guest nights</strong>
+          <span>These guests exist in Opera but have no valid nationality code. They are counted in Opera's grand total but cannot be placed in any country row. Fix these in Opera Guest Profiles.</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // Unmatched list
+  const unList = document.getElementById('unmatchedList');
+  if (unmatchedOp.length === 0) {
+    unList.innerHTML = `<div class="diag-row ok"><div class="diag-icon">✅</div><div class="diag-row-content"><strong>All Opera countries matched to Excel rows</strong><span>No country names were lost or unrecognized.</span></div></div>`;
+  } else {
+    unList.innerHTML = unmatchedOp.map(u => `
+      <div class="diag-row error">
+        <div class="diag-icon">🔴</div>
+        <div class="diag-row-content">
+          <strong>"${u.name}" — ${u.APR} arrivals · ${u.RMS} room nights · ${u.PRS} guest nights — NOT PLACED</strong>
+          <span>This country name is in Opera but has no matching row in your Excel sheet. These numbers are missing from the output. Report this name so the mapping can be added.</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // Side panel unknowns
+  document.getElementById('unk_apr').textContent = gapAPR > 0 ? `−${gapAPR}` : '0';
+  document.getElementById('unk_rms').textContent = gapRMS > 0 ? `−${gapRMS}` : '0';
+  document.getElementById('unk_prs').textContent = gapPRS > 0 ? `−${gapPRS}` : '0';
+
+  // Summary
+  document.getElementById('sumActive').textContent    = activeCount;
+  document.getElementById('sumZero').textContent      = 240 - activeCount;
+  document.getElementById('sumUnmatched').textContent = unmatchedOp.length;
+  document.getElementById('sumUnknown').textContent   = unknownGuests.length;
+
+  // Diag badge
+  const hasIssues = unknownGuests.length > 0 || unmatchedOp.length > 0;
+  const badge = document.getElementById('diagBadge');
+  badge.className = 'diag-badge ' + (hasIssues ? 'badge-warn' : 'badge-ok');
+  badge.textContent = hasIssues
+    ? `${unknownGuests.length} unknown · ${unmatchedOp.length} unmatched`
+    : '✓ All clean';
+
+  buildPreview();
+
+  document.getElementById('outputSection').style.display = 'block';
+  document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildPreview() {
+  const body = document.getElementById('previewBody');
+  body.innerHTML = EXCEL_COUNTRIES.map((country, i) => {
+    const v = outputData[i];
+    const rowNum   = i + 8;
+    const hasData  = v.APR || v.RMS || v.PRS;
+    const ac = hasData ? 'val-arrivals' : 'zero';
+    const rc = hasData ? 'val-rooms'    : 'zero';
+    const pc = hasData ? 'val-guests'   : 'zero';
+    const shortName = country.length > 17 ? country.substring(0,16)+'…' : country;
+    return `<div class="preview-row ${hasData?'has-data':''}">
+      <span class="pr-rownum">${rowNum}</span>
+      <span class="pr-country" title="${country}">${shortName}</span>
+      <span class="pr-num ${ac}">${v.APR}</span>
+      <span class="pr-num ${rc}">${v.RMS}</span>
+      <span class="pr-num ${pc}">${v.PRS}</span>
+    </div>`;
+  }).join('');
+}
+
+function copyNumbers() {
+  if (!copyText) return;
+  const btn = document.getElementById('copyBtn');
+  const done = () => {
+    btn.textContent = '✅ Copied! Now paste in Excel (B8)';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy All 240 Rows'; btn.classList.remove('copied'); }, 3500);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(copyText).then(done).catch(() => fallback(done));
+  } else { fallback(done); }
+}
+
+function fallback(cb) {
+  const ta = document.createElement('textarea');
+  ta.value = copyText; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+  document.body.removeChild(ta); cb();
+}
+
+function toggleDiag() {
+  const body    = document.getElementById('diagBody');
+  const chevron = document.getElementById('diagChevron');
+  const isOpen  = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+
+function clearAll() {
+  document.getElementById('inputData').value = '';
+  document.getElementById('outputSection').style.display = 'none';
+  outputData = []; copyText = '';
+}
+</script>
+</body>
+</html>
