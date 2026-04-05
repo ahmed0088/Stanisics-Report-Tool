@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nationality Report Tool</title>
+<title>Hotel Reports Tool</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -180,12 +180,77 @@ textarea::placeholder { color: var(--muted); }
 @keyframes fadeSlideIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 .animate-in { animation: fadeSlideIn 0.3s ease forwards; }
 
+/* TAB NAV */
+.tab-nav {
+  display: flex; gap: 4px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+.tab-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--muted2);
+  padding: 14px 20px 11px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* RENTED BEDS SECTION */
+.rb-upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
+.rb-file-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); margin-bottom: 8px; display: block; }
+.rb-output-grid { display: grid; grid-template-columns: 1fr 240px; gap: 16px; align-items: start; }
+
+.rb-preview-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.rb-preview-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+.rb-preview-header span { font-size: 0.7rem; color: var(--muted2); font-family: 'DM Mono', monospace; }
+.rb-preview-body { height: 420px; overflow-y: auto; }
+
+.rb-row { display: grid; grid-template-columns: 40px 1fr 80px 80px; align-items: center; padding: 4px 14px; font-family: 'DM Mono', monospace; font-size: 0.75rem; transition: background 0.1s; border-bottom: 1px solid rgba(255,255,255,0.02); }
+.rb-row:hover { background: rgba(255,255,255,0.03); }
+.rb-row.has-data { background: rgba(75,159,232,0.04); }
+.rb-row.has-data:hover { background: rgba(75,159,232,0.08); }
+.rb-row-header { background: rgba(255,255,255,0.04) !important; border-bottom: 1px solid var(--border) !important; }
+.rb-day   { color: var(--muted); font-size: 0.65rem; }
+.rb-date  { color: var(--muted2); font-size: 0.68rem; }
+.rb-num   { text-align: right; }
+.rb-num.zero        { color: var(--muted); }
+.rb-num.clr-rooms   { color: var(--accent2); }
+.rb-num.clr-beds    { color: var(--green); }
+
+.rb-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.rb-stat  { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; position: relative; overflow: hidden; }
+.rb-stat::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; }
+.rb-stat.s-rooms::after { background: var(--accent2); }
+.rb-stat.s-beds::after  { background: var(--green); }
+.rb-stat .num { display: block; font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.rb-stat.s-rooms .num { color: var(--accent2); }
+.rb-stat.s-beds  .num  { color: var(--green); }
+.rb-stat .lbl { font-size: 0.68rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
+
+.rb-copy-panel { display: flex; flex-direction: column; gap: 12px; }
+
 @media (max-width: 760px) {
   .main { padding: 20px 16px; }
   .header { padding: 20px 16px; flex-wrap: wrap; }
+  .tab-nav { padding: 0 16px; }
   .output-grid { grid-template-columns: 1fr; }
   .stats-strip { grid-template-columns: 1fr; }
   .totals-compare { grid-template-columns: 1fr; }
+  .rb-upload-grid { grid-template-columns: 1fr; }
+  .rb-output-grid { grid-template-columns: 1fr; }
+  .rb-stats { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -193,12 +258,22 @@ textarea::placeholder { color: var(--muted); }
 
 <div class="header">
   <div class="header-title">
-    <h1>🏨 Nationality Report</h1>
-    <p>Opera Cloud → Excel · Auto-match · Full Diagnostics</p>
+    <h1>🏨 Hotel Reports Tool</h1>
+    <p>Opera Cloud → Excel · Two Reports · Auto-match · Full Diagnostics</p>
   </div>
-  <div class="header-badge">240 ROWS · EXCEL ROW 8–247</div>
+  <div class="header-badge">DUBAI ECONOMY &amp; TOURISM</div>
 </div>
 
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('nationality')">🌍 Nationality Report</button>
+  <button class="tab-btn"        onclick="switchTab('rented')">🛏️ Rented Rooms &amp; Beds</button>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- TAB 1: NATIONALITY REPORT                  -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-nationality">
 <div class="main">
 
   <!-- STEP 1 -->
@@ -362,7 +437,138 @@ textarea::placeholder { color: var(--muted); }
     </div>
 
   </div><!-- /outputSection -->
-</div><!-- /main -->
+
+  </div><!-- /tab-nationality main -->
+</div><!-- /tab-nationality -->
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- TAB 2: RENTED ROOMS & BEDS                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-rented">
+<div class="main">
+
+  <!-- STEP 1 -->
+  <div class="step-label">
+    <div class="step-num">1</div>
+    <h2>Paste Both Opera Files</h2>
+  </div>
+
+  <div class="card">
+    <div class="rb-upload-grid">
+      <div>
+        <span class="rb-file-label">📄 File 1 — History Forecast <span style="color:var(--accent2)">(history_forecast_…txt)</span></span>
+        <textarea id="rbInput1" placeholder="Open your history_forecast .txt file → Select All → Copy → Paste here&#10;&#10;This file contains: NO_ROOMS, CONSIDERED_DATE ..."></textarea>
+      </div>
+      <div>
+        <span class="rb-file-label">📄 File 2 — Room Type Stats <span style="color:var(--green)">(statroomtype_…txt)</span></span>
+        <textarea id="rbInput2" placeholder="Open your statroomtype .txt file → Select All → Copy → Paste here&#10;&#10;This file contains: STAY_ROOMS, BUSINESS_DATE, ROOM_CATEGORY ..."></textarea>
+      </div>
+    </div>
+
+    <div id="rbError" style="display:none; margin-top:12px; padding:10px 14px; background:rgba(232,80,75,0.1); border:1px solid rgba(232,80,75,0.3); border-radius:8px; font-size:0.8rem; color:var(--red);"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="processRented()">⚡ Process Files</button>
+      <button class="btn btn-ghost"   onclick="clearRented()">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div id="rbOutput" style="display:none;">
+
+    <!-- STEP 2 stats -->
+    <div class="step-label animate-in">
+      <div class="step-num">2</div>
+      <h2>Monthly Totals</h2>
+    </div>
+
+    <div class="rb-stats animate-in">
+      <div class="rb-stat s-rooms">
+        <span class="num" id="rbStatRooms">—</span>
+        <span class="lbl">Total Rented Rooms (month)</span>
+      </div>
+      <div class="rb-stat s-beds">
+        <span class="num" id="rbStatBeds">—</span>
+        <span class="lbl">Total Rented Beds (month)</span>
+      </div>
+    </div>
+
+    <!-- how it works banner -->
+    <div class="card animate-in" style="padding:16px 20px; margin-bottom:20px; background:rgba(75,159,232,0.05); border-color:rgba(75,159,232,0.2);">
+      <div style="display:flex; align-items:flex-start; gap:12px;">
+        <div style="font-size:1.1rem; flex-shrink:0; margin-top:2px;">💡</div>
+        <div>
+          <div style="font-size:0.78rem; font-weight:600; color:var(--accent2); margin-bottom:4px;">Formula used</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--muted2); line-height:1.8;">
+            <strong style="color:var(--text);">Rented Rooms</strong> = Daily occupied rooms from History Forecast (<code style="color:var(--accent2);">NO_ROOMS</code>)<br>
+            <strong style="color:var(--text);">Rented Beds</strong> = Occupied rooms + Twin rooms from Room Type Stats (<code style="color:var(--green);">NO_ROOMS + STAY_ROOMS</code>)<br>
+            <span style="color:var(--muted); font-size:0.68rem;">Each twin room has 2 beds → adds 1 extra bed per twin room on top of total rooms</span>
+          </div>
+        </div>
+        <div style="margin-left:auto; text-align:right; flex-shrink:0;">
+          <div style="font-size:0.65rem; color:var(--muted); margin-bottom:4px; letter-spacing:1px; text-transform:uppercase;">Twin file</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--green);" id="rbStatTwin">—</div>
+          <div style="font-size:0.65rem; color:var(--muted); margin-top:6px; letter-spacing:1px; text-transform:uppercase;">Days found</div>
+          <div style="font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--accent);" id="rbStatDays">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-label animate-in">
+      <div class="step-num">3</div>
+      <h2>Copy &amp; Paste into Excel</h2>
+    </div>
+
+    <div class="rb-output-grid animate-in">
+
+      <!-- PREVIEW -->
+      <div class="rb-preview-wrap">
+        <div class="rb-preview-header">
+          <span>DAY · +TWIN · RENTED ROOMS · RENTED BEDS</span>
+          <span style="color:var(--accent); font-family:'DM Mono',monospace; font-size:0.7rem;" id="rbDayCount">31 rows</span>
+        </div>
+        <!-- column headers -->
+        <div class="rb-row rb-row-header" style="padding:6px 14px;">
+          <span style="font-size:0.62rem; color:var(--muted); font-family:'DM Mono',monospace;">DAY</span>
+          <span style="font-size:0.62rem; color:var(--muted); font-family:'DM Mono',monospace;">TWIN ADD</span>
+          <span style="font-size:0.62rem; color:var(--accent2); font-family:'DM Mono',monospace; text-align:right;">ROOMS</span>
+          <span style="font-size:0.62rem; color:var(--green);   font-family:'DM Mono',monospace; text-align:right;">BEDS</span>
+        </div>
+        <div class="rb-preview-body" id="rbPreviewBody"></div>
+      </div>
+
+      <!-- COPY PANEL -->
+      <div class="rb-copy-panel">
+
+        <div class="copy-card">
+          <div class="copy-card-title">📋 Copy to Excel</div>
+          <button class="btn-copy-main" id="rbCopyBtn" onclick="copyRented()">Copy All Rows</button>
+          <div class="copy-note">
+            After copying:<br>
+            <strong>1.</strong> Open your Excel sheet<br>
+            <strong>2.</strong> Click the cell for <strong>Day 1 · Rented Rooms</strong><br>
+            <strong>3.</strong> Press Ctrl+V<br>
+            <strong>4.</strong> Both columns fill automatically ✓
+          </div>
+        </div>
+
+        <div class="copy-card" style="background:rgba(75,159,232,0.05); border-color:rgba(75,159,232,0.2);">
+          <div class="copy-card-title" style="color:var(--accent2);">Column Guide</div>
+          <div style="font-size:0.72rem; font-family:'DM Mono',monospace; line-height:2; color:var(--muted2);">
+            <span style="color:var(--accent2);">Col 1</span> → Number of Rented Rooms<br>
+            <span style="color:var(--green);">  Col 2</span> → Number of Rented Beds<br>
+            <span style="color:var(--muted); font-size:0.65rem;">Paste starts at Day 1 row</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /rbOutput -->
+
+</div><!-- /tab-rented main -->
+</div><!-- /tab-rented -->
 
 <script>
 // ═══════════════════════════════════════════
@@ -667,6 +873,160 @@ function clearAll() {
   document.getElementById('inputData').value = '';
   document.getElementById('outputSection').style.display = 'none';
   outputData = []; copyText = '';
+}
+
+// ═══════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && name==='nationality') || (i===1 && name==='rented'));
+  });
+  document.getElementById('tab-nationality').classList.toggle('active', name==='nationality');
+  document.getElementById('tab-rented').classList.toggle('active', name==='rented');
+}
+
+// ═══════════════════════════════════════════
+// TAB 2: RENTED ROOMS & BEDS
+// ═══════════════════════════════════════════
+let rbCopyText = '';
+
+function parseHistoryForecast(raw) {
+  // Returns {day -> no_rooms} from history_forecast delimited file
+  const lines = raw.trim().split('\n');
+  if (lines.length < 2) return null;
+  const headers = lines[0].split('\t');
+  const idx = {};
+  headers.forEach((h,i) => { idx[h.trim()] = i; });
+  if (idx['NO_ROOMS'] === undefined || idx['CONSIDERED_DATE'] === undefined) return null;
+
+  const result = {};
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split('\t');
+    if (parts.length < 30) continue;
+    const dateStr = (parts[idx['CONSIDERED_DATE']] || '').trim();
+    if (!dateStr || !dateStr[0].match(/\d/)) continue;
+    const day = parseInt(dateStr.split('-')[0]);
+    const rooms = parseInt(parts[idx['NO_ROOMS']]) || 0;
+    if (day >= 1 && day <= 31) result[day] = rooms;
+  }
+  return Object.keys(result).length > 0 ? result : null;
+}
+
+function parseStatRoomType(raw) {
+  // Returns {day -> stay_rooms} from statroomtype delimited file
+  const lines = raw.trim().split('\n');
+  if (lines.length < 2) return null;
+  const headers = lines[0].split('\t');
+  const idx = {};
+  headers.forEach((h,i) => { idx[h.trim()] = i; });
+  if (idx['STAY_ROOMS'] === undefined || idx['BUSINESS_DATE'] === undefined) return null;
+
+  const result = {};
+  for (let i = 1; i < lines.length; i++) {
+    const parts = lines[i].split('\t');
+    if (parts.length < 5) continue;
+    const dateStr = (parts[idx['BUSINESS_DATE']] || '').trim();
+    if (!dateStr || !dateStr[0].match(/\d/)) continue;
+    const day = parseInt(dateStr.split('-')[0]);
+    const rooms = parseInt(parts[idx['STAY_ROOMS']]) || 0;
+    if (day >= 1 && day <= 31) result[day] = rooms;
+  }
+  return Object.keys(result).length > 0 ? result : null;
+}
+
+function processRented() {
+  const raw1 = document.getElementById('rbInput1').value.trim();
+  const raw2 = document.getElementById('rbInput2').value.trim();
+  const errEl = document.getElementById('rbError');
+  errEl.style.display = 'none';
+
+  if (!raw1 || !raw2) {
+    errEl.textContent = 'Please paste both files before processing.';
+    errEl.style.display = 'block'; return;
+  }
+
+  // Auto-detect which file is which
+  let hfRaw = null, stRaw = null;
+  const isHF  = t => t.includes('NO_ROOMS') && t.includes('CONSIDERED_DATE');
+  const isSRT = t => t.includes('STAY_ROOMS') && t.includes('BUSINESS_DATE');
+
+  if (isHF(raw1) && isSRT(raw2))       { hfRaw = raw1; stRaw = raw2; }
+  else if (isHF(raw2) && isSRT(raw1))  { hfRaw = raw2; stRaw = raw1; }
+  else if (isHF(raw1))                  { hfRaw = raw1; }
+  else if (isHF(raw2))                  { hfRaw = raw2; }
+  else {
+    errEl.textContent = 'Could not detect the files. Make sure you paste the History Forecast and Room Type files in Delimited Data format.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const hfData = parseHistoryForecast(hfRaw);
+  if (!hfData) {
+    errEl.textContent = 'Could not read the History Forecast file. Make sure it is in Delimited Data format.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const stData = stRaw ? parseStatRoomType(stRaw) : {};
+
+  // Detect how many days this month has
+  const days = Math.max(...Object.keys(hfData).map(Number));
+
+  // Build rows
+  const rows = [];
+  let totalRooms = 0, totalBeds = 0;
+  for (let d = 1; d <= days; d++) {
+    const rentedRooms = hfData[d] || 0;
+    const twinRooms   = stData  ? (stData[d] || 0) : 0;
+    const rentedBeds  = rentedRooms + twinRooms;
+    rows.push({ day: d, rooms: rentedRooms, beds: rentedBeds, twin: twinRooms });
+    totalRooms += rentedRooms;
+    totalBeds  += rentedBeds;
+  }
+
+  // Build copy text — just 2 numbers per row
+  rbCopyText = rows.map(r => `${r.rooms}\t${r.beds}`).join('\n');
+
+  // Update stats
+  document.getElementById('rbStatRooms').textContent = totalRooms.toLocaleString();
+  document.getElementById('rbStatBeds').textContent  = totalBeds.toLocaleString();
+  document.getElementById('rbStatDays').textContent  = days;
+  document.getElementById('rbStatTwin').textContent  = stData ? 'Connected ✓' : 'Not provided';
+
+  // Build preview
+  const body = document.getElementById('rbPreviewBody');
+  body.innerHTML = rows.map(r => {
+    const hasData = r.rooms > 0;
+    return `<div class="rb-row ${hasData?'has-data':''}">
+      <span class="rb-day">${r.day}</span>
+      <span class="rb-date" style="font-size:0.65rem;color:var(--muted);">+${r.twin} twin</span>
+      <span class="rb-num ${hasData?'clr-rooms':'zero'}">${r.rooms}</span>
+      <span class="rb-num ${hasData?'clr-beds':'zero'}">${r.beds}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('rbOutput').style.display = 'block';
+  document.getElementById('rbOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyRented() {
+  if (!rbCopyText) return;
+  const btn = document.getElementById('rbCopyBtn');
+  const done = () => {
+    btn.textContent = '✅ Copied! Paste in Excel now';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy All Rows'; btn.classList.remove('copied'); }, 3500);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(rbCopyText).then(done).catch(() => fallback(done));
+  } else { fallback(done); }
+}
+
+function clearRented() {
+  document.getElementById('rbInput1').value = '';
+  document.getElementById('rbInput2').value = '';
+  document.getElementById('rbOutput').style.display = 'none';
+  document.getElementById('rbError').style.display = 'none';
+  rbCopyText = '';
 }
 </script>
 </body>
