@@ -1002,6 +1002,260 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
 /* ─────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────── */
+
+/* ─────────────────────────────────────────
+   NIGHT AUDIT — PM ROOMS
+───────────────────────────────────────── */
+.na-upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Comparison table */
+.compare-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.compare-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card2);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.compare-top-left h3 { font-size: 0.88rem; font-weight: 600; }
+.compare-top-left p  { font-size: 0.68rem; color: var(--text3); font-family: 'Geist Mono', monospace; margin-top: 2px; }
+
+.compare-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.cpill {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.cpill.ok    { background: rgba(52,211,153,0.1);  color: var(--mint);  border: 1px solid rgba(52,211,153,0.2); }
+.cpill.diff  { background: rgba(251,191,36,0.1);  color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+.cpill.total { background: rgba(56,189,248,0.1);  color: var(--sky);   border: 1px solid rgba(56,189,248,0.2); }
+
+/* Table header */
+.compare-thead {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px;
+  gap: 0;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid var(--border);
+}
+
+.th {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* Table rows */
+.compare-scroll { max-height: 520px; overflow-y: auto; }
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px;
+  gap: 0;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.025);
+  transition: background 0.1s;
+  align-items: start;
+}
+
+.compare-row:last-child { border-bottom: none; }
+.compare-row:hover { background: rgba(255,255,255,0.02); }
+.compare-row.has-diff { background: rgba(251,191,36,0.04); border-left: 3px solid var(--amber); }
+.compare-row.has-diff:hover { background: rgba(251,191,36,0.08); }
+.compare-row.clean { border-left: 3px solid transparent; }
+
+.cr-room {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--sky);
+  font-weight: 600;
+  padding-top: 2px;
+}
+
+.cr-cell { font-size: 0.75rem; padding-right: 8px; }
+.cr-cell.opera-val { color: var(--text2); }
+.cr-cell.excel-val { color: var(--text3); }
+.cr-cell.changed   { color: var(--amber); }
+
+.cr-field-wrap { display: flex; flex-direction: column; gap: 4px; }
+
+.cr-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.diff-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--amber);
+  margin-top: 2px;
+}
+
+.diff-arrow { font-size: 0.7rem; }
+
+.cr-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.ok   { background: var(--mint); box-shadow: 0 0 6px var(--mint); }
+.status-dot.diff { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+/* Field-level diff display */
+.field-diff {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-opera {
+  font-size: 0.74rem;
+  color: var(--mint);
+  font-weight: 500;
+}
+
+.field-opera::before {
+  content: 'OPERA ';
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--mint);
+  letter-spacing: 1px;
+  margin-right: 4px;
+  opacity: 0.7;
+}
+
+.field-excel {
+  font-size: 0.7rem;
+  color: var(--rose);
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.field-excel::before {
+  content: 'EXCEL ';
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--rose);
+  letter-spacing: 1px;
+  margin-right: 4px;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.field-same { font-size: 0.74rem; color: var(--text2); }
+
+/* Output section */
+.na-output-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 20px;
+  align-items: start;
+}
+
+.fixed-table-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.fixed-thead {
+  display: grid;
+  grid-template-columns: 60px 1fr 100px 100px 100px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid var(--border);
+}
+
+.fixed-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 100px 100px 100px;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.025);
+  align-items: center;
+  font-size: 0.75rem;
+  transition: background 0.1s;
+}
+.fixed-row:hover { background: rgba(255,255,255,0.02); }
+.fixed-row.was-fixed { background: rgba(52,211,153,0.04); border-left: 3px solid var(--mint); }
+.fixed-row.was-fixed:hover { background: rgba(52,211,153,0.08); }
+.fixed-row.clean-row { border-left: 3px solid transparent; }
+
+.fixed-scroll { max-height: 460px; overflow-y: auto; }
+
+.fr-room { font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--sky); font-weight: 600; }
+.fr-name { color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; }
+.fr-val  { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: var(--text2); }
+.fr-bal  { font-family: 'Geist Mono', monospace; font-size: 0.72rem; }
+.fr-bal.pos  { color: var(--sky); }
+.fr-bal.neg  { color: var(--rose); }
+.fr-bal.zero { color: var(--text3); }
+.fr-fixed-tag {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--mint);
+  background: rgba(52,211,153,0.1);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 4px;
+}
+
+/* Changes summary card */
+.changes-list { display: flex; flex-direction: column; gap: 8px; }
+.change-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(251,191,36,0.05);
+  border: 1px solid rgba(251,191,36,0.12);
+  border-left: 3px solid var(--amber);
+  border-radius: var(--r-md);
+}
+.change-room { font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: var(--sky); font-weight: 600; }
+.change-desc { font-size: 0.72rem; color: var(--text2); }
+.change-old  { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--rose); }
+.change-new  { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--mint); }
+
+@media (max-width: 900px) {
+  .na-upload-grid { grid-template-columns: 1fr; }
+  .na-output-layout { grid-template-columns: 1fr; }
+  .compare-thead, .compare-row { grid-template-columns: 50px 1fr 1fr; }
+  .compare-row > *:nth-child(n+4) { display: none; }
+  .fixed-thead, .fixed-row { grid-template-columns: 50px 1fr 80px; }
+  .fixed-row > *:nth-child(n+4) { display: none; }
+}
+
 @media (max-width: 900px) {
   .app-header, .tab-nav, .page-wrap { padding-left: 20px; padding-right: 20px; }
   .upload-grid { grid-template-columns: 1fr; }
@@ -1041,6 +1295,11 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
     <div class="tab-icon">🛏️</div>
     Rented Rooms &amp; Beds
     <span class="tab-count">31 rows</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('audit')" id="tabBtn2">
+    <div class="tab-icon">🌙</div>
+    Night Audit · PM Rooms
+    <span class="tab-count" id="naTabCount">Compare</span>
   </button>
 </nav>
 
@@ -1540,7 +1799,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  const i = name === 'nat' ? 0 : 1;
+  const i = name === 'nat' ? 0 : name === 'rent' ? 1 : 2;
   document.getElementById('tabBtn' + i).classList.add('active');
 }
 
@@ -1868,6 +2127,575 @@ function clearRent() {
   document.getElementById('rentError').classList.remove('show');
   rentCopyText = '';
 }
+
+// ═══════════════════════════════════════════════════
+// NIGHT AUDIT — PM ROOMS
+// ═══════════════════════════════════════════════════
+let naCopyText = '';
+
+/* ── Parse Opera gipmbyroom delimited file ── */
+function parseOperaPM(raw) {
+  const lines = raw.trim().split('\n');
+  if (lines.length < 2) return null;
+  const headers = lines[0].split('\t').map(h => h.trim());
+  const idx = {};
+  headers.forEach((h, i) => { idx[h] = i; });
+  if (idx['ROOM'] === undefined) return null;
+
+  const rooms = [];
+  for (let i = 1; i < lines.length; i++) {
+    const p = lines[i].split('\t');
+    if (p.length < 6) continue;
+    const cat = (p[idx['ROOM_CATEGORY_LABEL']] || '').trim();
+    if (cat !== 'PM') continue; // only PM rooms
+    const room = (p[idx['ROOM']] || '').trim();
+    if (!room || isNaN(parseInt(room))) continue;
+    rooms.push({
+      room:      parseInt(room),
+      name:      (p[idx['FULL_NAME']]   || '').trim(),
+      company:   (p[idx['COMPANY_NAME']]|| '').trim(),
+      arrival:   parseOperaDate(p[idx['ARRIVAL']]   || ''),
+      departure: parseOperaDate(p[idx['DEPARTURE']] || ''),
+      balance:   parseBalance(p[idx['BALANCE']] || '0'),
+    });
+  }
+  return rooms.length > 0 ? rooms : null;
+}
+
+/* ── Parse Excel/CSV management report ── */
+function parseExcelPM(raw) {
+  // Support both tab-separated (copied from Excel) and comma-separated (CSV)
+  const lines = raw.trim().split('\n').filter(l => l.trim());
+  if (lines.length < 2) return null;
+
+  const sep = lines[0].includes('\t') ? '\t' : ',';
+  const parse = line => {
+    if (sep === ',') {
+      // Handle quoted CSV fields
+      const result = [];
+      let cur = '', inQ = false;
+      for (let c of line) {
+        if (c === '"') { inQ = !inQ; }
+        else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+        else cur += c;
+      }
+      result.push(cur.trim());
+      return result;
+    }
+    return line.split('\t').map(c => c.trim());
+  };
+
+  const headers = parse(lines[0]).map(h => h.replace(/"/g,'').trim().toUpperCase());
+  const roomIdx = headers.findIndex(h => h === 'PM' || h === 'ROOM');
+  const nameIdx = headers.findIndex(h => h === 'NAME');
+  const arrIdx  = headers.findIndex(h => h === 'ARRIVAL');
+  const depIdx  = headers.findIndex(h => h === 'DEPARTURE');
+  const balIdx  = headers.findIndex(h => h === 'BALANCE');
+  const deptIdx = headers.findIndex(h => h.includes('DEPT') || h.includes('DEPARTMENT'));
+  const remIdx  = headers.findIndex(h => h.includes('REMARK'));
+  const accIdx  = headers.findIndex(h => h.includes('ACCOUNT') || h.includes('COMMENTS'));
+
+  if (roomIdx === -1 || nameIdx === -1) return null;
+
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const p = parse(lines[i]);
+    const roomRaw = (p[roomIdx] || '').replace(/"/g,'').trim();
+    if (!roomRaw || isNaN(parseInt(roomRaw))) continue;
+    rows.push({
+      room:      parseInt(roomRaw),
+      name:      (p[nameIdx]  || '').replace(/"/g,'').trim(),
+      arrival:   parseExcelDate((p[arrIdx]  || '').replace(/"/g,'').trim()),
+      departure: parseExcelDate((p[depIdx]  || '').replace(/"/g,'').trim()),
+      balance:   parseBalance((p[balIdx]    || '0').replace(/"/g,'').trim()),
+      dept:      deptIdx >= 0 ? (p[deptIdx] || '').replace(/"/g,'').trim() : '',
+      remarks:   remIdx  >= 0 ? (p[remIdx]  || '').replace(/"/g,'').trim() : '',
+      accounts:  accIdx  >= 0 ? (p[accIdx]  || '').replace(/"/g,'').trim() : '',
+    });
+  }
+  return rows.length > 0 ? rows : null;
+}
+
+/* ── Date helpers ── */
+function parseOperaDate(s) {
+  // "25-03-26" → Date
+  if (!s) return null;
+  const p = s.trim().split('-');
+  if (p.length !== 3) return null;
+  const yr = parseInt(p[2]) + (parseInt(p[2]) < 100 ? 2000 : 0);
+  return new Date(yr, parseInt(p[1])-1, parseInt(p[0]));
+}
+
+function parseExcelDate(s) {
+  if (!s) return null;
+  // "3/25/2026" or "03/25/2026"
+  const p = s.split('/');
+  if (p.length === 3) return new Date(parseInt(p[2]), parseInt(p[0])-1, parseInt(p[1]));
+  // Try ISO
+  const d = new Date(s);
+  return isNaN(d) ? null : d;
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function fmtDateExcel(d) {
+  // Format for Excel paste: M/D/YYYY
+  if (!d) return '';
+  return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+}
+
+function parseBalance(s) {
+  if (!s) return 0;
+  return parseFloat(String(s).replace(/,/g,'')) || 0;
+}
+
+function sameDate(a, b) {
+  if (!a || !b) return !a && !b;
+  return a.getFullYear() === b.getFullYear() &&
+         a.getMonth()    === b.getMonth()    &&
+         a.getDate()     === b.getDate();
+}
+
+function fmtBal(n) {
+  if (n === 0) return '0.00';
+  return n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+/* ── Main comparison ── */
+function processAudit() {
+  const rawOpera = document.getElementById('naOperaInput').value.trim();
+  const rawExcel = document.getElementById('naExcelInput').value.trim();
+  const errBox = document.getElementById('naError');
+  const errMsg = document.getElementById('naErrorMsg');
+  errBox.classList.remove('show');
+
+  const showErr = msg => { errMsg.textContent = msg; errBox.classList.add('show'); };
+
+  if (!rawOpera) return showErr('Please paste the Opera PM rooms report (gipmbyroom file).');
+  if (!rawExcel) return showErr('Please paste your management Excel report.');
+
+  const operaRooms = parseOperaPM(rawOpera);
+  if (!operaRooms) return showErr('Could not read Opera file. Make sure it is the Delimited Data format with ROOM_CATEGORY_LABEL column containing "PM".');
+
+  const excelRows = parseExcelPM(rawExcel);
+  if (!excelRows) return showErr('Could not read Excel report. Copy the rows from your Excel file (include the header row) and paste here.');
+
+  // Build lookup maps
+  const excelMap = {};
+  excelRows.forEach(r => { excelMap[r.room] = r; });
+
+  // ── Compare ──
+  const diffs     = [];
+  const fixedRows = [];
+  const missing   = [];  // in Opera but not in Excel
+  const changes   = [];  // summary of what was fixed
+
+  operaRooms.forEach(op => {
+    const ex = excelMap[op.room];
+
+    if (!ex) {
+      missing.push(op);
+      // Still add to fixed output with no dept/remarks
+      fixedRows.push({ ...op, dept:'', remarks:'', accounts:'', wasFixed: false, wasMissing: true, fieldDiffs: [] });
+      return;
+    }
+
+    const fieldDiffs = [];
+
+    // Name — Opera always wins
+    if (op.name.toLowerCase().replace(/[.,\s]/g,'') !== ex.name.toLowerCase().replace(/[.,\s]/g,'')) {
+      fieldDiffs.push({ field:'Name', opera: op.name, excel: ex.name });
+    }
+
+    // Arrival
+    if (!sameDate(op.arrival, ex.arrival)) {
+      fieldDiffs.push({ field:'Arrival', opera: fmtDate(op.arrival), excel: fmtDate(ex.arrival) });
+    }
+
+    // Departure
+    if (!sameDate(op.departure, ex.departure)) {
+      fieldDiffs.push({ field:'Departure', opera: fmtDate(op.departure), excel: fmtDate(ex.departure) });
+    }
+
+    // Balance
+    if (Math.abs(op.balance - ex.balance) > 0.005) {
+      fieldDiffs.push({ field:'Balance', opera: fmtBal(op.balance), excel: fmtBal(ex.balance) });
+    }
+
+    const hasDiff = fieldDiffs.length > 0;
+
+    diffs.push({ op, ex, fieldDiffs, hasDiff });
+
+    // Fixed row: always use Opera values for the 5 core fields, preserve dept/remarks from Excel
+    fixedRows.push({
+      room:      op.room,
+      name:      op.name,
+      arrival:   op.arrival,
+      departure: op.departure,
+      balance:   op.balance,
+      dept:      ex.dept,
+      remarks:   ex.remarks,
+      accounts:  ex.accounts,
+      wasFixed:  hasDiff,
+      wasMissing: false,
+      fieldDiffs,
+    });
+
+    if (hasDiff) {
+      changes.push({ room: op.room, fieldDiffs });
+    }
+  });
+
+  const totalRooms = operaRooms.length;
+  const diffCount  = diffs.filter(d => d.hasDiff).length + missing.length;
+  const okCount    = totalRooms - diffCount;
+
+  // ── Update KPIs ──
+  document.getElementById('na-kpi-total').textContent = totalRooms;
+  document.getElementById('na-kpi-diff').textContent  = diffCount;
+  document.getElementById('na-kpi-ok').textContent    = okCount;
+
+  document.getElementById('na-pill-total').textContent = `${totalRooms} rooms`;
+  document.getElementById('na-pill-diff').textContent  = `${diffCount} difference${diffCount!==1?'s':''}`;
+  document.getElementById('na-pill-ok').textContent    = `${okCount} match${okCount!==1?'es':''}`;
+
+  // Tab count badge
+  document.getElementById('naTabCount').textContent = diffCount > 0 ? `${diffCount} fixes` : '✓ Clean';
+
+  // ── Build comparison table ──
+  const compTable = document.getElementById('naCompareTable');
+  compTable.innerHTML = diffs.map(({op, ex, fieldDiffs, hasDiff}) => {
+    const fd = {};
+    fieldDiffs.forEach(f => { fd[f.field] = f; });
+
+    const nameHtml = fd['Name']
+      ? `<div class="field-diff"><span class="field-opera">${fd['Name'].opera}</span><span class="field-excel">${fd['Name'].excel}</span></div>`
+      : `<span class="field-same">${op.name}</span>`;
+
+    const arrHtml = fd['Arrival']
+      ? `<div class="field-diff"><span class="field-opera">${fd['Arrival'].opera}</span><span class="field-excel">${fd['Arrival'].excel}</span></div>`
+      : `<span class="field-same">${fmtDate(op.arrival)}</span>`;
+
+    const depHtml = fd['Departure']
+      ? `<div class="field-diff"><span class="field-opera">${fd['Departure'].opera}</span><span class="field-excel">${fd['Departure'].excel}</span></div>`
+      : `<span class="field-same">${fmtDate(op.departure)}</span>`;
+
+    const balHtml = fd['Balance']
+      ? `<div class="field-diff"><span class="field-opera">${fd['Balance'].opera}</span><span class="field-excel">${fd['Balance'].excel}</span></div>`
+      : `<span class="field-same">${fmtBal(op.balance)}</span>`;
+
+    return `<div class="compare-row ${hasDiff ? 'has-diff' : 'clean'}">
+      <div class="cr-room">${op.room}</div>
+      <div class="cr-cell">${nameHtml}</div>
+      <div class="cr-cell">${arrHtml}</div>
+      <div class="cr-cell">${depHtml}</div>
+      <div class="cr-cell">${balHtml}</div>
+      <div class="cr-status">
+        <div class="status-dot ${hasDiff ? 'diff' : 'ok'}" title="${hasDiff ? fieldDiffs.length + ' difference(s)' : 'Perfect match'}"></div>
+      </div>
+    </div>`;
+  }).join('') + missing.map(op => `
+    <div class="compare-row has-diff">
+      <div class="cr-room">${op.room}</div>
+      <div class="cr-cell"><span class="field-opera">${op.name}</span></div>
+      <div class="cr-cell"><span class="field-opera">${fmtDate(op.arrival)}</span></div>
+      <div class="cr-cell"><span class="field-opera">${fmtDate(op.departure)}</span></div>
+      <div class="cr-cell"><span class="field-opera">${fmtBal(op.balance)}</span></div>
+      <div class="cr-status"><span style="font-family:'Geist Mono',monospace;font-size:0.58rem;color:var(--rose);">NOT IN EXCEL</span></div>
+    </div>`).join('');
+
+  // ── Build fixed output table ──
+  const fixedTable = document.getElementById('naFixedTable');
+  fixedTable.innerHTML = fixedRows.map(r => {
+    const balClass = r.balance > 0 ? 'pos' : r.balance < 0 ? 'neg' : 'zero';
+    const fixTag   = r.wasFixed ? '<span class="fr-fixed-tag">FIXED</span>' : '';
+    return `<div class="fixed-row ${r.wasFixed ? 'was-fixed' : 'clean-row'}">
+      <span class="fr-room">${r.room}</span>
+      <span class="fr-name">${r.name}${fixTag}</span>
+      <span class="fr-val">${fmtDate(r.arrival)}</span>
+      <span class="fr-val">${fmtDate(r.departure)}</span>
+      <span class="fr-bal ${balClass}">${fmtBal(r.balance)}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('naFixedCount').textContent = `${fixedRows.length} rows`;
+
+  // ── Build changes summary ──
+  const changesList = document.getElementById('naChangesList');
+  if (changes.length === 0 && missing.length === 0) {
+    changesList.innerHTML = '<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>No changes needed — everything matches!</strong><span>Opera and your Excel report are identical.</span></div></div>';
+  } else {
+    changesList.innerHTML = changes.map(c => `
+      <div class="change-item">
+        <span class="change-room">Room ${c.room}</span>
+        ${c.fieldDiffs.map(f => `
+          <span class="change-desc">${f.field} corrected</span>
+          <span class="change-old">✗ ${f.excel}</span>
+          <span class="change-new">✓ ${f.opera}</span>
+        `).join('')}
+      </div>`).join('') + missing.map(op => `
+      <div class="change-item">
+        <span class="change-room">Room ${op.room}</span>
+        <span class="change-desc">Not in Excel — added from Opera</span>
+        <span class="change-new">✓ ${op.name}</span>
+      </div>`).join('');
+  }
+
+  // ── Missing rooms card ──
+  const missingCard = document.getElementById('naMissingCard');
+  const missingList = document.getElementById('naMissingList');
+  if (missing.length > 0) {
+    missingCard.style.display = 'block';
+    missingList.innerHTML = missing.map(op => `
+      <div class="change-item">
+        <span class="change-room">Room ${op.room}</span>
+        <span class="change-new">${op.name}</span>
+        <span class="change-desc">Balance: ${fmtBal(op.balance)}</span>
+      </div>`).join('');
+  } else {
+    missingCard.style.display = 'none';
+  }
+
+  // ── Build copy text (tab-separated, matching Excel columns: PM, NAME, ARRIVAL, DEPARTURE, BALANCE, Department, REMARKS, Accounts Comments) ──
+  naCopyText = fixedRows.map(r => [
+    r.room,
+    r.name,
+    fmtDateExcel(r.arrival),
+    fmtDateExcel(r.departure),
+    r.balance,
+    r.dept,
+    r.remarks,
+    r.accounts,
+  ].join('\t')).join('\n');
+
+  document.getElementById('naCompareSection').style.display = 'block';
+  document.getElementById('naCompareSection').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function copyAudit() {
+  if (!naCopyText) return;
+  copyToClip(naCopyText, document.getElementById('naCopyBtn'), 'Copy All Fixed Rows');
+}
+
+function clearAudit() {
+  document.getElementById('naOperaInput').value = '';
+  document.getElementById('naExcelInput').value = '';
+  document.getElementById('naCompareSection').style.display = 'none';
+  document.getElementById('naError').classList.remove('show');
+  document.getElementById('naTabCount').textContent = 'Compare';
+  naCopyText = '';
+}
+
 </script>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — NIGHT AUDIT · PM ROOMS
+══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-audit">
+<div class="page-wrap">
+
+  <!-- STEP 1: Upload -->
+  <div class="section-head">
+    <div class="section-icon blue">📥</div>
+    <div>
+      <h2>Night Audit — PM Rooms Comparison</h2>
+      <p>Paste Opera report + upload your management Excel to find and fix differences</p>
+    </div>
+    <span class="step-badge">STEP 1 OF 3</span>
+  </div>
+
+  <div class="card">
+    <div class="na-upload-grid">
+      <div class="upload-zone">
+        <div class="upload-label">
+          <div class="upload-dot blue"></div>
+          <span class="upload-label-text">Opera Cloud — PM Rooms Report</span>
+          <span class="upload-label-sub">gipmbyroom_….txt</span>
+        </div>
+        <textarea id="naOperaInput" placeholder="Open Opera Cloud → Front Desk → In-House Guests by Room&#10;Download as: Delimited Data&#10;Open the .txt file → Select All → Copy → Paste here&#10;&#10;File should contain: ROOM, FULL_NAME, ARRIVAL, DEPARTURE, BALANCE ..."></textarea>
+      </div>
+      <div class="upload-zone file2">
+        <div class="upload-label">
+          <div class="upload-dot mint"></div>
+          <span class="upload-label-text">Management Report — Your Excel File</span>
+          <span class="upload-label-sub">PM_Ibis_DD_….csv or paste from Excel</span>
+        </div>
+        <textarea id="naExcelInput" placeholder="Open your Excel management report&#10;Select all rows (including header) → Copy → Paste here&#10;&#10;OR drag and drop your CSV file content here&#10;&#10;Expected columns: PM, NAME, ARRIVAL, DEPARTURE, BALANCE, Department, REMARKS ..."></textarea>
+      </div>
+    </div>
+
+    <div class="error-box" id="naError">
+      <span>⚠</span>
+      <span id="naErrorMsg"></span>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn btn-process" onclick="processAudit()">
+        <span>🔍</span> Compare &amp; Find Differences
+      </button>
+      <button class="btn btn-clear" onclick="clearAudit()">✕ Clear</button>
+      <span class="info-hint">Opera is always the source of truth</span>
+    </div>
+  </div>
+
+  <!-- STEP 2: Comparison results -->
+  <div id="naCompareSection" style="display:none;">
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-label">Comparison Results</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="section-head fade-in">
+      <div class="section-icon rose">🔍</div>
+      <div>
+        <h2>Differences Found</h2>
+        <p>Opera vs Management Report — fields highlighted in amber need fixing</p>
+      </div>
+      <span class="step-badge">STEP 2 OF 3</span>
+    </div>
+
+    <!-- KPI strip -->
+    <div class="kpi-strip cols3 fade-in" style="margin-bottom:20px;">
+      <div class="kpi sky">
+        <div class="kpi-glow"></div><div class="kpi-bar"></div>
+        <div class="kpi-label">Total PM Rooms</div>
+        <div class="kpi-value" id="na-kpi-total">—</div>
+        <div class="kpi-sub">Rooms in Opera report</div>
+      </div>
+      <div class="kpi gold">
+        <div class="kpi-glow"></div><div class="kpi-bar"></div>
+        <div class="kpi-label">Rooms with Differences</div>
+        <div class="kpi-value" id="na-kpi-diff">—</div>
+        <div class="kpi-sub">Needs to be corrected</div>
+      </div>
+      <div class="kpi mint">
+        <div class="kpi-glow"></div><div class="kpi-bar"></div>
+        <div class="kpi-label">Rooms Match Perfectly</div>
+        <div class="kpi-value" id="na-kpi-ok">—</div>
+        <div class="kpi-sub">No changes needed</div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="compare-wrap fade-in-2">
+      <div class="compare-top">
+        <div class="compare-top-left">
+          <h3>Room-by-Room Comparison</h3>
+          <p>Green = Opera (correct) · Red strikethrough = Excel (wrong) · Amber = has difference</p>
+        </div>
+        <div class="compare-pills">
+          <span class="cpill total" id="na-pill-total">— rooms</span>
+          <span class="cpill diff"  id="na-pill-diff">— differences</span>
+          <span class="cpill ok"    id="na-pill-ok">— matches</span>
+        </div>
+      </div>
+
+      <div class="compare-thead">
+        <span class="th">ROOM</span>
+        <span class="th">NAME</span>
+        <span class="th">ARRIVAL</span>
+        <span class="th">DEPARTURE</span>
+        <span class="th">BALANCE</span>
+        <span class="th" style="text-align:right;">STATUS</span>
+      </div>
+
+      <div class="compare-scroll" id="naCompareTable"></div>
+    </div>
+
+    <!-- STEP 3: Fixed output -->
+    <div class="section-head fade-in-3">
+      <div class="section-icon mint">✅</div>
+      <div>
+        <h2>Fixed Output — Ready to Paste into Excel</h2>
+        <p>All rows corrected using Opera as source of truth · Preserves your Department &amp; Remarks</p>
+      </div>
+      <span class="step-badge">STEP 3 OF 3</span>
+    </div>
+
+    <div class="na-output-layout fade-in-4">
+
+      <!-- Fixed data table -->
+      <div class="fixed-table-wrap">
+        <div class="compare-top" style="padding:12px 16px;">
+          <div class="compare-top-left">
+            <h3>Corrected PM Rooms Data</h3>
+            <p>Paste this into your Excel starting from row 2 (after header)</p>
+          </div>
+          <span class="cpill ok" id="naFixedCount">— rows</span>
+        </div>
+        <div class="fixed-thead">
+          <span class="th">ROOM</span>
+          <span class="th">NAME</span>
+          <span class="th">ARRIVAL</span>
+          <span class="th">DEPARTURE</span>
+          <span class="th" style="text-align:right;">BALANCE</span>
+        </div>
+        <div class="fixed-scroll" id="naFixedTable"></div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+
+        <!-- Copy button -->
+        <div class="side-card">
+          <div class="side-card-head">
+            <span class="side-card-head-icon">📋</span>
+            <span class="side-card-head-title">Copy Fixed Data</span>
+          </div>
+          <div class="side-card-body">
+            <div class="copy-btn-wrap">
+              <button class="btn btn-copy" id="naCopyBtn" onclick="copyAudit()">
+                Copy All Fixed Rows
+              </button>
+            </div>
+            <div class="paste-guide">
+              <div class="step-line"><div class="step-circle">1</div><span>Open your Excel management report</span></div>
+              <div class="step-line"><div class="step-circle">2</div><span>Click cell <strong>A2</strong> (first data row)</span></div>
+              <div class="step-line"><div class="step-circle">3</div><span>Press <strong>Ctrl + V</strong></span></div>
+              <div class="step-line"><div class="step-circle">4</div><span>All rows paste with Opera data ✓</span></div>
+            </div>
+            <div style="margin-top:12px; padding:10px; background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:8px;">
+              <div style="font-family:'Geist Mono',monospace;font-size:0.6rem;color:var(--sky);letter-spacing:1px;margin-bottom:6px;">NOTE</div>
+              <div style="font-family:'Geist Mono',monospace;font-size:0.65rem;color:var(--text3);line-height:1.6;">Department &amp; Remarks columns are preserved from your original Excel — only Room, Name, Arrival, Departure, Balance are updated from Opera.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Changes summary -->
+        <div class="side-card">
+          <div class="side-card-head">
+            <span class="side-card-head-icon">⚠️</span>
+            <span class="side-card-head-title">Changes Made</span>
+          </div>
+          <div class="side-card-body">
+            <div class="changes-list" id="naChangesList">
+              <div style="font-size:0.75rem;color:var(--text3);text-align:center;padding:10px;">Run comparison first</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Missing rooms -->
+        <div class="side-card" id="naMissingCard" style="display:none;">
+          <div class="side-card-head" style="background:rgba(251,113,133,0.06);border-bottom-color:rgba(251,113,133,0.15);">
+            <span class="side-card-head-icon">🔴</span>
+            <span class="side-card-head-title" style="color:var(--rose);">Missing Rooms</span>
+          </div>
+          <div class="side-card-body">
+            <div id="naMissingList" class="changes-list"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /naCompareSection -->
+
+</div>
+</div><!-- /tab-audit -->
+
 </body>
 </html>
