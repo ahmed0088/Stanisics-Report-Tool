@@ -6,9 +6,6 @@
 <title>Hotel Reports Pro · Dubai Economy & Tourism</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ─────────────────────────────────────────
-   DESIGN TOKENS
-───────────────────────────────────────── */
 :root {
   --bg:       #07090f;
   --bg2:      #0c0f1a;
@@ -18,7 +15,6 @@
   --border:   #1f2940;
   --border2:  #2a3654;
   --glow:     rgba(56,189,248,0.06);
-
   --gold:     #f5c842;
   --gold2:    #e8b430;
   --sky:      #38bdf8;
@@ -27,24 +23,17 @@
   --mint2:    #10b981;
   --rose:     #fb7185;
   --amber:    #fbbf24;
-
   --text:     #e8edf8;
   --text2:    #94a3b8;
   --text3:    #4a5568;
-
   --r-sm:     8px;
   --r-md:     12px;
   --r-lg:     18px;
   --r-xl:     24px;
 }
 
-/* ─────────────────────────────────────────
-   RESET & BASE
-───────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -52,8 +41,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/* Subtle grid background */
 body::before {
   content: '';
   position: fixed;
@@ -66,9 +53,7 @@ body::before {
   z-index: 0;
 }
 
-/* ─────────────────────────────────────────
-   HEADER
-───────────────────────────────────────── */
+/* HEADER */
 .app-header {
   position: relative;
   z-index: 10;
@@ -81,7 +66,6 @@ body::before {
   gap: 24px;
   height: 72px;
 }
-
 .app-header::after {
   content: '';
   position: absolute;
@@ -90,7 +74,6 @@ body::before {
   background: linear-gradient(90deg, transparent, var(--sky), var(--gold), transparent);
   opacity: 0.4;
 }
-
 .logo-mark {
   width: 38px; height: 38px;
   background: linear-gradient(135deg, var(--sky), var(--gold));
@@ -100,25 +83,9 @@ body::before {
   flex-shrink: 0;
   box-shadow: 0 0 20px rgba(56,189,248,0.3);
 }
-
-.app-name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 1.25rem;
-  color: var(--text);
-  letter-spacing: 0.2px;
-}
-
-.app-name span {
-  color: var(--gold);
-}
-
-.header-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
+.app-name { font-family: 'Instrument Serif', serif; font-size: 1.25rem; color: var(--text); letter-spacing: 0.2px; }
+.app-name span { color: var(--gold); }
+.header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
 .header-pill {
   font-family: 'Geist Mono', monospace;
   font-size: 0.65rem;
@@ -130,16 +97,9 @@ body::before {
   border-radius: 20px;
   padding: 5px 12px;
 }
+.header-pill.active { color: var(--sky); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06); }
 
-.header-pill.active {
-  color: var(--sky);
-  border-color: rgba(56,189,248,0.3);
-  background: rgba(56,189,248,0.06);
-}
-
-/* ─────────────────────────────────────────
-   TAB NAVIGATION
-───────────────────────────────────────── */
+/* TAB NAV */
 .tab-nav {
   position: relative;
   z-index: 10;
@@ -148,8 +108,8 @@ body::before {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
   padding: 0 48px;
+  overflow-x: auto;
 }
-
 .tab-btn {
   position: relative;
   display: flex;
@@ -167,14 +127,8 @@ body::before {
   transition: all 0.2s;
   white-space: nowrap;
 }
-
 .tab-btn:hover { color: var(--text2); }
-
-.tab-btn.active {
-  color: var(--text);
-  border-bottom-color: var(--sky);
-}
-
+.tab-btn.active { color: var(--text); border-bottom-color: var(--sky); }
 .tab-icon {
   width: 28px; height: 28px;
   border-radius: 8px;
@@ -183,11 +137,7 @@ body::before {
   background: var(--surface);
   transition: all 0.2s;
 }
-
-.tab-btn.active .tab-icon {
-  background: rgba(56,189,248,0.15);
-}
-
+.tab-btn.active .tab-icon { background: rgba(56,189,248,0.15); }
 .tab-count {
   font-family: 'Geist Mono', monospace;
   font-size: 0.6rem;
@@ -196,18 +146,11 @@ body::before {
   padding: 2px 6px;
   border-radius: 10px;
 }
+.tab-btn.active .tab-count { background: rgba(56,189,248,0.15); color: var(--sky); }
 
-.tab-btn.active .tab-count {
-  background: rgba(56,189,248,0.15);
-  color: var(--sky);
-}
-
-/* ─────────────────────────────────────────
-   PANELS
-───────────────────────────────────────── */
+/* PANELS */
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
-
 .page-wrap {
   position: relative;
   z-index: 1;
@@ -216,16 +159,8 @@ body::before {
   padding: 40px 48px 80px;
 }
 
-/* ─────────────────────────────────────────
-   SECTION TITLES
-───────────────────────────────────────── */
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
+/* SECTION TITLES */
+.section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
 .section-icon {
   width: 36px; height: 36px;
   border-radius: 10px;
@@ -233,25 +168,13 @@ body::before {
   font-size: 1rem;
   flex-shrink: 0;
 }
-
 .section-icon.blue  { background: rgba(56,189,248,0.12);  border: 1px solid rgba(56,189,248,0.2); }
 .section-icon.gold  { background: rgba(245,200,66,0.1);   border: 1px solid rgba(245,200,66,0.2); }
 .section-icon.mint  { background: rgba(52,211,153,0.1);   border: 1px solid rgba(52,211,153,0.2); }
 .section-icon.rose  { background: rgba(251,113,133,0.1);  border: 1px solid rgba(251,113,133,0.2); }
-
-.section-head h2 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.section-head p {
-  font-size: 0.78rem;
-  color: var(--text3);
-  margin-top: 2px;
-  font-family: 'Geist Mono', monospace;
-}
-
+.section-icon.amber { background: rgba(251,191,36,0.1);   border: 1px solid rgba(251,191,36,0.2); }
+.section-head h2 { font-size: 1rem; font-weight: 600; color: var(--text); }
+.section-head p { font-size: 0.78rem; color: var(--text3); margin-top: 2px; font-family: 'Geist Mono', monospace; }
 .step-badge {
   margin-left: auto;
   font-family: 'Geist Mono', monospace;
@@ -265,9 +188,7 @@ body::before {
   padding: 4px 10px;
 }
 
-/* ─────────────────────────────────────────
-   CARDS
-───────────────────────────────────────── */
+/* CARDS */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -278,7 +199,6 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-
 .card::before {
   content: '';
   position: absolute;
@@ -286,15 +206,11 @@ body::before {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
 }
-
 .card:hover { border-color: var(--border2); }
 
-/* ─────────────────────────────────────────
-   UPLOAD ZONE
-───────────────────────────────────────── */
+/* UPLOAD ZONE */
 .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .upload-grid.single { grid-template-columns: 1fr; }
-
 .upload-zone {
   position: relative;
   border: 1.5px dashed var(--border2);
@@ -303,50 +219,14 @@ body::before {
   transition: all 0.2s;
   overflow: hidden;
 }
-
-.upload-zone:focus-within {
-  border-color: var(--sky);
-  background: rgba(56,189,248,0.03);
-  box-shadow: 0 0 0 3px rgba(56,189,248,0.08);
-}
-
-.upload-zone.file2:focus-within {
-  border-color: var(--mint);
-  background: rgba(52,211,153,0.03);
-  box-shadow: 0 0 0 3px rgba(52,211,153,0.08);
-}
-
-.upload-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-.upload-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
+.upload-zone:focus-within { border-color: var(--sky); background: rgba(56,189,248,0.03); box-shadow: 0 0 0 3px rgba(56,189,248,0.08); }
+.upload-zone.file2:focus-within { border-color: var(--mint); background: rgba(52,211,153,0.03); box-shadow: 0 0 0 3px rgba(52,211,153,0.08); }
+.upload-label { display: flex; align-items: center; gap: 10px; padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
+.upload-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .upload-dot.blue { background: var(--sky); box-shadow: 0 0 8px var(--sky); }
 .upload-dot.mint { background: var(--mint); box-shadow: 0 0 8px var(--mint); }
-
-.upload-label-text {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: var(--text2);
-}
-
-.upload-label-sub {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text3);
-  margin-left: auto;
-}
-
+.upload-label-text { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; color: var(--text2); }
+.upload-label-sub { font-family: 'Geist Mono', monospace; font-size: 0.62rem; color: var(--text3); margin-left: auto; }
 textarea {
   width: 100%;
   height: 140px;
@@ -360,20 +240,10 @@ textarea {
   outline: none;
   line-height: 1.7;
 }
-
 textarea::placeholder { color: var(--text3); line-height: 1.8; }
 
-/* ─────────────────────────────────────────
-   ACTION BAR
-───────────────────────────────────────── */
-.action-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
+/* ACTION BAR */
+.action-bar { display: flex; align-items: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 .btn {
   display: inline-flex;
   align-items: center;
@@ -388,28 +258,11 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
   transition: all 0.18s;
   letter-spacing: 0.2px;
 }
-
-.btn-process {
-  background: linear-gradient(135deg, var(--sky2), var(--sky));
-  color: #000;
-  box-shadow: 0 4px 20px rgba(56,189,248,0.25);
-}
-
-.btn-process:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(56,189,248,0.35);
-}
-
+.btn-process { background: linear-gradient(135deg, var(--sky2), var(--sky)); color: #000; box-shadow: 0 4px 20px rgba(56,189,248,0.25); }
+.btn-process:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.35); }
 .btn-process:active { transform: translateY(0); }
-
-.btn-clear {
-  background: transparent;
-  border: 1px solid var(--border2);
-  color: var(--text3);
-}
-
+.btn-clear { background: transparent; border: 1px solid var(--border2); color: var(--text3); }
 .btn-clear:hover { border-color: var(--rose); color: var(--rose); }
-
 .btn-copy {
   background: linear-gradient(135deg, var(--mint2), var(--mint));
   color: #000;
@@ -420,70 +273,23 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
   width: 100%;
   justify-content: center;
 }
+.btn-copy:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(52,211,153,0.3); }
+.btn-copy.done { background: linear-gradient(135deg, var(--sky2), var(--sky)); box-shadow: 0 4px 20px rgba(56,189,248,0.25); }
+.info-hint { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--text3); margin-left: auto; }
 
-.btn-copy:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 28px rgba(52,211,153,0.3);
-}
-
-.btn-copy.done {
-  background: linear-gradient(135deg, var(--sky2), var(--sky));
-  box-shadow: 0 4px 20px rgba(56,189,248,0.25);
-}
-
-.info-hint {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text3);
-  margin-left: auto;
-}
-
-/* ─────────────────────────────────────────
-   ERROR BOX
-───────────────────────────────────────── */
-.error-box {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  margin-top: 14px;
-  padding: 12px 16px;
-  background: rgba(251,113,133,0.08);
-  border: 1px solid rgba(251,113,133,0.25);
-  border-radius: var(--r-md);
-  font-size: 0.8rem;
-  color: var(--rose);
-}
-
+/* ERROR BOX */
+.error-box { display: none; align-items: center; gap: 10px; margin-top: 14px; padding: 12px 16px; background: rgba(251,113,133,0.08); border: 1px solid rgba(251,113,133,0.25); border-radius: var(--r-md); font-size: 0.8rem; color: var(--rose); }
 .error-box.show { display: flex; }
 
-/* ─────────────────────────────────────────
-   DIVIDER
-───────────────────────────────────────── */
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 32px 0 28px;
-}
-
+/* DIVIDER */
+.divider { display: flex; align-items: center; gap: 16px; margin: 32px 0 28px; }
 .divider-line { flex: 1; height: 1px; background: var(--border); }
+.divider-label { font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
 
-.divider-label {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text3);
-  white-space: nowrap;
-}
-
-/* ─────────────────────────────────────────
-   STAT CARDS (KPI strip)
-───────────────────────────────────────── */
+/* KPI STRIP */
 .kpi-strip { display: grid; gap: 14px; margin-bottom: 24px; }
 .kpi-strip.cols3 { grid-template-columns: repeat(3, 1fr); }
 .kpi-strip.cols2 { grid-template-columns: repeat(2, 1fr); }
-
 .kpi {
   background: var(--card);
   border: 1px solid var(--border);
@@ -493,725 +299,184 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s;
 }
-
 .kpi:hover { border-color: var(--border2); transform: translateY(-1px); }
-
-.kpi-glow {
-  position: absolute;
-  top: -30px; right: -30px;
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  opacity: 0.12;
-  filter: blur(20px);
-}
-
+.kpi-glow { position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; opacity: 0.12; filter: blur(20px); }
 .kpi.sky  .kpi-glow { background: var(--sky); }
 .kpi.gold .kpi-glow { background: var(--gold); }
 .kpi.mint .kpi-glow { background: var(--mint); }
 .kpi.rose .kpi-glow { background: var(--rose); }
-
-.kpi-bar {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-}
-
+.kpi.amber .kpi-glow { background: var(--amber); }
+.kpi-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; }
 .kpi.sky  .kpi-bar { background: linear-gradient(90deg, transparent, var(--sky), transparent); }
 .kpi.gold .kpi-bar { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 .kpi.mint .kpi-bar { background: linear-gradient(90deg, transparent, var(--mint), transparent); }
 .kpi.rose .kpi-bar { background: linear-gradient(90deg, transparent, var(--rose), transparent); }
-
-.kpi-label {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 8px;
-}
-
-.kpi-value {
-  font-family: 'Instrument Serif', serif;
-  font-size: 2.4rem;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
+.kpi.amber .kpi-bar { background: linear-gradient(90deg, transparent, var(--amber), transparent); }
+.kpi-label { font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+.kpi-value { font-family: 'Instrument Serif', serif; font-size: 2.4rem; line-height: 1; margin-bottom: 4px; }
 .kpi.sky  .kpi-value { color: var(--sky); }
 .kpi.gold .kpi-value { color: var(--gold); }
 .kpi.mint .kpi-value { color: var(--mint); }
 .kpi.rose .kpi-value { color: var(--rose); }
+.kpi.amber .kpi-value { color: var(--amber); }
+.kpi-sub { font-size: 0.72rem; color: var(--text3); font-weight: 400; }
 
-.kpi-sub {
-  font-size: 0.72rem;
-  color: var(--text3);
-  font-weight: 400;
-}
-
-/* ─────────────────────────────────────────
-   DIAGNOSTICS PANEL
-───────────────────────────────────────── */
-.diag-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.diag-toggle {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 24px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.15s;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-}
-
+/* DIAGNOSTICS */
+.diag-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 20px; }
+.diag-toggle { display: flex; align-items: center; gap: 14px; padding: 16px 24px; cursor: pointer; user-select: none; transition: background 0.15s; border: none; background: none; width: 100%; text-align: left; }
 .diag-toggle:hover { background: rgba(255,255,255,0.02); }
-
-.diag-toggle-icon {
-  width: 32px; height: 32px;
-  border-radius: 9px;
-  background: rgba(245,200,66,0.1);
-  border: 1px solid rgba(245,200,66,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-}
-
-.diag-toggle-title {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.diag-toggle-sub {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text3);
-  margin-top: 1px;
-}
-
-.diag-status {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-pill {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
-
-.status-pill.ok     { background: rgba(52,211,153,0.12); color: var(--mint);  border: 1px solid rgba(52,211,153,0.25); }
-.status-pill.warn   { background: rgba(251,191,36,0.12); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
-.status-pill.error  { background: rgba(251,113,133,0.12); color: var(--rose); border: 1px solid rgba(251,113,133,0.25); }
-
-.chevron {
-  color: var(--text3);
-  font-size: 0.7rem;
-  transition: transform 0.2s;
-}
-
+.diag-toggle-icon { width: 32px; height: 32px; border-radius: 9px; background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+.diag-toggle-title { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.diag-toggle-sub { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--text3); margin-top: 1px; }
+.diag-status { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.status-pill { font-family: 'Geist Mono', monospace; font-size: 0.62rem; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+.status-pill.ok   { background: rgba(52,211,153,0.12); color: var(--mint); border: 1px solid rgba(52,211,153,0.25); }
+.status-pill.warn { background: rgba(251,191,36,0.12); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
+.chevron { color: var(--text3); font-size: 0.7rem; transition: transform 0.2s; }
 .chevron.open { transform: rotate(180deg); }
-
-.diag-body {
-  border-top: 1px solid var(--border);
-  padding: 24px;
-  display: none;
-}
-
+.diag-body { border-top: 1px solid var(--border); padding: 24px; display: none; }
 .diag-body.open { display: block; }
-
-/* Totals table */
 .totals-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 24px; }
-
-.total-cell {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 14px 16px;
-}
-
-.total-cell-title {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
-
-.total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 0;
-  font-size: 0.78rem;
-}
-
+.total-cell { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; }
+.total-cell-title { font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.total-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.78rem; }
 .total-key { color: var(--text3); }
 .total-val { font-family: 'Geist Mono', monospace; font-size: 0.8rem; }
-.clr-sky    { color: var(--sky);   }
-.clr-text2  { color: var(--text2); }
-.clr-amber  { color: var(--amber); }
-.clr-mint   { color: var(--mint);  }
-
-/* Alert rows */
+.clr-sky   { color: var(--sky); }
+.clr-text2 { color: var(--text2); }
+.clr-amber { color: var(--amber); }
+.clr-mint  { color: var(--mint); }
 .alert-list { display: flex; flex-direction: column; gap: 8px; }
-
-.alert-row {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 12px 14px;
-  border-radius: var(--r-md);
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
-
+.alert-row { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: var(--r-md); font-size: 0.8rem; line-height: 1.5; }
 .alert-row.warn  { background: rgba(251,191,36,0.06);  border: 1px solid rgba(251,191,36,0.15);  border-left: 3px solid var(--amber); }
-.alert-row.info  { background: rgba(56,189,248,0.05);  border: 1px solid rgba(56,189,248,0.15);  border-left: 3px solid var(--sky);   }
-.alert-row.ok    { background: rgba(52,211,153,0.05);  border: 1px solid rgba(52,211,153,0.15);  border-left: 3px solid var(--mint);  }
-.alert-row.error { background: rgba(251,113,133,0.05); border: 1px solid rgba(251,113,133,0.15); border-left: 3px solid var(--rose);  }
-
+.alert-row.info  { background: rgba(56,189,248,0.05);  border: 1px solid rgba(56,189,248,0.15);  border-left: 3px solid var(--sky); }
+.alert-row.ok    { background: rgba(52,211,153,0.05);  border: 1px solid rgba(52,211,153,0.15);  border-left: 3px solid var(--mint); }
+.alert-row.error { background: rgba(251,113,133,0.05); border: 1px solid rgba(251,113,133,0.15); border-left: 3px solid var(--rose); }
 .alert-ico { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
 .alert-content strong { color: var(--text); font-weight: 600; display: block; margin-bottom: 3px; }
-.alert-content span   { color: var(--text3); font-family: 'Geist Mono', monospace; font-size: 0.7rem; }
+.alert-content span { color: var(--text3); font-family: 'Geist Mono', monospace; font-size: 0.7rem; }
+.diag-section-title { font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; margin-top: 20px; display: flex; align-items: center; gap: 8px; }
+.diag-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-.diag-section-title {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 10px;
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.diag-section-title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-/* ─────────────────────────────────────────
-   OUTPUT LAYOUT
-───────────────────────────────────────── */
-.output-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 20px;
-  align-items: start;
-}
-
-/* ─────────────────────────────────────────
-   PREVIEW TABLE
-───────────────────────────────────────── */
-.preview-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-}
-
-.preview-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--card2);
-}
-
-.preview-top-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.preview-top-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text);
-}
-
-.preview-top-sub {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text3);
-  margin-top: 1px;
-}
-
-.row-count {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--gold);
-  background: rgba(245,200,66,0.08);
-  border: 1px solid rgba(245,200,66,0.2);
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-
-/* Column headers */
-.col-header {
-  display: grid;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.02);
-  border-bottom: 1px solid var(--border);
-}
-
+/* OUTPUT LAYOUT */
+.output-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+.preview-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+.preview-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--card2); }
+.preview-top-left { display: flex; align-items: center; gap: 10px; }
+.preview-top-title { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+.preview-top-sub { font-family: 'Geist Mono', monospace; font-size: 0.62rem; color: var(--text3); margin-top: 1px; }
+.row-count { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--gold); background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.2); padding: 3px 10px; border-radius: 20px; }
+.col-header { display: grid; padding: 8px 16px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); }
 .col-header.nat  { grid-template-columns: 38px 1fr 58px 58px 58px; }
 .col-header.rent { grid-template-columns: 44px 1fr 72px 72px; }
-
-.col-h {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  text-align: right;
-}
-
+.col-h { font-family: 'Geist Mono', monospace; font-size: 0.58rem; letter-spacing: 1.5px; text-transform: uppercase; text-align: right; }
 .col-h:first-child  { text-align: left; color: var(--text3); }
 .col-h:nth-child(2) { text-align: left; color: var(--text3); }
-.col-h.c-sky  { color: var(--sky);  }
+.col-h.c-sky  { color: var(--sky); }
 .col-h.c-gold { color: var(--gold); }
 .col-h.c-mint { color: var(--mint); }
-
-.preview-scroll {
-  height: 440px;
-  overflow-y: auto;
-}
-
-/* Data rows */
-.data-row {
-  display: grid;
-  align-items: center;
-  padding: 3.5px 16px;
-  transition: background 0.1s;
-  border-bottom: 1px solid rgba(255,255,255,0.02);
-}
-
+.preview-scroll { height: 440px; overflow-y: auto; }
+.data-row { display: grid; align-items: center; padding: 3.5px 16px; transition: background 0.1s; border-bottom: 1px solid rgba(255,255,255,0.02); }
 .data-row.nat  { grid-template-columns: 38px 1fr 58px 58px 58px; }
 .data-row.rent { grid-template-columns: 44px 1fr 72px 72px; }
-
 .data-row:hover { background: rgba(255,255,255,0.025); }
-
 .data-row.active { background: rgba(56,189,248,0.03); }
 .data-row.active:hover { background: rgba(56,189,248,0.06); }
-
 .data-row.active-rent { background: rgba(52,211,153,0.03); }
 .data-row.active-rent:hover { background: rgba(52,211,153,0.06); }
-
 .cell-rn   { font-family: 'Geist Mono', monospace; font-size: 0.6rem; color: var(--text3); }
 .cell-name { font-size: 0.7rem; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; }
 .cell-num  { font-family: 'Geist Mono', monospace; font-size: 0.74rem; text-align: right; }
 .cell-num.zero  { color: var(--border2); }
-.cell-num.c-sky  { color: var(--sky);  }
+.cell-num.c-sky  { color: var(--sky); }
 .cell-num.c-gold { color: var(--gold); }
 .cell-num.c-mint { color: var(--mint); }
 .cell-num.c-sky2 { color: var(--sky2); }
 
-/* ─────────────────────────────────────────
-   SIDEBAR
-───────────────────────────────────────── */
+/* SIDEBAR */
 .sidebar { display: flex; flex-direction: column; gap: 14px; }
-
-.side-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-
+.side-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: border-color 0.2s; }
 .side-card:hover { border-color: var(--border2); }
-
-.side-card-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--card2);
-}
-
+.side-card-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--card2); }
 .side-card-head-icon { font-size: 0.85rem; }
-
-.side-card-head-title {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text2);
-  letter-spacing: 0.3px;
-}
-
+.side-card-head-title { font-size: 0.72rem; font-weight: 600; color: var(--text2); letter-spacing: 0.3px; }
 .side-card-body { padding: 14px 16px; }
-
 .copy-btn-wrap { margin-bottom: 14px; }
-
-.paste-guide {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text3);
-  line-height: 2;
-}
-
-.paste-guide .step-line {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 3px 0;
-}
-
-.step-circle {
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: var(--border2);
-  color: var(--text2);
-  font-size: 0.55rem;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
+.paste-guide { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--text3); line-height: 2; }
+.paste-guide .step-line { display: flex; align-items: flex-start; gap: 8px; padding: 3px 0; }
+.step-circle { width: 16px; height: 16px; border-radius: 50%; background: var(--border2); color: var(--text2); font-size: 0.55rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
 .step-line strong { color: var(--text2); }
-
-/* Summary stats */
 .sum-grid { display: flex; flex-direction: column; gap: 6px; }
-
-.sum-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  font-size: 0.75rem;
-}
-
+.sum-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.75rem; }
 .sum-row:last-child { border-bottom: none; }
 .sum-key { color: var(--text3); }
 .sum-val { font-family: 'Geist Mono', monospace; font-size: 0.78rem; }
-
-/* Gap warning */
-.gap-card {
-  background: rgba(251,191,36,0.04);
-  border: 1px solid rgba(251,191,36,0.15);
-  border-radius: var(--r-lg);
-  overflow: hidden;
-}
-
-.gap-card .side-card-head {
-  background: rgba(251,191,36,0.06);
-  border-bottom-color: rgba(251,191,36,0.15);
-}
-
-.gap-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 0.75rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-
+.gap-card { background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15); border-radius: var(--r-lg); overflow: hidden; }
+.gap-card .side-card-head { background: rgba(251,191,36,0.06); border-bottom-color: rgba(251,191,36,0.15); }
+.gap-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
 .gap-row:last-child { border-bottom: none; }
 .gap-key { color: var(--text3); }
 .gap-val { font-family: 'Geist Mono', monospace; color: var(--amber); }
-
-.gap-note {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.62rem;
-  color: var(--text3);
-  line-height: 1.6;
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255,255,255,0.03);
-}
-
-/* Formula card */
-.formula-card {
-  background: rgba(56,189,248,0.03);
-  border: 1px solid rgba(56,189,248,0.12);
-  border-radius: var(--r-lg);
-  padding: 14px 16px;
-}
-
-.formula-title {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--sky);
-  margin-bottom: 10px;
-}
-
-.formula-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 5px 0;
-  font-size: 0.74rem;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-
+.gap-note { font-family: 'Geist Mono', monospace; font-size: 0.62rem; color: var(--text3); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.03); }
+.formula-card { background: rgba(56,189,248,0.03); border: 1px solid rgba(56,189,248,0.12); border-radius: var(--r-lg); padding: 14px 16px; }
+.formula-title { font-family: 'Geist Mono', monospace; font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sky); margin-bottom: 10px; }
+.formula-line { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; font-size: 0.74rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
 .formula-line:last-child { border-bottom: none; }
 .formula-key { color: var(--text2); font-weight: 500; }
 .formula-val { font-family: 'Geist Mono', monospace; font-size: 0.68rem; color: var(--text3); }
 
-/* ─────────────────────────────────────────
-   SCROLLBAR
-───────────────────────────────────────── */
+/* SCROLLBAR */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* ─────────────────────────────────────────
-   ANIMATIONS
-───────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
-}
-
-.fade-in { animation: fadeUp 0.4s ease forwards; }
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in   { animation: fadeUp 0.4s ease forwards; }
 .fade-in-2 { animation: fadeUp 0.4s 0.08s ease both; }
 .fade-in-3 { animation: fadeUp 0.4s 0.16s ease both; }
 .fade-in-4 { animation: fadeUp 0.4s 0.24s ease both; }
 
-/* ─────────────────────────────────────────
-   RESPONSIVE
-───────────────────────────────────────── */
-
-/* ─────────────────────────────────────────
-   NIGHT AUDIT — PM ROOMS
-───────────────────────────────────────── */
+/* NIGHT AUDIT COMPARE */
 .na-upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-/* Comparison table */
-.compare-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.compare-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--card2);
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
+.compare-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-bottom: 20px; }
+.compare-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--card2); flex-wrap: wrap; gap: 10px; }
 .compare-top-left h3 { font-size: 0.88rem; font-weight: 600; }
 .compare-top-left p  { font-size: 0.68rem; color: var(--text3); font-family: 'Geist Mono', monospace; margin-top: 2px; }
-
 .compare-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.cpill {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.62rem;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-}
+.cpill { font-family: 'Geist Mono', monospace; font-size: 0.62rem; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
 .cpill.ok    { background: rgba(52,211,153,0.1);  color: var(--mint);  border: 1px solid rgba(52,211,153,0.2); }
 .cpill.diff  { background: rgba(251,191,36,0.1);  color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
 .cpill.total { background: rgba(56,189,248,0.1);  color: var(--sky);   border: 1px solid rgba(56,189,248,0.2); }
-
-/* Table header */
-.compare-thead {
-  display: grid;
-  grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px;
-  gap: 0;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.025);
-  border-bottom: 1px solid var(--border);
-}
-
-.th {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.58rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-
-/* Table rows */
+.compare-thead { display: grid; grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px; gap: 0; padding: 8px 16px; background: rgba(255,255,255,0.025); border-bottom: 1px solid var(--border); }
+.th { font-family: 'Geist Mono', monospace; font-size: 0.58rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
 .compare-scroll { max-height: 520px; overflow-y: auto; }
-
-.compare-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px;
-  gap: 0;
-  padding: 10px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.025);
-  transition: background 0.1s;
-  align-items: start;
-}
-
+.compare-row { display: grid; grid-template-columns: 60px 1fr 1fr 1fr 1fr 80px; gap: 0; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.025); transition: background 0.1s; align-items: start; }
 .compare-row:last-child { border-bottom: none; }
 .compare-row:hover { background: rgba(255,255,255,0.02); }
 .compare-row.has-diff { background: rgba(251,191,36,0.04); border-left: 3px solid var(--amber); }
 .compare-row.has-diff:hover { background: rgba(251,191,36,0.08); }
 .compare-row.clean { border-left: 3px solid transparent; }
-
-.cr-room {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--sky);
-  font-weight: 600;
-  padding-top: 2px;
-}
-
+.cr-room { font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--sky); font-weight: 600; padding-top: 2px; }
 .cr-cell { font-size: 0.75rem; padding-right: 8px; }
-.cr-cell.opera-val { color: var(--text2); }
-.cr-cell.excel-val { color: var(--text3); }
-.cr-cell.changed   { color: var(--amber); }
-
-.cr-field-wrap { display: flex; flex-direction: column; gap: 4px; }
-
-.cr-label {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--text3);
-}
-
-.diff-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--amber);
-  margin-top: 2px;
-}
-
-.diff-arrow { font-size: 0.7rem; }
-
-.cr-status {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.status-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+.field-diff { display: flex; flex-direction: column; gap: 2px; }
+.field-opera { font-size: 0.74rem; color: var(--mint); font-weight: 500; }
+.field-opera::before { content: 'OPERA '; font-family: 'Geist Mono', monospace; font-size: 0.55rem; color: var(--mint); letter-spacing: 1px; margin-right: 4px; opacity: 0.7; }
+.field-excel { font-size: 0.7rem; color: var(--rose); text-decoration: line-through; opacity: 0.7; }
+.field-excel::before { content: 'EXCEL '; font-family: 'Geist Mono', monospace; font-size: 0.55rem; color: var(--rose); letter-spacing: 1px; margin-right: 4px; opacity: 0.7; text-decoration: none; }
+.field-same { font-size: 0.74rem; color: var(--text2); }
+.cr-status { display: flex; align-items: center; justify-content: flex-end; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 .status-dot.ok   { background: var(--mint); box-shadow: 0 0 6px var(--mint); }
 .status-dot.diff { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
-
-/* Field-level diff display */
-.field-diff {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.field-opera {
-  font-size: 0.74rem;
-  color: var(--mint);
-  font-weight: 500;
-}
-
-.field-opera::before {
-  content: 'OPERA ';
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--mint);
-  letter-spacing: 1px;
-  margin-right: 4px;
-  opacity: 0.7;
-}
-
-.field-excel {
-  font-size: 0.7rem;
-  color: var(--rose);
-  text-decoration: line-through;
-  opacity: 0.7;
-}
-
-.field-excel::before {
-  content: 'EXCEL ';
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--rose);
-  letter-spacing: 1px;
-  margin-right: 4px;
-  opacity: 0.7;
-  text-decoration: none;
-}
-
-.field-same { font-size: 0.74rem; color: var(--text2); }
-
-/* Output section */
-.na-output-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 20px;
-  align-items: start;
-}
-
-.fixed-table-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-}
-
-.fixed-thead {
-  display: grid;
-  grid-template-columns: 60px 1fr 100px 100px 100px;
-  padding: 8px 16px;
-  background: rgba(255,255,255,0.025);
-  border-bottom: 1px solid var(--border);
-}
-
-.fixed-row {
-  display: grid;
-  grid-template-columns: 60px 1fr 100px 100px 100px;
-  padding: 9px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.025);
-  align-items: center;
-  font-size: 0.75rem;
-  transition: background 0.1s;
-}
+.na-output-layout { display: grid; grid-template-columns: 1fr 280px; gap: 20px; align-items: start; }
+.fixed-table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+.fixed-thead { display: grid; grid-template-columns: 60px 1fr 100px 100px 100px; padding: 8px 16px; background: rgba(255,255,255,0.025); border-bottom: 1px solid var(--border); }
+.fixed-row { display: grid; grid-template-columns: 60px 1fr 100px 100px 100px; padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,0.025); align-items: center; font-size: 0.75rem; transition: background 0.1s; }
 .fixed-row:hover { background: rgba(255,255,255,0.02); }
 .fixed-row.was-fixed { background: rgba(52,211,153,0.04); border-left: 3px solid var(--mint); }
-.fixed-row.was-fixed:hover { background: rgba(52,211,153,0.08); }
 .fixed-row.clean-row { border-left: 3px solid transparent; }
-
 .fixed-scroll { max-height: 460px; overflow-y: auto; }
-
 .fr-room { font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--sky); font-weight: 600; }
 .fr-name { color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 8px; }
 .fr-val  { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: var(--text2); }
@@ -1219,58 +484,363 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
 .fr-bal.pos  { color: var(--sky); }
 .fr-bal.neg  { color: var(--rose); }
 .fr-bal.zero { color: var(--text3); }
-.fr-fixed-tag {
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--mint);
-  background: rgba(52,211,153,0.1);
-  border: 1px solid rgba(52,211,153,0.2);
-  border-radius: 4px;
-  padding: 1px 5px;
-  margin-left: 4px;
-}
-
-/* Changes summary card */
+.fr-fixed-tag { font-family: 'Geist Mono', monospace; font-size: 0.55rem; color: var(--mint); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
 .changes-list { display: flex; flex-direction: column; gap: 8px; }
-.change-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 10px 12px;
-  background: rgba(251,191,36,0.05);
-  border: 1px solid rgba(251,191,36,0.12);
-  border-left: 3px solid var(--amber);
-  border-radius: var(--r-md);
-}
+.change-item { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.12); border-left: 3px solid var(--amber); border-radius: var(--r-md); }
 .change-room { font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: var(--sky); font-weight: 600; }
 .change-desc { font-size: 0.72rem; color: var(--text2); }
 .change-old  { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--rose); }
 .change-new  { font-family: 'Geist Mono', monospace; font-size: 0.65rem; color: var(--mint); }
 
+/* ═══════════════════════════════════════
+   NIGHT RUN CHECKLIST — TAB 4
+═══════════════════════════════════════ */
+.checklist-page { padding: 40px 48px 80px; position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+
+.cl-top-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.cl-top-info h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.cl-top-info p {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text3);
+}
+
+.cl-top-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.cl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.cl-btn:hover { border-color: var(--sky); color: var(--sky); background: rgba(56,189,248,0.05); }
+.cl-btn.reset { border-color: rgba(251,113,133,0.3); color: var(--rose); background: rgba(251,113,133,0.04); }
+.cl-btn.reset:hover { background: rgba(251,113,133,0.1); }
+
+/* Progress */
+.cl-progress-wrap { margin-bottom: 28px; }
+.cl-progress-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.cl-progress-label { font-size: 0.8rem; color: var(--text2); }
+.cl-progress-pct {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.8rem;
+  color: var(--mint);
+  line-height: 1;
+}
+.cl-progress-track {
+  height: 6px;
+  background: var(--surface);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.cl-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sky2), var(--mint));
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Phase group */
+.cl-phase-group { margin-bottom: 10px; }
+.cl-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  margin-bottom: 8px;
+}
+.cl-phase-line { flex: 1; height: 1px; background: var(--border); }
+.cl-phase-badge {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.cl-phase-badge.pre   { color: var(--text3); border-color: var(--border2); background: var(--surface); }
+.cl-phase-badge.run   { color: var(--sky);   border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.06); }
+.cl-phase-badge.post  { color: var(--mint);  border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.06); }
+
+/* Step cards */
+.cl-step {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-bottom: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+.cl-step.done { border-color: rgba(52,211,153,0.25); }
+.cl-step.done .cl-step-main { background: rgba(52,211,153,0.04); }
+.cl-step.skipped { opacity: 0.35; }
+.cl-step-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+.cl-step-main:hover { background: rgba(255,255,255,0.02); }
+
+/* Checkbox */
+.cl-check {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  font-size: 0.75rem;
+  color: transparent;
+  background: var(--bg2);
+}
+.cl-step.done .cl-check {
+  background: rgba(52,211,153,0.15);
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+/* Step info */
+.cl-step-num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1px;
+  color: var(--text3);
+  margin-bottom: 2px;
+}
+.cl-step-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.cl-step.done .cl-step-name { color: var(--text3); text-decoration: line-through; }
+.cl-step-hint {
+  font-size: 0.72rem;
+  color: var(--text3);
+  margin-top: 2px;
+  line-height: 1.5;
+}
+
+/* Tag */
+.cl-tag {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.58rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid;
+  white-space: nowrap;
+  margin-left: 6px;
+}
+.cl-tag.save   { color: var(--gold);  border-color: rgba(245,200,66,0.3);  background: rgba(245,200,66,0.06); }
+.cl-tag.scan   { color: var(--sky);   border-color: rgba(56,189,248,0.3);  background: rgba(56,189,248,0.06); }
+.cl-tag.charge { color: var(--amber); border-color: rgba(251,191,36,0.3);  background: rgba(251,191,36,0.06); }
+.cl-tag.check  { color: var(--mint);  border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.06); }
+.cl-tag.run    { color: var(--rose);  border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.06); }
+
+/* Step controls */
+.cl-step-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.cl-icon-btn {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  transition: all 0.15s;
+}
+.cl-icon-btn:hover { border-color: var(--border2); color: var(--text2); background: var(--surface); }
+.cl-icon-btn.skip-btn:hover { border-color: rgba(251,113,133,0.4); color: var(--rose); }
+.cl-icon-btn.note-btn.has-note { border-color: rgba(245,200,66,0.4); color: var(--gold); }
+
+/* Expandable detail */
+.cl-detail {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 16px 20px 16px 54px;
+}
+.cl-detail.open { display: block; }
+.cl-detail-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+  margin-top: 12px;
+}
+.cl-detail-label:first-child { margin-top: 0; }
+
+/* Sub-task checklist */
+.cl-subtask {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 0.78rem;
+  color: var(--text3);
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.cl-subtask:last-of-type { border-bottom: none; }
+.cl-subtask:hover { color: var(--text2); }
+.cl-subtask.checked { color: var(--text3); text-decoration: line-through; opacity: 0.5; }
+.cl-mini-check {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem;
+  color: transparent;
+  background: var(--bg);
+  transition: all 0.15s;
+}
+.cl-subtask.checked .cl-mini-check {
+  background: rgba(52,211,153,0.12);
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+/* Notes textarea */
+.cl-notes-area {
+  width: 100%;
+  min-height: 60px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  line-height: 1.7;
+  transition: border-color 0.2s;
+  margin-top: 4px;
+}
+.cl-notes-area:focus { border-color: var(--sky); }
+.cl-notes-area::placeholder { color: var(--text3); }
+
+/* Edit step name */
+.cl-edit-name {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  outline: none;
+  line-height: 1.4;
+  transition: border-color 0.2s;
+  height: auto;
+  resize: none;
+  min-height: unset;
+}
+.cl-edit-name:focus { border-color: var(--gold); }
+
+/* Complete banner */
+.cl-complete {
+  display: none;
+  margin-top: 24px;
+  background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(56,189,248,0.08));
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  text-align: center;
+}
+.cl-complete.show { display: block; }
+.cl-complete-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.8rem;
+  color: var(--mint);
+  margin-bottom: 6px;
+}
+.cl-complete-sub {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text3);
+}
+
+/* Edit mode overlay indicator */
+.cl-edit-mode-bar {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(245,200,66,0.05);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: var(--r-md);
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+  color: var(--amber);
+}
+.cl-edit-mode-bar.show { display: flex; }
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
+  .app-header, .tab-nav { padding-left: 20px; padding-right: 20px; }
+  .page-wrap, .checklist-page { padding: 24px 20px 60px; }
+  .upload-grid { grid-template-columns: 1fr; }
   .na-upload-grid { grid-template-columns: 1fr; }
+  .kpi-strip.cols3 { grid-template-columns: 1fr; }
+  .kpi-strip.cols2 { grid-template-columns: 1fr; }
+  .totals-grid { grid-template-columns: 1fr; }
+  .output-layout { grid-template-columns: 1fr; }
   .na-output-layout { grid-template-columns: 1fr; }
   .compare-thead, .compare-row { grid-template-columns: 50px 1fr 1fr; }
   .compare-row > *:nth-child(n+4) { display: none; }
   .fixed-thead, .fixed-row { grid-template-columns: 50px 1fr 80px; }
   .fixed-row > *:nth-child(n+4) { display: none; }
 }
-
-@media (max-width: 900px) {
-  .app-header, .tab-nav, .page-wrap { padding-left: 20px; padding-right: 20px; }
-  .upload-grid { grid-template-columns: 1fr; }
-  .kpi-strip.cols3 { grid-template-columns: 1fr; }
-  .kpi-strip.cols2 { grid-template-columns: 1fr; }
-  .totals-grid { grid-template-columns: 1fr; }
-  .output-layout { grid-template-columns: 1fr; }
-}
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     HEADER
-══════════════════════════════════════════ -->
+<!-- HEADER -->
 <header class="app-header">
   <div class="logo-mark">🏨</div>
   <div>
@@ -1282,9 +852,7 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
   </div>
 </header>
 
-<!-- ══════════════════════════════════════════
-     TAB NAV
-══════════════════════════════════════════ -->
+<!-- TAB NAV -->
 <nav class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('nat')" id="tabBtn0">
     <div class="tab-icon">🌍</div>
@@ -1301,24 +869,21 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
     Night Audit · PM Rooms
     <span class="tab-count" id="naTabCount">Compare</span>
   </button>
+  <button class="tab-btn" onclick="switchTab('checklist')" id="tabBtn3">
+    <div class="tab-icon">✅</div>
+    Night Run Checklist
+    <span class="tab-count" id="clTabCount">17 steps</span>
+  </button>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     TAB 1 — NATIONALITY REPORT
-══════════════════════════════════════════ -->
+<!-- TAB 1 — NATIONALITY REPORT -->
 <div class="tab-panel active" id="tab-nat">
 <div class="page-wrap">
-
-  <!-- Upload -->
   <div class="section-head">
     <div class="section-icon blue">📥</div>
-    <div>
-      <h2>Paste Opera Cloud Report</h2>
-      <p>stat_countrybyday · Delimited Data format</p>
-    </div>
+    <div><h2>Paste Opera Cloud Report</h2><p>stat_countrybyday · Delimited Data format</p></div>
     <span class="step-badge">STEP 1 OF 3</span>
   </div>
-
   <div class="card">
     <div class="upload-grid single">
       <div class="upload-zone">
@@ -1327,182 +892,75 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
           <span class="upload-label-text">Nationality Report File</span>
           <span class="upload-label-sub">stat_countrybyday_….txt</span>
         </div>
-        <textarea id="natInput" placeholder="1. Open Opera Cloud → Reports → Nationality by Country&#10;2. Download as: Delimited Data&#10;3. Open the .txt file → Ctrl+A (Select All) → Ctrl+C (Copy)&#10;4. Click here and Ctrl+V (Paste)&#10;&#10;The file should start with: VALUE_ORDER  VALUE_CODE  CHAR_MONTH_YEAR ..."></textarea>
+        <textarea id="natInput" placeholder="1. Open Opera Cloud → Reports → Nationality by Country&#10;2. Download as: Delimited Data&#10;3. Open the .txt file → Ctrl+A → Ctrl+C&#10;4. Click here and Ctrl+V&#10;&#10;The file should start with: VALUE_ORDER  VALUE_CODE  CHAR_MONTH_YEAR ..."></textarea>
       </div>
     </div>
-
-    <div class="error-box" id="natError">
-      <span>⚠</span>
-      <span id="natErrorMsg"></span>
-    </div>
-
+    <div class="error-box" id="natError"><span>⚠</span><span id="natErrorMsg"></span></div>
     <div class="action-bar">
-      <button class="btn btn-process" onclick="processNat()">
-        <span>⚡</span> Process Report
-      </button>
+      <button class="btn btn-process" onclick="processNat()"><span>⚡</span> Process Report</button>
       <button class="btn btn-clear" onclick="clearNat()">✕ Clear</button>
       <span class="info-hint">Paste → Click Process → Copy to Excel</span>
     </div>
   </div>
 
-  <!-- Results -->
   <div id="natResults" style="display:none;">
-
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-label">Results</div>
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- KPIs -->
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Results</div><div class="divider-line"></div></div>
     <div class="section-head fade-in">
       <div class="section-icon gold">📊</div>
-      <div>
-        <h2>Opera Grand Totals — March 2026</h2>
-        <p>These are the official Opera numbers for the full month</p>
-      </div>
+      <div><h2>Opera Grand Totals — March 2026</h2><p>These are the official Opera numbers for the full month</p></div>
       <span class="step-badge">STEP 2 OF 3</span>
     </div>
-
     <div class="kpi-strip cols3 fade-in">
-      <div class="kpi sky">
-        <div class="kpi-glow"></div>
-        <div class="kpi-bar"></div>
-        <div class="kpi-label">New Guest Arrivals</div>
-        <div class="kpi-value" id="kpi-apr">—</div>
-        <div class="kpi-sub">Total guests checked in</div>
-      </div>
-      <div class="kpi gold">
-        <div class="kpi-glow"></div>
-        <div class="kpi-bar"></div>
-        <div class="kpi-label">Room Nights</div>
-        <div class="kpi-value" id="kpi-rms">—</div>
-        <div class="kpi-sub">Total room nights occupied</div>
-      </div>
-      <div class="kpi mint">
-        <div class="kpi-glow"></div>
-        <div class="kpi-bar"></div>
-        <div class="kpi-label">Guest Nights</div>
-        <div class="kpi-value" id="kpi-prs">—</div>
-        <div class="kpi-sub">Total person nights stayed</div>
-      </div>
+      <div class="kpi sky"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">New Guest Arrivals</div><div class="kpi-value" id="kpi-apr">—</div><div class="kpi-sub">Total guests checked in</div></div>
+      <div class="kpi gold"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Room Nights</div><div class="kpi-value" id="kpi-rms">—</div><div class="kpi-sub">Total room nights occupied</div></div>
+      <div class="kpi mint"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Guest Nights</div><div class="kpi-value" id="kpi-prs">—</div><div class="kpi-sub">Total person nights stayed</div></div>
     </div>
-
-    <!-- Diagnostics -->
     <div class="diag-wrap fade-in-2">
       <button class="diag-toggle" onclick="toggleDiag('natDiag','natChevron')">
         <div class="diag-toggle-icon">🔍</div>
-        <div>
-          <div class="diag-toggle-title">Data Quality &amp; Diagnostics</div>
-          <div class="diag-toggle-sub">Check for gaps, unknown guests, and unmatched countries</div>
-        </div>
-        <div class="diag-status">
-          <span class="status-pill warn" id="natDiagBadge">Checking…</span>
-          <span class="chevron open" id="natChevron">▼</span>
-        </div>
+        <div><div class="diag-toggle-title">Data Quality &amp; Diagnostics</div><div class="diag-toggle-sub">Check for gaps, unknown guests, and unmatched countries</div></div>
+        <div class="diag-status"><span class="status-pill warn" id="natDiagBadge">Checking…</span><span class="chevron open" id="natChevron">▼</span></div>
       </button>
-
       <div class="diag-body open" id="natDiag">
-
         <div class="diag-section-title">Totals Comparison</div>
         <div class="totals-grid">
-          <div class="total-cell">
-            <div class="total-cell-title">New Guest Arrivals</div>
-            <div class="total-row"><span class="total-key">Opera Total</span>     <span class="total-val clr-sky"   id="d-apr-op">—</span></div>
-            <div class="total-row"><span class="total-key">Placed in rows</span>  <span class="total-val clr-text2" id="d-apr-mp">—</span></div>
-            <div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-apr-gp">—</span></div>
-          </div>
-          <div class="total-cell">
-            <div class="total-cell-title">Room Nights</div>
-            <div class="total-row"><span class="total-key">Opera Total</span>     <span class="total-val clr-sky"   id="d-rms-op">—</span></div>
-            <div class="total-row"><span class="total-key">Placed in rows</span>  <span class="total-val clr-text2" id="d-rms-mp">—</span></div>
-            <div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-rms-gp">—</span></div>
-          </div>
-          <div class="total-cell">
-            <div class="total-cell-title">Guest Nights</div>
-            <div class="total-row"><span class="total-key">Opera Total</span>     <span class="total-val clr-sky"   id="d-prs-op">—</span></div>
-            <div class="total-row"><span class="total-key">Placed in rows</span>  <span class="total-val clr-text2" id="d-prs-mp">—</span></div>
-            <div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-prs-gp">—</span></div>
-          </div>
+          <div class="total-cell"><div class="total-cell-title">New Guest Arrivals</div><div class="total-row"><span class="total-key">Opera Total</span><span class="total-val clr-sky" id="d-apr-op">—</span></div><div class="total-row"><span class="total-key">Placed in rows</span><span class="total-val clr-text2" id="d-apr-mp">—</span></div><div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-apr-gp">—</span></div></div>
+          <div class="total-cell"><div class="total-cell-title">Room Nights</div><div class="total-row"><span class="total-key">Opera Total</span><span class="total-val clr-sky" id="d-rms-op">—</span></div><div class="total-row"><span class="total-key">Placed in rows</span><span class="total-val clr-text2" id="d-rms-mp">—</span></div><div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-rms-gp">—</span></div></div>
+          <div class="total-cell"><div class="total-cell-title">Guest Nights</div><div class="total-row"><span class="total-key">Opera Total</span><span class="total-val clr-sky" id="d-prs-op">—</span></div><div class="total-row"><span class="total-key">Placed in rows</span><span class="total-val clr-text2" id="d-prs-mp">—</span></div><div class="total-row"><span class="total-key">Gap (unallocated)</span><span class="total-val clr-amber" id="d-prs-gp">—</span></div></div>
         </div>
-
         <div class="diag-section-title">Unknown & Unassigned Guests</div>
         <div class="alert-list" id="natUnknownList"></div>
-
         <div class="diag-section-title">Countries Not Found in Excel</div>
         <div class="alert-list" id="natUnmatchedList"></div>
-
         <div class="diag-section-title">How to Fix</div>
         <div class="alert-list">
-          <div class="alert-row info">
-            <div class="alert-ico">💡</div>
-            <div class="alert-content">
-              <strong>Fix Unknown guests in Opera</strong>
-              <span>Go to Opera → Reservations → find guests with no nationality → open their profile → add the correct country. Re-run the report after fixing.</span>
-            </div>
-          </div>
-          <div class="alert-row warn">
-            <div class="alert-ico">⚠️</div>
-            <div class="alert-content">
-              <strong>Excel Total row (row 248) will be lower than Opera's total</strong>
-              <span>The gap = unallocated guests. The 240 country rows are 100% correct. The difference exists only because Opera has guests with no nationality assigned.</span>
-            </div>
-          </div>
+          <div class="alert-row info"><div class="alert-ico">💡</div><div class="alert-content"><strong>Fix Unknown guests in Opera</strong><span>Go to Opera → Reservations → find guests with no nationality → open their profile → add the correct country. Re-run the report after fixing.</span></div></div>
+          <div class="alert-row warn"><div class="alert-ico">⚠️</div><div class="alert-content"><strong>Excel Total row (row 248) will be lower than Opera's total</strong><span>The gap = unallocated guests. The 240 country rows are 100% correct.</span></div></div>
         </div>
-
       </div>
     </div>
-
-    <!-- Output -->
     <div class="section-head fade-in-3">
       <div class="section-icon mint">📋</div>
-      <div>
-        <h2>Copy &amp; Paste into Excel</h2>
-        <p>240 rows · columns B C D · starting at row 8</p>
-      </div>
+      <div><h2>Copy &amp; Paste into Excel</h2><p>240 rows · columns B C D · starting at row 8</p></div>
       <span class="step-badge">STEP 3 OF 3</span>
     </div>
-
     <div class="output-layout fade-in-4">
-
-      <!-- Preview table -->
       <div class="preview-card">
         <div class="preview-top">
-          <div class="preview-top-left">
-            <div>
-              <div class="preview-top-title">Data Preview</div>
-              <div class="preview-top-sub">Showing all 240 nationality rows</div>
-            </div>
-          </div>
+          <div class="preview-top-left"><div><div class="preview-top-title">Data Preview</div><div class="preview-top-sub">Showing all 240 nationality rows</div></div></div>
           <div class="row-count">240 ROWS · EXCEL 8–247</div>
         </div>
-
         <div class="col-header nat">
-          <span class="col-h">ROW</span>
-          <span class="col-h">NATIONALITY</span>
-          <span class="col-h c-sky">ARRIVALS</span>
-          <span class="col-h c-gold">ROOMS</span>
-          <span class="col-h c-mint">GUESTS</span>
+          <span class="col-h">ROW</span><span class="col-h">NATIONALITY</span>
+          <span class="col-h c-sky">ARRIVALS</span><span class="col-h c-gold">ROOMS</span><span class="col-h c-mint">GUESTS</span>
         </div>
-
         <div class="preview-scroll" id="natPreview"></div>
       </div>
-
-      <!-- Sidebar -->
       <div class="sidebar">
-
-        <!-- Copy button -->
         <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">📋</span>
-            <span class="side-card-head-title">Copy to Excel</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">📋</span><span class="side-card-head-title">Copy to Excel</span></div>
           <div class="side-card-body">
-            <div class="copy-btn-wrap">
-              <button class="btn btn-copy" id="natCopyBtn" onclick="copyNat()">
-                Copy All 240 Rows
-              </button>
-            </div>
+            <div class="copy-btn-wrap"><button class="btn btn-copy" id="natCopyBtn" onclick="copyNat()">Copy All 240 Rows</button></div>
             <div class="paste-guide">
               <div class="step-line"><div class="step-circle">1</div><span>Open your Excel sheet</span></div>
               <div class="step-line"><div class="step-circle">2</div><span>Click cell <strong>B8</strong></span></div>
@@ -1511,200 +969,84 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
             </div>
           </div>
         </div>
-
-        <!-- Gap card -->
         <div class="gap-card side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">⚠️</span>
-            <span class="side-card-head-title">Unallocated Gap</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">⚠️</span><span class="side-card-head-title">Unallocated Gap</span></div>
           <div class="side-card-body">
             <div class="gap-row"><span class="gap-key">New Arrivals</span><span class="gap-val" id="gap-apr">—</span></div>
-            <div class="gap-row"><span class="gap-key">Room Nights</span> <span class="gap-val" id="gap-rms">—</span></div>
+            <div class="gap-row"><span class="gap-key">Room Nights</span><span class="gap-val" id="gap-rms">—</span></div>
             <div class="gap-row"><span class="gap-key">Guest Nights</span><span class="gap-val" id="gap-prs">—</span></div>
             <div class="gap-note">Guests in Opera with no nationality. Fix in Opera Guest Profiles to close this gap.</div>
           </div>
         </div>
-
-        <!-- Summary -->
         <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">📈</span>
-            <span class="side-card-head-title">Report Summary</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">📈</span><span class="side-card-head-title">Report Summary</span></div>
           <div class="side-card-body">
             <div class="sum-grid">
-              <div class="sum-row"><span class="sum-key">Countries with data</span> <span class="sum-val" style="color:var(--mint)"  id="s-active">—</span></div>
-              <div class="sum-row"><span class="sum-key">Countries with zero</span> <span class="sum-val" style="color:var(--text3)" id="s-zero">—</span></div>
-              <div class="sum-row"><span class="sum-key">Unmatched in Opera</span> <span class="sum-val" style="color:var(--rose)"  id="s-unmat">—</span></div>
-              <div class="sum-row"><span class="sum-key">Unknown guests</span>      <span class="sum-val" style="color:var(--amber)" id="s-unk">—</span></div>
+              <div class="sum-row"><span class="sum-key">Countries with data</span><span class="sum-val" style="color:var(--mint)" id="s-active">—</span></div>
+              <div class="sum-row"><span class="sum-key">Countries with zero</span><span class="sum-val" style="color:var(--text3)" id="s-zero">—</span></div>
+              <div class="sum-row"><span class="sum-key">Unmatched in Opera</span><span class="sum-val" style="color:var(--rose)" id="s-unmat">—</span></div>
+              <div class="sum-row"><span class="sum-key">Unknown guests</span><span class="sum-val" style="color:var(--amber)" id="s-unk">—</span></div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-  </div><!-- /natResults -->
+  </div>
 </div>
-</div><!-- /tab-nat -->
+</div>
 
-<!-- ══════════════════════════════════════════
-     TAB 2 — RENTED ROOMS & BEDS
-══════════════════════════════════════════ -->
+<!-- TAB 2 — RENTED ROOMS & BEDS -->
 <div class="tab-panel" id="tab-rent">
 <div class="page-wrap">
-
-  <!-- Upload -->
   <div class="section-head">
     <div class="section-icon blue">📥</div>
-    <div>
-      <h2>Paste Both Opera Files</h2>
-      <p>history_forecast + statroomtype · Delimited Data format</p>
-    </div>
+    <div><h2>Paste Both Opera Files</h2><p>history_forecast + statroomtype · Delimited Data format</p></div>
     <span class="step-badge">STEP 1 OF 3</span>
   </div>
-
   <div class="card">
     <div class="upload-grid">
       <div class="upload-zone">
-        <div class="upload-label">
-          <div class="upload-dot blue"></div>
-          <span class="upload-label-text">File 1 — History Forecast</span>
-          <span class="upload-label-sub">history_forecast_….txt</span>
-        </div>
-        <textarea id="rentInput1" placeholder="Open history_forecast .txt → Select All → Copy → Paste here&#10;&#10;Contains: NO_ROOMS, CONSIDERED_DATE, INVENTORY_ROOMS ...&#10;&#10;This gives us: daily occupied rooms per day"></textarea>
+        <div class="upload-label"><div class="upload-dot blue"></div><span class="upload-label-text">File 1 — History Forecast</span><span class="upload-label-sub">history_forecast_….txt</span></div>
+        <textarea id="rentInput1" placeholder="Open history_forecast .txt → Select All → Copy → Paste here&#10;&#10;Contains: NO_ROOMS, CONSIDERED_DATE, INVENTORY_ROOMS ..."></textarea>
       </div>
       <div class="upload-zone file2">
-        <div class="upload-label">
-          <div class="upload-dot mint"></div>
-          <span class="upload-label-text">File 2 — Room Type Stats</span>
-          <span class="upload-label-sub">statroomtype_….txt</span>
-        </div>
-        <textarea id="rentInput2" placeholder="Open statroomtype .txt → Select All → Copy → Paste here&#10;&#10;Contains: STAY_ROOMS, BUSINESS_DATE, ROOM_CATEGORY (TWC)&#10;&#10;This gives us: daily twin rooms for bed calculation"></textarea>
+        <div class="upload-label"><div class="upload-dot mint"></div><span class="upload-label-text">File 2 — Room Type Stats</span><span class="upload-label-sub">statroomtype_….txt</span></div>
+        <textarea id="rentInput2" placeholder="Open statroomtype .txt → Select All → Copy → Paste here&#10;&#10;Contains: STAY_ROOMS, BUSINESS_DATE, ROOM_CATEGORY (TWC)"></textarea>
       </div>
     </div>
-
-    <div class="error-box" id="rentError">
-      <span>⚠</span>
-      <span id="rentErrorMsg"></span>
-    </div>
-
+    <div class="error-box" id="rentError"><span>⚠</span><span id="rentErrorMsg"></span></div>
     <div class="action-bar">
-      <button class="btn btn-process" onclick="processRent()">
-        <span>⚡</span> Process Files
-      </button>
+      <button class="btn btn-process" onclick="processRent()"><span>⚡</span> Process Files</button>
       <button class="btn btn-clear" onclick="clearRent()">✕ Clear</button>
       <span class="info-hint">App auto-detects which file is which</span>
     </div>
   </div>
-
-  <!-- Results -->
   <div id="rentResults" style="display:none;">
-
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-label">Results</div>
-      <div class="divider-line"></div>
-    </div>
-
-    <!-- KPIs -->
-    <div class="section-head fade-in">
-      <div class="section-icon gold">📊</div>
-      <div>
-        <h2>Monthly Totals</h2>
-        <p>Sum of all days in the month</p>
-      </div>
-      <span class="step-badge">STEP 2 OF 3</span>
-    </div>
-
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Results</div><div class="divider-line"></div></div>
+    <div class="section-head fade-in"><div class="section-icon gold">📊</div><div><h2>Monthly Totals</h2><p>Sum of all days in the month</p></div><span class="step-badge">STEP 2 OF 3</span></div>
     <div class="kpi-strip cols2 fade-in">
-      <div class="kpi sky">
-        <div class="kpi-glow"></div>
-        <div class="kpi-bar"></div>
-        <div class="kpi-label">Total Rented Rooms</div>
-        <div class="kpi-value" id="kpi-rooms">—</div>
-        <div class="kpi-sub">Sum of daily occupied rooms</div>
-      </div>
-      <div class="kpi mint">
-        <div class="kpi-glow"></div>
-        <div class="kpi-bar"></div>
-        <div class="kpi-label">Total Rented Beds</div>
-        <div class="kpi-value" id="kpi-beds">—</div>
-        <div class="kpi-sub">Rooms + twin bed add-on</div>
-      </div>
+      <div class="kpi sky"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Total Rented Rooms</div><div class="kpi-value" id="kpi-rooms">—</div><div class="kpi-sub">Sum of daily occupied rooms</div></div>
+      <div class="kpi mint"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Total Rented Beds</div><div class="kpi-value" id="kpi-beds">—</div><div class="kpi-sub">Rooms + twin bed add-on</div></div>
     </div>
-
-    <!-- Formula info -->
     <div class="formula-card fade-in-2" style="margin-bottom:20px;">
       <div class="formula-title">Formula Used</div>
-      <div class="formula-line">
-        <span class="formula-key">Rented Rooms</span>
-        <span class="formula-val">NO_ROOMS from History Forecast (daily occ. rooms)</span>
-      </div>
-      <div class="formula-line">
-        <span class="formula-key">Rented Beds</span>
-        <span class="formula-val">NO_ROOMS + STAY_ROOMS (twin rooms add 1 extra bed each)</span>
-      </div>
-      <div class="formula-line">
-        <span class="formula-key">Days found</span>
-        <span class="formula-val" id="daysFound">—</span>
-      </div>
-      <div class="formula-line">
-        <span class="formula-key">Twin file status</span>
-        <span class="formula-val" id="twinStatus">—</span>
-      </div>
+      <div class="formula-line"><span class="formula-key">Rented Rooms</span><span class="formula-val">NO_ROOMS from History Forecast</span></div>
+      <div class="formula-line"><span class="formula-key">Rented Beds</span><span class="formula-val">NO_ROOMS + STAY_ROOMS (twin rooms add 1 extra bed each)</span></div>
+      <div class="formula-line"><span class="formula-key">Days found</span><span class="formula-val" id="daysFound">—</span></div>
+      <div class="formula-line"><span class="formula-key">Twin file status</span><span class="formula-val" id="twinStatus">—</span></div>
     </div>
-
-    <!-- Output -->
-    <div class="section-head fade-in-3">
-      <div class="section-icon mint">📋</div>
-      <div>
-        <h2>Copy &amp; Paste into Excel</h2>
-        <p>31 rows · 2 columns · Day 1 to Day 31</p>
-      </div>
-      <span class="step-badge">STEP 3 OF 3</span>
-    </div>
-
+    <div class="section-head fade-in-3"><div class="section-icon mint">📋</div><div><h2>Copy &amp; Paste into Excel</h2><p>31 rows · 2 columns · Day 1 to Day 31</p></div><span class="step-badge">STEP 3 OF 3</span></div>
     <div class="output-layout fade-in-4">
-
-      <!-- Preview table -->
       <div class="preview-card">
-        <div class="preview-top">
-          <div class="preview-top-left">
-            <div>
-              <div class="preview-top-title">Data Preview</div>
-              <div class="preview-top-sub">Daily rented rooms &amp; beds</div>
-            </div>
-          </div>
-          <div class="row-count" id="rentRowCount">31 ROWS</div>
-        </div>
-
-        <div class="col-header rent">
-          <span class="col-h">DAY</span>
-          <span class="col-h">+TWIN BEDS</span>
-          <span class="col-h c-sky">ROOMS</span>
-          <span class="col-h c-mint">BEDS</span>
-        </div>
-
+        <div class="preview-top"><div class="preview-top-left"><div><div class="preview-top-title">Data Preview</div><div class="preview-top-sub">Daily rented rooms &amp; beds</div></div></div><div class="row-count" id="rentRowCount">31 ROWS</div></div>
+        <div class="col-header rent"><span class="col-h">DAY</span><span class="col-h">+TWIN BEDS</span><span class="col-h c-sky">ROOMS</span><span class="col-h c-mint">BEDS</span></div>
         <div class="preview-scroll" id="rentPreview"></div>
       </div>
-
-      <!-- Sidebar -->
       <div class="sidebar">
-
-        <!-- Copy button -->
         <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">📋</span>
-            <span class="side-card-head-title">Copy to Excel</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">📋</span><span class="side-card-head-title">Copy to Excel</span></div>
           <div class="side-card-body">
-            <div class="copy-btn-wrap">
-              <button class="btn btn-copy" id="rentCopyBtn" onclick="copyRent()">
-                Copy All Rows
-              </button>
-            </div>
+            <div class="copy-btn-wrap"><button class="btn btn-copy" id="rentCopyBtn" onclick="copyRent()">Copy All Rows</button></div>
             <div class="paste-guide">
               <div class="step-line"><div class="step-circle">1</div><span>Open your Excel sheet</span></div>
               <div class="step-line"><div class="step-circle">2</div><span>Click cell for <strong>Day 1 Rooms</strong></span></div>
@@ -1713,71 +1055,153 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
             </div>
           </div>
         </div>
-
-        <!-- Column guide -->
         <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">🗂️</span>
-            <span class="side-card-head-title">Column Guide</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">🗂️</span><span class="side-card-head-title">Column Guide</span></div>
           <div class="side-card-body">
             <div class="sum-grid">
-              <div class="sum-row">
-                <span class="sum-key">Column 1</span>
-                <span class="sum-val" style="color:var(--sky)">Rented Rooms</span>
-              </div>
-              <div class="sum-row">
-                <span class="sum-key">Column 2</span>
-                <span class="sum-val" style="color:var(--mint)">Rented Beds</span>
-              </div>
-              <div class="sum-row">
-                <span class="sum-key">Start row</span>
-                <span class="sum-val" style="color:var(--text2)">Day 1 row</span>
-              </div>
-              <div class="sum-row">
-                <span class="sum-key">End row</span>
-                <span class="sum-val" style="color:var(--text2)" id="rentEndRow">Day 31 row</span>
-              </div>
+              <div class="sum-row"><span class="sum-key">Column 1</span><span class="sum-val" style="color:var(--sky)">Rented Rooms</span></div>
+              <div class="sum-row"><span class="sum-key">Column 2</span><span class="sum-val" style="color:var(--mint)">Rented Beds</span></div>
+              <div class="sum-row"><span class="sum-key">End row</span><span class="sum-val" style="color:var(--text2)" id="rentEndRow">Day 31 row</span></div>
             </div>
           </div>
         </div>
-
-        <!-- Monthly breakdown -->
         <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">📈</span>
-            <span class="side-card-head-title">Month Summary</span>
-          </div>
+          <div class="side-card-head"><span class="side-card-head-icon">📈</span><span class="side-card-head-title">Month Summary</span></div>
           <div class="side-card-body">
             <div class="sum-grid">
-              <div class="sum-row"><span class="sum-key">Total Rooms</span>   <span class="sum-val" style="color:var(--sky)"   id="rs-rooms">—</span></div>
-              <div class="sum-row"><span class="sum-key">Total Beds</span>    <span class="sum-val" style="color:var(--mint)"  id="rs-beds">—</span></div>
+              <div class="sum-row"><span class="sum-key">Total Rooms</span><span class="sum-val" style="color:var(--sky)" id="rs-rooms">—</span></div>
+              <div class="sum-row"><span class="sum-key">Total Beds</span><span class="sum-val" style="color:var(--mint)" id="rs-beds">—</span></div>
               <div class="sum-row"><span class="sum-key">Total Twin add</span><span class="sum-val" style="color:var(--amber)" id="rs-twin">—</span></div>
               <div class="sum-row"><span class="sum-key">Days in report</span><span class="sum-val" style="color:var(--text2)" id="rs-days">—</span></div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-
-  </div><!-- /rentResults -->
+  </div>
 </div>
-</div><!-- /tab-rent -->
+</div>
+
+<!-- TAB 3 — NIGHT AUDIT PM ROOMS -->
+<div class="tab-panel" id="tab-audit">
+<div class="page-wrap">
+  <div class="section-head"><div class="section-icon blue">📥</div><div><h2>Night Audit — PM Rooms Comparison</h2><p>Paste Opera report + upload your management Excel to find and fix differences</p></div><span class="step-badge">STEP 1 OF 3</span></div>
+  <div class="card">
+    <div class="na-upload-grid">
+      <div class="upload-zone">
+        <div class="upload-label"><div class="upload-dot blue"></div><span class="upload-label-text">Opera Cloud — PM Rooms Report</span><span class="upload-label-sub">gipmbyroom_….txt</span></div>
+        <textarea id="naOperaInput" placeholder="Open Opera Cloud → Front Desk → In-House Guests by Room&#10;Download as: Delimited Data&#10;Open the .txt file → Select All → Copy → Paste here&#10;&#10;File should contain: ROOM, FULL_NAME, ARRIVAL, DEPARTURE, BALANCE ..."></textarea>
+      </div>
+      <div class="upload-zone file2">
+        <div class="upload-label"><div class="upload-dot mint"></div><span class="upload-label-text">Management Report — Your Excel File</span><span class="upload-label-sub">PM_Ibis_DD_….csv or paste from Excel</span></div>
+        <textarea id="naExcelInput" placeholder="Open your Excel management report&#10;Select all rows (including header) → Copy → Paste here&#10;&#10;Expected columns: PM, NAME, ARRIVAL, DEPARTURE, BALANCE, Department, REMARKS ..."></textarea>
+      </div>
+    </div>
+    <div class="error-box" id="naError"><span>⚠</span><span id="naErrorMsg"></span></div>
+    <div class="action-bar">
+      <button class="btn btn-process" onclick="processAudit()"><span>🔍</span> Compare &amp; Find Differences</button>
+      <button class="btn btn-clear" onclick="clearAudit()">✕ Clear</button>
+      <span class="info-hint">Opera is always the source of truth</span>
+    </div>
+  </div>
+  <div id="naCompareSection" style="display:none;">
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Comparison Results</div><div class="divider-line"></div></div>
+    <div class="section-head fade-in"><div class="section-icon rose">🔍</div><div><h2>Differences Found</h2><p>Opera vs Management Report — fields highlighted in amber need fixing</p></div><span class="step-badge">STEP 2 OF 3</span></div>
+    <div class="kpi-strip cols3 fade-in" style="margin-bottom:20px;">
+      <div class="kpi sky"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Total PM Rooms</div><div class="kpi-value" id="na-kpi-total">—</div><div class="kpi-sub">Rooms in Opera report</div></div>
+      <div class="kpi gold"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Rooms with Differences</div><div class="kpi-value" id="na-kpi-diff">—</div><div class="kpi-sub">Needs to be corrected</div></div>
+      <div class="kpi mint"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Rooms Match Perfectly</div><div class="kpi-value" id="na-kpi-ok">—</div><div class="kpi-sub">No changes needed</div></div>
+    </div>
+    <div class="compare-wrap fade-in-2">
+      <div class="compare-top">
+        <div class="compare-top-left"><h3>Room-by-Room Comparison</h3><p>Green = Opera (correct) · Red strikethrough = Excel (wrong) · Amber = has difference</p></div>
+        <div class="compare-pills"><span class="cpill total" id="na-pill-total">— rooms</span><span class="cpill diff" id="na-pill-diff">— differences</span><span class="cpill ok" id="na-pill-ok">— matches</span></div>
+      </div>
+      <div class="compare-thead"><span class="th">ROOM</span><span class="th">NAME</span><span class="th">ARRIVAL</span><span class="th">DEPARTURE</span><span class="th">BALANCE</span><span class="th" style="text-align:right;">STATUS</span></div>
+      <div class="compare-scroll" id="naCompareTable"></div>
+    </div>
+    <div class="section-head fade-in-3"><div class="section-icon mint">✅</div><div><h2>Fixed Output — Ready to Paste into Excel</h2><p>All rows corrected using Opera as source of truth · Preserves your Department &amp; Remarks</p></div><span class="step-badge">STEP 3 OF 3</span></div>
+    <div class="na-output-layout fade-in-4">
+      <div class="fixed-table-wrap">
+        <div class="compare-top" style="padding:12px 16px;"><div class="compare-top-left"><h3>Corrected PM Rooms Data</h3><p>Paste this into your Excel starting from row 2 (after header)</p></div><span class="cpill ok" id="naFixedCount">— rows</span></div>
+        <div class="fixed-thead"><span class="th">ROOM</span><span class="th">NAME</span><span class="th">ARRIVAL</span><span class="th">DEPARTURE</span><span class="th" style="text-align:right;">BALANCE</span></div>
+        <div class="fixed-scroll" id="naFixedTable"></div>
+      </div>
+      <div class="sidebar">
+        <div class="side-card">
+          <div class="side-card-head"><span class="side-card-head-icon">📋</span><span class="side-card-head-title">Copy Fixed Data</span></div>
+          <div class="side-card-body">
+            <div class="copy-btn-wrap"><button class="btn btn-copy" id="naCopyBtn" onclick="copyAudit()">Copy All Fixed Rows</button></div>
+            <div class="paste-guide">
+              <div class="step-line"><div class="step-circle">1</div><span>Open your Excel management report</span></div>
+              <div class="step-line"><div class="step-circle">2</div><span>Click cell <strong>A2</strong> (first data row)</span></div>
+              <div class="step-line"><div class="step-circle">3</div><span>Press <strong>Ctrl + V</strong></span></div>
+              <div class="step-line"><div class="step-circle">4</div><span>All rows paste with Opera data ✓</span></div>
+            </div>
+            <div style="margin-top:12px;padding:10px;background:rgba(56,189,248,0.05);border:1px solid rgba(56,189,248,0.15);border-radius:8px;">
+              <div style="font-family:'Geist Mono',monospace;font-size:0.6rem;color:var(--sky);letter-spacing:1px;margin-bottom:6px;">NOTE</div>
+              <div style="font-family:'Geist Mono',monospace;font-size:0.65rem;color:var(--text3);line-height:1.6;">Department &amp; Remarks columns are preserved from your original Excel — only Room, Name, Arrival, Departure, Balance are updated from Opera.</div>
+            </div>
+          </div>
+        </div>
+        <div class="side-card"><div class="side-card-head"><span class="side-card-head-icon">⚠️</span><span class="side-card-head-title">Changes Made</span></div><div class="side-card-body"><div class="changes-list" id="naChangesList"></div></div></div>
+        <div class="side-card" id="naMissingCard" style="display:none;"><div class="side-card-head" style="background:rgba(251,113,133,0.06);border-bottom-color:rgba(251,113,133,0.15);"><span class="side-card-head-icon">🔴</span><span class="side-card-head-title" style="color:var(--rose);">Missing Rooms</span></div><div class="side-card-body"><div id="naMissingList" class="changes-list"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TAB 4 — NIGHT RUN CHECKLIST
+═══════════════════════════════════════════ -->
+<div class="tab-panel" id="tab-checklist">
+<div class="checklist-page">
+
+  <div class="cl-top-bar">
+    <div class="cl-top-info">
+      <h2>Night Run Checklist</h2>
+      <p id="cl-date-label">Loading…</p>
+    </div>
+    <div class="cl-top-actions">
+      <button class="cl-btn" onclick="clToggleEdit()">✏️ Edit steps</button>
+      <button class="cl-btn reset" onclick="clReset()">↺ New night</button>
+    </div>
+  </div>
+
+  <div class="cl-edit-mode-bar" id="clEditBar">
+    ✏️ Edit mode — rename any step, skip steps you don't need tonight, or add notes below each card.
+  </div>
+
+  <!-- Progress -->
+  <div class="cl-progress-wrap">
+    <div class="cl-progress-meta">
+      <span class="cl-progress-label" id="clProgLabel">0 of 17 steps done</span>
+      <span class="cl-progress-pct" id="clProgPct">0%</span>
+    </div>
+    <div class="cl-progress-track"><div class="cl-progress-fill" id="clProgFill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Step list -->
+  <div id="clStepList"></div>
+
+  <!-- Complete banner -->
+  <div class="cl-complete" id="clComplete">
+    <div class="cl-complete-title">Night run complete ✓</div>
+    <div class="cl-complete-sub" id="clCompleteTime">All steps done</div>
+  </div>
+
+</div>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════
-// DATA: EXCEL MASTER LIST (rows 8-247)
+// EXCEL COUNTRY DATA
 // ═══════════════════════════════════════════════════
 const EXCEL_COUNTRIES = ["Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Antarctica","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia-Herzegovina","Botswana","Brazil","British Indian Ocean Territory","British Virgin Islands","British West Indies","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon Republic","Canada","Cape Verde","Cayman Island","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo (Republic of the Congo)","Congo, Dem. Rep. of (Zaire)","Cook Islands","Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Czechoslovakia","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands (Malvinas)","Faroe Islands","Fiji","Finland","France","French Guiana","French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Holy See (Vatican City State)","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea, Democratic People's Republic of (North)","Korea, Republic of (South)","Kosovo","Kuwait","Kyrghyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia, Republic of","Madagascar","Malagasy Republic","Malawi","Malaysia","Maldives","Mali","Malta","Marshal Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico","Micronesia, Federated States","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar (Burma)","Namibia","Nauru","Nepal","Netherlands","Netherlands, Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norfolk Island","Northern Mariana Isl.","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saba","Saint Barthelemy","Saint Helena","Saint Kitts and Nevis","Saint Lucia","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino (in Italy)","Sao Tomé","Saudi Arabia","Scotland","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia Republic","Slovenia","Solomon Island","Somalia","South Africa","South Georgia and the South Sandwich Islands","South Sudan","Spain","Sri Lanka","Sudan","Surinam","Swaziland","Sweden","Switzerland","Syria","Tadjikistan","Taiwan","Tanzania","Thailand","Togo","Tokelau","Tonga","Trinidad & Tobaggo","Tunisia","Turkey","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Virgin Islands, British","Virgin Islands, U.S.","Yemen","Yugoslavia","Zambia","Zimbabwe"];
-
 const EXCEL_LOWER = {};
 EXCEL_COUNTRIES.forEach(n => { EXCEL_LOWER[n.toLowerCase()] = n; });
-
-const NAME_MAP = {
-  "United States":"United States of America","Cameroon":"Cameroon Republic","Congo (Kinshasa)":"Congo, Dem. Rep. of (Zaire)","Congo (Brazzaville)":"Congo (Republic of the Congo)","South Korea":"Korea, Republic of (South)","Korea, South":"Korea, Republic of (South)","North Korea":"Korea, Democratic People's Republic of (North)","Myanmar":"Myanmar (Burma)","Taiwan (Chinese Taipei)":"Taiwan","Tajikistan":"Tadjikistan","Kyrgyzstan":"Kyrghyzstan","Kyrgyz Republic":"Kyrghyzstan","Bosnia and Herzegovina":"Bosnia-Herzegovina","Macedonia":"Macedonia, Republic of","North Macedonia":"Macedonia, Republic of","Ivory Coast":"Côte d'Ivoire","Cote d'Ivoire":"Côte d'Ivoire","Palestine, State of":"Palestine","Palestinian Territory":"Palestine","Trinidad and Tobago":"Trinidad & Tobaggo","Trinidad & Tobago":"Trinidad & Tobaggo","Antigua and Barbuda":"Antigua & Barbuda","Timor-Leste":"East Timor","Sao Tome and Principe":"Sao Tomé","Sao Tome":"Sao Tomé","Unknown":null,"DO NOT USE":null
-};
-
+const NAME_MAP = {"United States":"United States of America","Cameroon":"Cameroon Republic","Congo (Kinshasa)":"Congo, Dem. Rep. of (Zaire)","Congo (Brazzaville)":"Congo (Republic of the Congo)","South Korea":"Korea, Republic of (South)","Korea, South":"Korea, Republic of (South)","North Korea":"Korea, Democratic People's Republic of (North)","Myanmar":"Myanmar (Burma)","Taiwan (Chinese Taipei)":"Taiwan","Tajikistan":"Tadjikistan","Kyrgyzstan":"Kyrghyzstan","Kyrgyz Republic":"Kyrghyzstan","Bosnia and Herzegovina":"Bosnia-Herzegovina","Macedonia":"Macedonia, Republic of","North Macedonia":"Macedonia, Republic of","Ivory Coast":"Côte d'Ivoire","Cote d'Ivoire":"Côte d'Ivoire","Palestine, State of":"Palestine","Palestinian Territory":"Palestine","Trinidad and Tobago":"Trinidad & Tobaggo","Trinidad & Tobago":"Trinidad & Tobaggo","Antigua and Barbuda":"Antigua & Barbuda","Timor-Leste":"East Timor","Sao Tome and Principe":"Sao Tomé","Sao Tome":"Sao Tomé","Unknown":null,"DO NOT USE":null};
 function resolveCountry(name) {
   if (!name) return { excel: null, isUnknown: true };
   const t = name.trim();
@@ -1790,7 +1214,7 @@ function resolveCountry(name) {
 // ═══════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════
-let natCopyText = '', rentCopyText = '';
+let natCopyText = '', rentCopyText = '', naCopyText = '';
 
 // ═══════════════════════════════════════════════════
 // TAB SWITCHING
@@ -1799,903 +1223,382 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  const i = name === 'nat' ? 0 : name === 'rent' ? 1 : 2;
-  document.getElementById('tabBtn' + i).classList.add('active');
+  const map = {nat:0,rent:1,audit:2,checklist:3};
+  document.getElementById('tabBtn' + map[name]).classList.add('active');
 }
 
-// ═══════════════════════════════════════════════════
-// DIAGNOSTICS TOGGLE
-// ═══════════════════════════════════════════════════
 function toggleDiag(bodyId, chevId) {
-  const body  = document.getElementById(bodyId);
-  const chev  = document.getElementById(chevId);
-  const open  = body.classList.contains('open');
+  const body = document.getElementById(bodyId);
+  const chev = document.getElementById(chevId);
+  const open = body.classList.contains('open');
   body.classList.toggle('open', !open);
   chev.classList.toggle('open', !open);
 }
 
-// ═══════════════════════════════════════════════════
-// CLIPBOARD HELPER
-// ═══════════════════════════════════════════════════
 function copyToClip(text, btn, label) {
-  const done = () => {
-    btn.textContent = '✅ Copied! Paste in Excel now';
-    btn.classList.add('done');
-    setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); }, 3500);
-  };
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(done).catch(() => fbCopy(text, done));
-  } else fbCopy(text, done);
+  const done = () => { btn.textContent = '✅ Copied! Paste in Excel now'; btn.classList.add('done'); setTimeout(() => { btn.textContent = label; btn.classList.remove('done'); }, 3500); };
+  if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done).catch(() => fbCopy(text, done)); }
+  else fbCopy(text, done);
 }
 function fbCopy(text, cb) {
-  const ta = document.createElement('textarea');
-  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
-  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-  document.body.removeChild(ta); cb();
+  const ta = document.createElement('textarea'); ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); cb();
 }
 
 // ═══════════════════════════════════════════════════
-// TAB 1 — NATIONALITY REPORT
+// TAB 1 — NATIONALITY
 // ═══════════════════════════════════════════════════
 function processNat() {
   const raw = document.getElementById('natInput').value.trim();
-  const errBox = document.getElementById('natError');
-  const errMsg = document.getElementById('natErrorMsg');
-  errBox.classList.remove('show');
-
+  const errBox = document.getElementById('natError'); const errMsg = document.getElementById('natErrorMsg'); errBox.classList.remove('show');
   const showErr = msg => { errMsg.textContent = msg; errBox.classList.add('show'); };
-
   if (!raw) return showErr('Please paste your Opera Cloud nationality report first.');
-
   const lines = raw.split('\n');
-  if (lines.length < 2) return showErr('File appears empty. Make sure you copied the full .txt content.');
-
-  const headers = lines[0].split('\t');
-  const idx = {};
+  if (lines.length < 2) return showErr('File appears empty.');
+  const headers = lines[0].split('\t'); const idx = {};
   headers.forEach((h, i) => { idx[h.trim()] = i; });
-
   const needed = ['VALUE_CODE','COUNTRY_CODE','COUNTRY_NAME','SUMVALUEPERCOUNTRY_CODE','SUMVALUEPERVALUE_CODE'];
   const missing = needed.filter(k => idx[k] === undefined);
   if (missing.length) return showErr(`Missing columns: ${missing.join(', ')} — Use "Delimited Data" format from Opera Cloud.`);
-
-  const seenKey = new Set();
-  const operaRaw = {};
-  let grandAPR = 0, grandRMS = 0, grandPRS = 0;
-  let fA = false, fR = false, fP = false;
-
-  for (let i = 1; i < lines.length; i++) {
-    const parts = lines[i].split('\t');
-    if (parts.length < 22) continue;
-    const code = (parts[idx['VALUE_CODE']] || '').trim();
-    if (!['RMS','APR','PRS'].includes(code)) continue;
-    const gtot = parseInt(parts[idx['SUMVALUEPERVALUE_CODE']] || '0') || 0;
-    if (code==='APR' && !fA && gtot>0) { grandAPR=gtot; fA=true; }
-    if (code==='RMS' && !fR && gtot>0) { grandRMS=gtot; fR=true; }
-    if (code==='PRS' && !fP && gtot>0) { grandPRS=gtot; fP=true; }
-    const cc   = (parts[idx['COUNTRY_CODE']] || '').trim();
-    const name = (parts[idx['COUNTRY_NAME']] || '').trim();
-    const sum  = (parts[idx['SUMVALUEPERCOUNTRY_CODE']] || '').trim();
-    const key  = cc + '|' + code;
-    if (seenKey.has(key) || !name) continue;
-    seenKey.add(key);
-    if (!operaRaw[name]) operaRaw[name] = {APR:0,RMS:0,PRS:0};
-    operaRaw[name][code] = parseInt(sum) || 0;
-  }
-
-  const excelData = {}, unknowns = [], unmatched = [];
-
-  for (const [opName, vals] of Object.entries(operaRaw)) {
-    const { excel, isUnknown } = resolveCountry(opName);
-    if (isUnknown) { unknowns.push({name:opName,...vals}); continue; }
-    if (excel === null) { if (vals.APR||vals.RMS||vals.PRS) unmatched.push({name:opName,...vals}); continue; }
-    excelData[excel] = vals;
-  }
-
-  let mappedAPR=0, mappedRMS=0, mappedPRS=0, active=0;
-  const rows = [];
-  EXCEL_COUNTRIES.forEach(c => {
-    const v = excelData[c] || {APR:0,RMS:0,PRS:0};
-    rows.push(v);
-    mappedAPR+=v.APR; mappedRMS+=v.RMS; mappedPRS+=v.PRS;
-    if (v.APR||v.RMS||v.PRS) active++;
-  });
-
-  const unkAPR = unknowns.reduce((s,x)=>s+x.APR,0) + unmatched.reduce((s,x)=>s+x.APR,0);
-  const unkRMS = unknowns.reduce((s,x)=>s+x.RMS,0) + unmatched.reduce((s,x)=>s+x.RMS,0);
-  const unkPRS = unknowns.reduce((s,x)=>s+x.PRS,0) + unmatched.reduce((s,x)=>s+x.PRS,0);
-
-  if (!grandAPR) grandAPR = mappedAPR + unkAPR;
-  if (!grandRMS) grandRMS = mappedRMS + unkRMS;
-  if (!grandPRS) grandPRS = mappedPRS + unkPRS;
-
-  const gapAPR = grandAPR - mappedAPR;
-  const gapRMS = grandRMS - mappedRMS;
-  const gapPRS = grandPRS - mappedPRS;
-
-  natCopyText = rows.map(v => `${v.APR}\t${v.RMS}\t${v.PRS}`).join('\n');
-
-  // KPIs
-  document.getElementById('kpi-apr').textContent = grandAPR.toLocaleString();
-  document.getElementById('kpi-rms').textContent = grandRMS.toLocaleString();
-  document.getElementById('kpi-prs').textContent = grandPRS.toLocaleString();
-
-  // Diagnostics totals
-  ['apr','rms','prs'].forEach(k => {
-    const op = k==='apr'?grandAPR : k==='rms'?grandRMS : grandPRS;
-    const mp = k==='apr'?mappedAPR: k==='rms'?mappedRMS: mappedPRS;
-    const gp = k==='apr'?gapAPR   : k==='rms'?gapRMS   : gapPRS;
-    document.getElementById(`d-${k}-op`).textContent = op.toLocaleString();
-    document.getElementById(`d-${k}-mp`).textContent = mp.toLocaleString();
-    const gpEl = document.getElementById(`d-${k}-gp`);
-    gpEl.textContent = gp > 0 ? `− ${gp}` : '✓ 0';
-    gpEl.className = `total-val ${gp>0?'clr-amber':'clr-mint'}`;
-  });
-
-  // Unknown list
-  const unkEl = document.getElementById('natUnknownList');
-  unkEl.innerHTML = unknowns.length === 0
-    ? `<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>No unknown guests — all nationalities are assigned</strong><span>Perfect data quality for this month.</span></div></div>`
-    : unknowns.map(u=>`<div class="alert-row warn"><div class="alert-ico">⚠️</div><div class="alert-content"><strong>"${u.name}" — ${u.APR} arrivals · ${u.RMS} room nights · ${u.PRS} guest nights</strong><span>No nationality code. Fix in Opera Guest Profiles to close the gap.</span></div></div>`).join('');
-
-  // Unmatched list
-  const unmEl = document.getElementById('natUnmatchedList');
-  unmEl.innerHTML = unmatched.length === 0
-    ? `<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>All countries matched to Excel rows</strong><span>No data was lost.</span></div></div>`
-    : unmatched.map(u=>`<div class="alert-row error"><div class="alert-ico">🔴</div><div class="alert-content"><strong>"${u.name}" — ${u.APR} arr · ${u.RMS} rms · ${u.PRS} gsts — NOT PLACED</strong><span>Country exists in Opera but has no Excel row. Numbers are lost — report this name to update the mapping.</span></div></div>`).join('');
-
-  // Diag badge
-  const hasIssues = unknowns.length > 0 || unmatched.length > 0;
-  const badge = document.getElementById('natDiagBadge');
-  badge.className = 'status-pill ' + (hasIssues ? 'warn' : 'ok');
-  badge.textContent = hasIssues ? `${unknowns.length} unknown · ${unmatched.length} unmatched` : '✓ All Clean';
-
-  // Gap sidebar
-  document.getElementById('gap-apr').textContent = gapAPR > 0 ? `−${gapAPR}` : '0';
-  document.getElementById('gap-rms').textContent = gapRMS > 0 ? `−${gapRMS}` : '0';
-  document.getElementById('gap-prs').textContent = gapPRS > 0 ? `−${gapPRS}` : '0';
-
-  // Summary
-  document.getElementById('s-active').textContent = active;
-  document.getElementById('s-zero').textContent   = 240 - active;
-  document.getElementById('s-unmat').textContent  = unmatched.length;
-  document.getElementById('s-unk').textContent    = unknowns.length;
-
-  // Header status
-  document.getElementById('headerStatus').textContent = 'Nationality Ready';
-  document.getElementById('headerStatus').className = 'header-pill active';
-
-  // Build preview
-  const prev = document.getElementById('natPreview');
-  prev.innerHTML = EXCEL_COUNTRIES.map((c,i) => {
-    const v   = rows[i];
-    const rn  = i + 8;
-    const has = v.APR || v.RMS || v.PRS;
-    const sn  = c.length > 20 ? c.substring(0,19)+'…' : c;
-    return `<div class="data-row nat ${has?'active':''}">
-      <span class="cell-rn">${rn}</span>
-      <span class="cell-name" title="${c}">${sn}</span>
-      <span class="cell-num ${has?'c-sky':'zero'}">${v.APR}</span>
-      <span class="cell-num ${has?'c-gold':'zero'}">${v.RMS}</span>
-      <span class="cell-num ${has?'c-mint':'zero'}">${v.PRS}</span>
-    </div>`;
-  }).join('');
-
-  document.getElementById('natResults').style.display = 'block';
-  document.getElementById('natResults').scrollIntoView({ behavior:'smooth', block:'start' });
-}
-
-function copyNat() {
-  if (!natCopyText) return;
-  copyToClip(natCopyText, document.getElementById('natCopyBtn'), 'Copy All 240 Rows');
-}
-
-function clearNat() {
-  document.getElementById('natInput').value = '';
-  document.getElementById('natResults').style.display = 'none';
-  document.getElementById('natError').classList.remove('show');
-  natCopyText = '';
-  document.getElementById('headerStatus').textContent = 'Ready';
-  document.getElementById('headerStatus').className = 'header-pill';
-}
-
-// ═══════════════════════════════════════════════════
-// TAB 2 — RENTED ROOMS & BEDS
-// ═══════════════════════════════════════════════════
-function parseHF(raw) {
-  const lines = raw.trim().split('\n');
-  if (lines.length < 2) return null;
-  const headers = lines[0].split('\t');
-  const idx = {};
-  headers.forEach((h,i) => { idx[h.trim()] = i; });
-  if (idx['NO_ROOMS']===undefined || idx['CONSIDERED_DATE']===undefined) return null;
-  const out = {};
+  const seenKey = new Set(); const operaRaw = {};
+  let grandAPR=0,grandRMS=0,grandPRS=0,fA=false,fR=false,fP=false;
   for (let i=1;i<lines.length;i++) {
-    const p = lines[i].split('\t');
-    if (p.length < 30) continue;
-    const ds = (p[idx['CONSIDERED_DATE']]||'').trim();
-    if (!ds || !ds[0].match(/\d/)) continue;
-    const day = parseInt(ds.split('-')[0]);
-    const rooms = parseInt(p[idx['NO_ROOMS']]) || 0;
-    if (day>=1 && day<=31) out[day] = rooms;
+    const parts=lines[i].split('\t'); if (parts.length<22) continue;
+    const code=(parts[idx['VALUE_CODE']]||'').trim(); if (!['RMS','APR','PRS'].includes(code)) continue;
+    const gtot=parseInt(parts[idx['SUMVALUEPERVALUE_CODE']]||'0')||0;
+    if(code==='APR'&&!fA&&gtot>0){grandAPR=gtot;fA=true;} if(code==='RMS'&&!fR&&gtot>0){grandRMS=gtot;fR=true;} if(code==='PRS'&&!fP&&gtot>0){grandPRS=gtot;fP=true;}
+    const cc=(parts[idx['COUNTRY_CODE']]||'').trim(); const name=(parts[idx['COUNTRY_NAME']]||'').trim(); const sum=(parts[idx['SUMVALUEPERCOUNTRY_CODE']]||'').trim();
+    const key=cc+'|'+code; if(seenKey.has(key)||!name) continue; seenKey.add(key);
+    if(!operaRaw[name]) operaRaw[name]={APR:0,RMS:0,PRS:0}; operaRaw[name][code]=parseInt(sum)||0;
   }
-  return Object.keys(out).length > 0 ? out : null;
-}
-
-function parseSRT(raw) {
-  const lines = raw.trim().split('\n');
-  if (lines.length < 2) return null;
-  const headers = lines[0].split('\t');
-  const idx = {};
-  headers.forEach((h,i) => { idx[h.trim()] = i; });
-  if (idx['STAY_ROOMS']===undefined || idx['BUSINESS_DATE']===undefined) return null;
-  const out = {};
-  for (let i=1;i<lines.length;i++) {
-    const p = lines[i].split('\t');
-    if (p.length < 5) continue;
-    const ds = (p[idx['BUSINESS_DATE']]||'').trim();
-    if (!ds || !ds[0].match(/\d/)) continue;
-    const day = parseInt(ds.split('-')[0]);
-    const rooms = parseInt(p[idx['STAY_ROOMS']]) || 0;
-    if (day>=1 && day<=31) out[day] = rooms;
+  const excelData={},unknowns=[],unmatched=[];
+  for (const [opName,vals] of Object.entries(operaRaw)) {
+    const {excel,isUnknown}=resolveCountry(opName);
+    if(isUnknown){unknowns.push({name:opName,...vals});continue;}
+    if(excel===null){if(vals.APR||vals.RMS||vals.PRS)unmatched.push({name:opName,...vals});continue;}
+    excelData[excel]=vals;
   }
-  return Object.keys(out).length > 0 ? out : null;
+  let mappedAPR=0,mappedRMS=0,mappedPRS=0,active=0; const rows=[];
+  EXCEL_COUNTRIES.forEach(c=>{const v=excelData[c]||{APR:0,RMS:0,PRS:0};rows.push(v);mappedAPR+=v.APR;mappedRMS+=v.RMS;mappedPRS+=v.PRS;if(v.APR||v.RMS||v.PRS)active++;});
+  const unkAPR=unknowns.reduce((s,x)=>s+x.APR,0)+unmatched.reduce((s,x)=>s+x.APR,0);
+  const unkRMS=unknowns.reduce((s,x)=>s+x.RMS,0)+unmatched.reduce((s,x)=>s+x.RMS,0);
+  const unkPRS=unknowns.reduce((s,x)=>s+x.PRS,0)+unmatched.reduce((s,x)=>s+x.PRS,0);
+  if(!grandAPR)grandAPR=mappedAPR+unkAPR; if(!grandRMS)grandRMS=mappedRMS+unkRMS; if(!grandPRS)grandPRS=mappedPRS+unkPRS;
+  const gapAPR=grandAPR-mappedAPR,gapRMS=grandRMS-mappedRMS,gapPRS=grandPRS-mappedPRS;
+  natCopyText=rows.map(v=>`${v.APR}\t${v.RMS}\t${v.PRS}`).join('\n');
+  document.getElementById('kpi-apr').textContent=grandAPR.toLocaleString();
+  document.getElementById('kpi-rms').textContent=grandRMS.toLocaleString();
+  document.getElementById('kpi-prs').textContent=grandPRS.toLocaleString();
+  ['apr','rms','prs'].forEach(k=>{
+    const op=k==='apr'?grandAPR:k==='rms'?grandRMS:grandPRS;
+    const mp=k==='apr'?mappedAPR:k==='rms'?mappedRMS:mappedPRS;
+    const gp=k==='apr'?gapAPR:k==='rms'?gapRMS:gapPRS;
+    document.getElementById(`d-${k}-op`).textContent=op.toLocaleString();
+    document.getElementById(`d-${k}-mp`).textContent=mp.toLocaleString();
+    const gpEl=document.getElementById(`d-${k}-gp`);gpEl.textContent=gp>0?`− ${gp}`:'✓ 0';gpEl.className=`total-val ${gp>0?'clr-amber':'clr-mint'}`;
+  });
+  document.getElementById('natUnknownList').innerHTML=unknowns.length===0?`<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>No unknown guests</strong><span>Perfect data quality.</span></div></div>`:unknowns.map(u=>`<div class="alert-row warn"><div class="alert-ico">⚠️</div><div class="alert-content"><strong>"${u.name}" — ${u.APR} arrivals · ${u.RMS} room nights · ${u.PRS} guest nights</strong><span>No nationality code. Fix in Opera Guest Profiles.</span></div></div>`).join('');
+  document.getElementById('natUnmatchedList').innerHTML=unmatched.length===0?`<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>All countries matched to Excel rows</strong><span>No data was lost.</span></div></div>`:unmatched.map(u=>`<div class="alert-row error"><div class="alert-ico">🔴</div><div class="alert-content"><strong>"${u.name}" — ${u.APR} arr · ${u.RMS} rms · ${u.PRS} gsts — NOT PLACED</strong><span>Country has no Excel row. Numbers are lost.</span></div></div>`).join('');
+  const hasIssues=unknowns.length>0||unmatched.length>0;
+  const badge=document.getElementById('natDiagBadge');badge.className='status-pill '+(hasIssues?'warn':'ok');badge.textContent=hasIssues?`${unknowns.length} unknown · ${unmatched.length} unmatched`:'✓ All Clean';
+  document.getElementById('gap-apr').textContent=gapAPR>0?`−${gapAPR}`:'0';
+  document.getElementById('gap-rms').textContent=gapRMS>0?`−${gapRMS}`:'0';
+  document.getElementById('gap-prs').textContent=gapPRS>0?`−${gapPRS}`:'0';
+  document.getElementById('s-active').textContent=active;document.getElementById('s-zero').textContent=240-active;document.getElementById('s-unmat').textContent=unmatched.length;document.getElementById('s-unk').textContent=unknowns.length;
+  document.getElementById('headerStatus').textContent='Nationality Ready';document.getElementById('headerStatus').className='header-pill active';
+  document.getElementById('natPreview').innerHTML=EXCEL_COUNTRIES.map((c,i)=>{const v=rows[i];const rn=i+8;const has=v.APR||v.RMS||v.PRS;const sn=c.length>20?c.substring(0,19)+'…':c;return `<div class="data-row nat ${has?'active':''}"><span class="cell-rn">${rn}</span><span class="cell-name" title="${c}">${sn}</span><span class="cell-num ${has?'c-sky':'zero'}">${v.APR}</span><span class="cell-num ${has?'c-gold':'zero'}">${v.RMS}</span><span class="cell-num ${has?'c-mint':'zero'}">${v.PRS}</span></div>`;}).join('');
+  document.getElementById('natResults').style.display='block';
+  document.getElementById('natResults').scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function processRent() {
-  const r1 = document.getElementById('rentInput1').value.trim();
-  const r2 = document.getElementById('rentInput2').value.trim();
-  const errBox = document.getElementById('rentError');
-  const errMsg = document.getElementById('rentErrorMsg');
-  errBox.classList.remove('show');
-
-  const showErr = msg => { errMsg.textContent = msg; errBox.classList.add('show'); };
-
-  if (!r1 || !r2) return showErr('Please paste both files before processing.');
-
-  const isHF  = t => t.includes('NO_ROOMS') && t.includes('CONSIDERED_DATE');
-  const isSRT = t => t.includes('STAY_ROOMS') && t.includes('BUSINESS_DATE');
-
-  let hfRaw = null, stRaw = null;
-  if      (isHF(r1) && isSRT(r2)) { hfRaw=r1; stRaw=r2; }
-  else if (isHF(r2) && isSRT(r1)) { hfRaw=r2; stRaw=r1; }
-  else if (isHF(r1))               { hfRaw=r1; }
-  else if (isHF(r2))               { hfRaw=r2; }
-  else return showErr('Could not detect the files. Make sure you paste History Forecast and Room Type files in Delimited Data format.');
-
-  const hfData = parseHF(hfRaw);
-  if (!hfData) return showErr('Could not read the History Forecast file. Make sure it is in Delimited Data format.');
-
-  const stData = stRaw ? parseSRT(stRaw) : {};
-  const days   = Math.max(...Object.keys(hfData).map(Number));
-
-  let totalRooms=0, totalBeds=0, totalTwin=0;
-  const rows = [];
-
-  for (let d=1; d<=days; d++) {
-    const rm   = hfData[d] || 0;
-    const twin = stData ? (stData[d]||0) : 0;
-    const beds = rm + twin;
-    rows.push({day:d, rooms:rm, beds, twin});
-    totalRooms += rm;
-    totalBeds  += beds;
-    totalTwin  += twin;
-  }
-
-  rentCopyText = rows.map(r => `${r.rooms}\t${r.beds}`).join('\n');
-
-  // KPIs
-  document.getElementById('kpi-rooms').textContent = totalRooms.toLocaleString();
-  document.getElementById('kpi-beds').textContent  = totalBeds.toLocaleString();
-
-  // Formula card
-  document.getElementById('daysFound').textContent = `${days} days`;
-  document.getElementById('twinStatus').textContent = stRaw ? '✓ Connected — twin beds included' : '⚠ Not provided — beds = rooms only';
-
-  // Summary sidebar
-  document.getElementById('rs-rooms').textContent = totalRooms.toLocaleString();
-  document.getElementById('rs-beds').textContent  = totalBeds.toLocaleString();
-  document.getElementById('rs-twin').textContent  = totalTwin.toLocaleString();
-  document.getElementById('rs-days').textContent  = days;
-  document.getElementById('rentEndRow').textContent = `Day ${days} row`;
-  document.getElementById('rentRowCount').textContent = `${days} ROWS`;
-
-  // Build preview
-  const prev = document.getElementById('rentPreview');
-  prev.innerHTML = rows.map(r => {
-    const has = r.rooms > 0;
-    return `<div class="data-row rent ${has?'active-rent':''}">
-      <span class="cell-rn" style="color:${has?'var(--sky2)':'var(--text3)'}">Day ${r.day}</span>
-      <span class="cell-num" style="text-align:left;font-size:0.65rem;color:var(--text3)">+${r.twin} twin</span>
-      <span class="cell-num ${has?'c-sky2':'zero'}">${r.rooms}</span>
-      <span class="cell-num ${has?'c-mint':'zero'}">${r.beds}</span>
-    </div>`;
-  }).join('');
-
-  document.getElementById('rentResults').style.display = 'block';
-  document.getElementById('rentResults').scrollIntoView({ behavior:'smooth', block:'start' });
-}
-
-function copyRent() {
-  if (!rentCopyText) return;
-  copyToClip(rentCopyText, document.getElementById('rentCopyBtn'), 'Copy All Rows');
-}
-
-function clearRent() {
-  document.getElementById('rentInput1').value = '';
-  document.getElementById('rentInput2').value = '';
-  document.getElementById('rentResults').style.display = 'none';
-  document.getElementById('rentError').classList.remove('show');
-  rentCopyText = '';
-}
+function copyNat(){if(!natCopyText)return;copyToClip(natCopyText,document.getElementById('natCopyBtn'),'Copy All 240 Rows');}
+function clearNat(){document.getElementById('natInput').value='';document.getElementById('natResults').style.display='none';document.getElementById('natError').classList.remove('show');natCopyText='';document.getElementById('headerStatus').textContent='Ready';document.getElementById('headerStatus').className='header-pill';}
 
 // ═══════════════════════════════════════════════════
-// NIGHT AUDIT — PM ROOMS
+// TAB 2 — RENTED ROOMS
 // ═══════════════════════════════════════════════════
-let naCopyText = '';
+function parseHF(raw){const lines=raw.trim().split('\n');if(lines.length<2)return null;const headers=lines[0].split('\t');const idx={};headers.forEach((h,i)=>{idx[h.trim()]=i;});if(idx['NO_ROOMS']===undefined||idx['CONSIDERED_DATE']===undefined)return null;const out={};for(let i=1;i<lines.length;i++){const p=lines[i].split('\t');if(p.length<30)continue;const ds=(p[idx['CONSIDERED_DATE']]||'').trim();if(!ds||!ds[0].match(/\d/))continue;const day=parseInt(ds.split('-')[0]);const rooms=parseInt(p[idx['NO_ROOMS']])||0;if(day>=1&&day<=31)out[day]=rooms;}return Object.keys(out).length>0?out:null;}
+function parseSRT(raw){const lines=raw.trim().split('\n');if(lines.length<2)return null;const headers=lines[0].split('\t');const idx={};headers.forEach((h,i)=>{idx[h.trim()]=i;});if(idx['STAY_ROOMS']===undefined||idx['BUSINESS_DATE']===undefined)return null;const out={};for(let i=1;i<lines.length;i++){const p=lines[i].split('\t');if(p.length<5)continue;const ds=(p[idx['BUSINESS_DATE']]||'').trim();if(!ds||!ds[0].match(/\d/))continue;const day=parseInt(ds.split('-')[0]);const rooms=parseInt(p[idx['STAY_ROOMS']])||0;if(day>=1&&day<=31)out[day]=rooms;}return Object.keys(out).length>0?out:null;}
+function processRent(){
+  const r1=document.getElementById('rentInput1').value.trim();const r2=document.getElementById('rentInput2').value.trim();
+  const errBox=document.getElementById('rentError');const errMsg=document.getElementById('rentErrorMsg');errBox.classList.remove('show');
+  const showErr=msg=>{errMsg.textContent=msg;errBox.classList.add('show');};
+  if(!r1||!r2)return showErr('Please paste both files before processing.');
+  const isHF=t=>t.includes('NO_ROOMS')&&t.includes('CONSIDERED_DATE');const isSRT=t=>t.includes('STAY_ROOMS')&&t.includes('BUSINESS_DATE');
+  let hfRaw=null,stRaw=null;
+  if(isHF(r1)&&isSRT(r2)){hfRaw=r1;stRaw=r2;}else if(isHF(r2)&&isSRT(r1)){hfRaw=r2;stRaw=r1;}else if(isHF(r1)){hfRaw=r1;}else if(isHF(r2)){hfRaw=r2;}else return showErr('Could not detect the files.');
+  const hfData=parseHF(hfRaw);if(!hfData)return showErr('Could not read the History Forecast file.');
+  const stData=stRaw?parseSRT(stRaw):{};const days=Math.max(...Object.keys(hfData).map(Number));
+  let totalRooms=0,totalBeds=0,totalTwin=0;const rows=[];
+  for(let d=1;d<=days;d++){const rm=hfData[d]||0;const twin=stData?(stData[d]||0):0;const beds=rm+twin;rows.push({day:d,rooms:rm,beds,twin});totalRooms+=rm;totalBeds+=beds;totalTwin+=twin;}
+  rentCopyText=rows.map(r=>`${r.rooms}\t${r.beds}`).join('\n');
+  document.getElementById('kpi-rooms').textContent=totalRooms.toLocaleString();document.getElementById('kpi-beds').textContent=totalBeds.toLocaleString();
+  document.getElementById('daysFound').textContent=`${days} days`;document.getElementById('twinStatus').textContent=stRaw?'✓ Connected — twin beds included':'⚠ Not provided — beds = rooms only';
+  document.getElementById('rs-rooms').textContent=totalRooms.toLocaleString();document.getElementById('rs-beds').textContent=totalBeds.toLocaleString();document.getElementById('rs-twin').textContent=totalTwin.toLocaleString();document.getElementById('rs-days').textContent=days;document.getElementById('rentEndRow').textContent=`Day ${days} row`;document.getElementById('rentRowCount').textContent=`${days} ROWS`;
+  document.getElementById('rentPreview').innerHTML=rows.map(r=>{const has=r.rooms>0;return `<div class="data-row rent ${has?'active-rent':''}"><span class="cell-rn" style="color:${has?'var(--sky2)':'var(--text3)'}">Day ${r.day}</span><span class="cell-num" style="text-align:left;font-size:0.65rem;color:var(--text3)">+${r.twin} twin</span><span class="cell-num ${has?'c-sky2':'zero'}">${r.rooms}</span><span class="cell-num ${has?'c-mint':'zero'}">${r.beds}</span></div>`;}).join('');
+  document.getElementById('rentResults').style.display='block';document.getElementById('rentResults').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function copyRent(){if(!rentCopyText)return;copyToClip(rentCopyText,document.getElementById('rentCopyBtn'),'Copy All Rows');}
+function clearRent(){document.getElementById('rentInput1').value='';document.getElementById('rentInput2').value='';document.getElementById('rentResults').style.display='none';document.getElementById('rentError').classList.remove('show');rentCopyText='';}
 
-/* ── Parse Opera gipmbyroom delimited file ── */
-function parseOperaPM(raw) {
-  const lines = raw.trim().split('\n');
-  if (lines.length < 2) return null;
-  const headers = lines[0].split('\t').map(h => h.trim());
-  const idx = {};
-  headers.forEach((h, i) => { idx[h] = i; });
-  if (idx['ROOM'] === undefined) return null;
+// ═══════════════════════════════════════════════════
+// TAB 3 — NIGHT AUDIT PM ROOMS
+// ═══════════════════════════════════════════════════
+function parseOperaPM(raw){const lines=raw.trim().split('\n');if(lines.length<2)return null;const headers=lines[0].split('\t').map(h=>h.trim());const idx={};headers.forEach((h,i)=>{idx[h]=i;});if(idx['ROOM']===undefined)return null;const rooms=[];for(let i=1;i<lines.length;i++){const p=lines[i].split('\t');if(p.length<6)continue;const cat=(p[idx['ROOM_CATEGORY_LABEL']]||'').trim();if(cat!=='PM')continue;const room=(p[idx['ROOM']]||'').trim();if(!room||isNaN(parseInt(room)))continue;rooms.push({room:parseInt(room),name:(p[idx['FULL_NAME']]||'').trim(),company:(p[idx['COMPANY_NAME']]||'').trim(),arrival:parseOperaDate(p[idx['ARRIVAL']]||''),departure:parseOperaDate(p[idx['DEPARTURE']]||''),balance:parseBalance(p[idx['BALANCE']]||'0')});}return rooms.length>0?rooms:null;}
+function parseExcelPM(raw){const lines=raw.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return null;const sep=lines[0].includes('\t')?'\t':',';const parse=line=>{if(sep===','){const result=[];let cur='',inQ=false;for(let c of line){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){result.push(cur.trim());cur='';}else cur+=c;}result.push(cur.trim());return result;}return line.split('\t').map(c=>c.trim());};const headers=parse(lines[0]).map(h=>h.replace(/"/g,'').trim().toUpperCase());const roomIdx=headers.findIndex(h=>h==='PM'||h==='ROOM');const nameIdx=headers.findIndex(h=>h==='NAME');const arrIdx=headers.findIndex(h=>h==='ARRIVAL');const depIdx=headers.findIndex(h=>h==='DEPARTURE');const balIdx=headers.findIndex(h=>h==='BALANCE');const deptIdx=headers.findIndex(h=>h.includes('DEPT')||h.includes('DEPARTMENT'));const remIdx=headers.findIndex(h=>h.includes('REMARK'));const accIdx=headers.findIndex(h=>h.includes('ACCOUNT')||h.includes('COMMENTS'));if(roomIdx===-1||nameIdx===-1)return null;const rows=[];for(let i=1;i<lines.length;i++){const p=parse(lines[i]);const roomRaw=(p[roomIdx]||'').replace(/"/g,'').trim();if(!roomRaw||isNaN(parseInt(roomRaw)))continue;rows.push({room:parseInt(roomRaw),name:(p[nameIdx]||'').replace(/"/g,'').trim(),arrival:parseExcelDate((p[arrIdx]||'').replace(/"/g,'').trim()),departure:parseExcelDate((p[depIdx]||'').replace(/"/g,'').trim()),balance:parseBalance((p[balIdx]||'0').replace(/"/g,'').trim()),dept:deptIdx>=0?(p[deptIdx]||'').replace(/"/g,'').trim():'',remarks:remIdx>=0?(p[remIdx]||'').replace(/"/g,'').trim():'',accounts:accIdx>=0?(p[accIdx]||'').replace(/"/g,'').trim():''});}return rows.length>0?rows:null;}
+function parseOperaDate(s){if(!s)return null;const p=s.trim().split('-');if(p.length!==3)return null;const yr=parseInt(p[2])+(parseInt(p[2])<100?2000:0);return new Date(yr,parseInt(p[1])-1,parseInt(p[0]));}
+function parseExcelDate(s){if(!s)return null;const p=s.split('/');if(p.length===3)return new Date(parseInt(p[2]),parseInt(p[0])-1,parseInt(p[1]));const d=new Date(s);return isNaN(d)?null:d;}
+function fmtDate(d){if(!d)return '—';return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtDateExcel(d){if(!d)return '';return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;}
+function parseBalance(s){if(!s)return 0;return parseFloat(String(s).replace(/,/g,''))||0;}
+function sameDate(a,b){if(!a||!b)return !a&&!b;return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function fmtBal(n){if(n===0)return '0.00';return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function processAudit(){
+  const rawOpera=document.getElementById('naOperaInput').value.trim();const rawExcel=document.getElementById('naExcelInput').value.trim();
+  const errBox=document.getElementById('naError');const errMsg=document.getElementById('naErrorMsg');errBox.classList.remove('show');
+  const showErr=msg=>{errMsg.textContent=msg;errBox.classList.add('show');};
+  if(!rawOpera)return showErr('Please paste the Opera PM rooms report.');
+  if(!rawExcel)return showErr('Please paste your management Excel report.');
+  const operaRooms=parseOperaPM(rawOpera);if(!operaRooms)return showErr('Could not read Opera file.');
+  const excelRows=parseExcelPM(rawExcel);if(!excelRows)return showErr('Could not read Excel report.');
+  const excelMap={};excelRows.forEach(r=>{excelMap[r.room]=r;});
+  const diffs=[],fixedRows=[],missing=[],changes=[];
+  operaRooms.forEach(op=>{
+    const ex=excelMap[op.room];
+    if(!ex){missing.push(op);fixedRows.push({...op,dept:'',remarks:'',accounts:'',wasFixed:false,wasMissing:true,fieldDiffs:[]});return;}
+    const fieldDiffs=[];
+    if(op.name.toLowerCase().replace(/[.,\s]/g,'')!==ex.name.toLowerCase().replace(/[.,\s]/g,''))fieldDiffs.push({field:'Name',opera:op.name,excel:ex.name});
+    if(!sameDate(op.arrival,ex.arrival))fieldDiffs.push({field:'Arrival',opera:fmtDate(op.arrival),excel:fmtDate(ex.arrival)});
+    if(!sameDate(op.departure,ex.departure))fieldDiffs.push({field:'Departure',opera:fmtDate(op.departure),excel:fmtDate(ex.departure)});
+    if(Math.abs(op.balance-ex.balance)>0.005)fieldDiffs.push({field:'Balance',opera:fmtBal(op.balance),excel:fmtBal(ex.balance)});
+    const hasDiff=fieldDiffs.length>0;
+    diffs.push({op,ex,fieldDiffs,hasDiff});
+    fixedRows.push({room:op.room,name:op.name,arrival:op.arrival,departure:op.departure,balance:op.balance,dept:ex.dept,remarks:ex.remarks,accounts:ex.accounts,wasFixed:hasDiff,wasMissing:false,fieldDiffs});
+    if(hasDiff)changes.push({room:op.room,fieldDiffs});
+  });
+  const totalRooms=operaRooms.length;const diffCount=diffs.filter(d=>d.hasDiff).length+missing.length;const okCount=totalRooms-diffCount;
+  document.getElementById('na-kpi-total').textContent=totalRooms;document.getElementById('na-kpi-diff').textContent=diffCount;document.getElementById('na-kpi-ok').textContent=okCount;
+  document.getElementById('na-pill-total').textContent=`${totalRooms} rooms`;document.getElementById('na-pill-diff').textContent=`${diffCount} difference${diffCount!==1?'s':''}`;document.getElementById('na-pill-ok').textContent=`${okCount} match${okCount!==1?'es':''}`;
+  document.getElementById('naTabCount').textContent=diffCount>0?`${diffCount} fixes`:'✓ Clean';
+  document.getElementById('naCompareTable').innerHTML=diffs.map(({op,ex,fieldDiffs,hasDiff})=>{const fd={};fieldDiffs.forEach(f=>{fd[f.field]=f;});const nameHtml=fd['Name']?`<div class="field-diff"><span class="field-opera">${fd['Name'].opera}</span><span class="field-excel">${fd['Name'].excel}</span></div>`:`<span class="field-same">${op.name}</span>`;const arrHtml=fd['Arrival']?`<div class="field-diff"><span class="field-opera">${fd['Arrival'].opera}</span><span class="field-excel">${fd['Arrival'].excel}</span></div>`:`<span class="field-same">${fmtDate(op.arrival)}</span>`;const depHtml=fd['Departure']?`<div class="field-diff"><span class="field-opera">${fd['Departure'].opera}</span><span class="field-excel">${fd['Departure'].excel}</span></div>`:`<span class="field-same">${fmtDate(op.departure)}</span>`;const balHtml=fd['Balance']?`<div class="field-diff"><span class="field-opera">${fd['Balance'].opera}</span><span class="field-excel">${fd['Balance'].excel}</span></div>`:`<span class="field-same">${fmtBal(op.balance)}</span>`;return `<div class="compare-row ${hasDiff?'has-diff':'clean'}"><div class="cr-room">${op.room}</div><div class="cr-cell">${nameHtml}</div><div class="cr-cell">${arrHtml}</div><div class="cr-cell">${depHtml}</div><div class="cr-cell">${balHtml}</div><div class="cr-status"><div class="status-dot ${hasDiff?'diff':'ok'}"></div></div></div>`;}).join('')+missing.map(op=>`<div class="compare-row has-diff"><div class="cr-room">${op.room}</div><div class="cr-cell"><span class="field-opera">${op.name}</span></div><div class="cr-cell"><span class="field-opera">${fmtDate(op.arrival)}</span></div><div class="cr-cell"><span class="field-opera">${fmtDate(op.departure)}</span></div><div class="cr-cell"><span class="field-opera">${fmtBal(op.balance)}</span></div><div class="cr-status"><span style="font-family:'Geist Mono',monospace;font-size:0.58rem;color:var(--rose);">NOT IN EXCEL</span></div></div>`).join('');
+  document.getElementById('naFixedTable').innerHTML=fixedRows.map(r=>{const balClass=r.balance>0?'pos':r.balance<0?'neg':'zero';const fixTag=r.wasFixed?'<span class="fr-fixed-tag">FIXED</span>':'';return `<div class="fixed-row ${r.wasFixed?'was-fixed':'clean-row'}"><span class="fr-room">${r.room}</span><span class="fr-name">${r.name}${fixTag}</span><span class="fr-val">${fmtDate(r.arrival)}</span><span class="fr-val">${fmtDate(r.departure)}</span><span class="fr-bal ${balClass}">${fmtBal(r.balance)}</span></div>`;}).join('');
+  document.getElementById('naFixedCount').textContent=`${fixedRows.length} rows`;
+  const changesList=document.getElementById('naChangesList');
+  if(changes.length===0&&missing.length===0){changesList.innerHTML='<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>No changes needed</strong><span>Opera and Excel are identical.</span></div></div>';}
+  else{changesList.innerHTML=changes.map(c=>`<div class="change-item"><span class="change-room">Room ${c.room}</span>${c.fieldDiffs.map(f=>`<span class="change-desc">${f.field} corrected</span><span class="change-old">✗ ${f.excel}</span><span class="change-new">✓ ${f.opera}</span>`).join('')}</div>`).join('')+missing.map(op=>`<div class="change-item"><span class="change-room">Room ${op.room}</span><span class="change-desc">Not in Excel — added from Opera</span><span class="change-new">✓ ${op.name}</span></div>`).join('');}
+  const missingCard=document.getElementById('naMissingCard');const missingList=document.getElementById('naMissingList');
+  if(missing.length>0){missingCard.style.display='block';missingList.innerHTML=missing.map(op=>`<div class="change-item"><span class="change-room">Room ${op.room}</span><span class="change-new">${op.name}</span><span class="change-desc">Balance: ${fmtBal(op.balance)}</span></div>`).join('');}else{missingCard.style.display='none';}
+  naCopyText=fixedRows.map(r=>[r.room,r.name,fmtDateExcel(r.arrival),fmtDateExcel(r.departure),r.balance,r.dept,r.remarks,r.accounts].join('\t')).join('\n');
+  document.getElementById('naCompareSection').style.display='block';document.getElementById('naCompareSection').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function copyAudit(){if(!naCopyText)return;copyToClip(naCopyText,document.getElementById('naCopyBtn'),'Copy All Fixed Rows');}
+function clearAudit(){document.getElementById('naOperaInput').value='';document.getElementById('naExcelInput').value='';document.getElementById('naCompareSection').style.display='none';document.getElementById('naError').classList.remove('show');document.getElementById('naTabCount').textContent='Compare';naCopyText='';}
 
-  const rooms = [];
-  for (let i = 1; i < lines.length; i++) {
-    const p = lines[i].split('\t');
-    if (p.length < 6) continue;
-    const cat = (p[idx['ROOM_CATEGORY_LABEL']] || '').trim();
-    if (cat !== 'PM') continue; // only PM rooms
-    const room = (p[idx['ROOM']] || '').trim();
-    if (!room || isNaN(parseInt(room))) continue;
-    rooms.push({
-      room:      parseInt(room),
-      name:      (p[idx['FULL_NAME']]   || '').trim(),
-      company:   (p[idx['COMPANY_NAME']]|| '').trim(),
-      arrival:   parseOperaDate(p[idx['ARRIVAL']]   || ''),
-      departure: parseOperaDate(p[idx['DEPARTURE']] || ''),
-      balance:   parseBalance(p[idx['BALANCE']] || '0'),
-    });
+// ═══════════════════════════════════════════════════
+// TAB 4 — NIGHT RUN CHECKLIST
+// ═══════════════════════════════════════════════════
+const CL_STEPS = [
+  { id:1,  phase:'pre',  name:'Cancel non-guaranteed bookings',            tag:'check',  hint:'Check all reservations with no guarantee method and cancel per hotel policy.',         checks:['Filter by guarantee type in Opera','Identify no-deposit / no-CC bookings','Cancel and record each cancellation number'] },
+  { id:2,  phase:'pre',  name:'CC recancellations',                         tag:'check',  hint:'Run credit card recancellations for failed or declined cards in Opera.',              checks:['Pull declined CC report','Attempt manual recharge if possible','Cancel reservation if card cannot be recovered'] },
+  { id:3,  phase:'pre',  name:'Cancel OTA rooms + mark card invalid',       tag:'check',  hint:'Cancel Booking.com and other OTA rooms with invalid Virtual Credit Cards.',          checks:['Review OTA arrivals list for tonight','Check VCC status for each reservation','Cancel room if VCC is declined or invalid','Mark card as invalid in Opera profile'] },
+  { id:4,  phase:'pre',  name:'Check immigration / nationality report',     tag:'check',  hint:'Verify all in-house guests have a nationality assigned. Fix missing entries.',        checks:['Run nationality report in Opera','Check for unknown / blank nationalities','Update guest profiles before night run'] },
+  { id:5,  phase:'pre',  name:'Charge VCCs for tomorrow\'s arrivals',       tag:'charge', hint:'Charge any Virtual Credit Cards due tonight for guests arriving tomorrow.',           checks:['Pull VCC list for tomorrow\'s arrivals','Charge each VCC in Opera','Record authorisation numbers'] },
+  { id:6,  phase:'pre',  name:'Update no-show sheet (pre-run)',              tag:'check',  hint:'Flag expected no-shows before running the night audit.',                             checks:['Cross-reference arrival list vs actual check-ins','Mark no-shows in tracking sheet','Note any late arrivals to hold rooms for'] },
+  { id:7,  phase:'pre',  name:'Save Inhouse Guest Complimentary report',    tag:'save',   hint:'Export and save the complimentary in-house guest report before night run.',           checks:['Generate Inhouse Comp report in Opera','Export to PDF','Save in tonight\'s reporting folder'] },
+  { id:8,  phase:'pre',  name:'Zero rate room report — remove pseudo rooms',tag:'check',  hint:'Run zero-rate report. Pseudo/dummy rooms must be empty before night run.',           checks:['Run zero rate room report in Opera','Confirm no pseudo rooms are listed as occupied','Resolve any pseudo room discrepancies'] },
+  { id:9,  phase:'pre',  name:'Paidout report + attach commission & FD docs',tag:'scan',  hint:'Save paidout report and scan/attach commission and front desk paidout receipts.',    checks:['Run paidout report in Opera','Scan and attach FD paidout receipts','Scan and attach commission paidout documents','Save combined PDF in tonight\'s folder'] },
+  { id:10, phase:'pre',  name:'Refund report + attach documents',            tag:'scan',   hint:'Save refund report and scan/attach any refund slips from today.',                    checks:['Run refund report in Opera','Scan refund authorisation documents','Attach and save in tonight\'s folder'] },
+  { id:11, phase:'pre',  name:'Rate check — select check-in & search',      tag:'check',  hint:'Perform rate check using today\'s check-in date filter before running the night.',   checks:['Open rate check in Opera','Select today\'s check-in date','Search and review rates for any exceptions or errors'] },
+  { id:12, phase:'run',  name:'Run the night audit',                         tag:'run',    hint:'Execute the night audit in Opera. Do not interrupt the process once started.',       checks:['Confirm all pre-night steps are complete','Start night audit in Opera','Wait for the successful completion confirmation'] },
+  { id:13, phase:'post', name:'Manager report',                              tag:'save',   hint:'Generate and save the manager report after the night audit has completed.',           checks:['Run manager report in Opera','Verify all figures are correct','Save / print and file in reporting folder'] },
+  { id:14, phase:'post', name:'No-show report + post charges',               tag:'save',   hint:'Finalise no-show list post-night and post charges where required.',                  checks:['Run no-show report in Opera','Post no-show charges per hotel policy','Update no-show tracking sheet'] },
+  { id:15, phase:'post', name:'Negative posting report',                     tag:'check',  hint:'Review all negative postings and resolve or escalate any discrepancies.',            checks:['Run negative posting report in Opera','Investigate each negative entry','Correct or escalate to management as needed'] },
+  { id:16, phase:'post', name:'Room recancellations (post-night)',            tag:'check',  hint:'Process any room recancellations that were held until after the night audit.',       checks:['Review list of held cancellations','Process each in Opera','Confirm availability is updated'] },
+  { id:17, phase:'post', name:'Flash report',                                tag:'save',   hint:'Prepare and distribute the flash report with tonight\'s key figures.',               checks:['Pull occupancy and revenue figures','Complete flash report template','Send to management / file in reporting folder'] },
+];
+
+const clState = { done: new Set(), skipped: new Set(), expanded: new Set(), miniChecks: {}, notes: {}, names: {}, editMode: false };
+
+function clSave() {
+  try {
+    localStorage.setItem('hrp_cl', JSON.stringify({
+      done: [...clState.done], skipped: [...clState.skipped], expanded: [...clState.expanded],
+      miniChecks: clState.miniChecks, notes: clState.notes, names: clState.names
+    }));
+  } catch(e) {}
+}
+
+function clLoad() {
+  try {
+    const d = JSON.parse(localStorage.getItem('hrp_cl') || '{}');
+    if (d.done)     d.done.forEach(i => clState.done.add(i));
+    if (d.skipped)  d.skipped.forEach(i => clState.skipped.add(i));
+    if (d.expanded) d.expanded.forEach(i => clState.expanded.add(i));
+    if (d.miniChecks) Object.assign(clState.miniChecks, d.miniChecks);
+    if (d.notes)    Object.assign(clState.notes, d.notes);
+    if (d.names)    Object.assign(clState.names, d.names);
+  } catch(e) {}
+}
+
+function clUpdateProgress() {
+  const active = CL_STEPS.filter(s => !clState.skipped.has(s.id));
+  const done   = active.filter(s => clState.done.has(s.id)).length;
+  const total  = active.length;
+  const pct    = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('clProgLabel').textContent = `${done} of ${total} steps done`;
+  document.getElementById('clProgPct').textContent   = `${pct}%`;
+  document.getElementById('clProgFill').style.width  = pct + '%';
+  document.getElementById('clTabCount').textContent  = pct === 100 ? '✓ Done' : `${done}/${total}`;
+  const banner = document.getElementById('clComplete');
+  if (pct === 100 && total > 0) {
+    banner.classList.add('show');
+    document.getElementById('clCompleteTime').textContent = 'Completed at ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+  } else {
+    banner.classList.remove('show');
   }
-  return rooms.length > 0 ? rooms : null;
 }
 
-/* ── Parse Excel/CSV management report ── */
-function parseExcelPM(raw) {
-  // Support both tab-separated (copied from Excel) and comma-separated (CSV)
-  const lines = raw.trim().split('\n').filter(l => l.trim());
-  if (lines.length < 2) return null;
+function clRender() {
+  const list = document.getElementById('clStepList');
+  const phases = [
+    { key:'pre',  label:'Before night run',   cls:'pre'  },
+    { key:'run',  label:'Night run',           cls:'run'  },
+    { key:'post', label:'After night run',     cls:'post' },
+  ];
+  let html = '';
 
-  const sep = lines[0].includes('\t') ? '\t' : ',';
-  const parse = line => {
-    if (sep === ',') {
-      // Handle quoted CSV fields
-      const result = [];
-      let cur = '', inQ = false;
-      for (let c of line) {
-        if (c === '"') { inQ = !inQ; }
-        else if (c === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
-        else cur += c;
-      }
-      result.push(cur.trim());
-      return result;
-    }
-    return line.split('\t').map(c => c.trim());
-  };
+  phases.forEach(ph => {
+    const steps = CL_STEPS.filter(s => s.phase === ph.key);
+    html += `<div class="cl-phase-group">
+      <div class="cl-phase-header">
+        <div class="cl-phase-line"></div>
+        <div class="cl-phase-badge ${ph.cls}">${ph.label}</div>
+        <div class="cl-phase-line"></div>
+      </div>`;
 
-  const headers = parse(lines[0]).map(h => h.replace(/"/g,'').trim().toUpperCase());
-  const roomIdx = headers.findIndex(h => h === 'PM' || h === 'ROOM');
-  const nameIdx = headers.findIndex(h => h === 'NAME');
-  const arrIdx  = headers.findIndex(h => h === 'ARRIVAL');
-  const depIdx  = headers.findIndex(h => h === 'DEPARTURE');
-  const balIdx  = headers.findIndex(h => h === 'BALANCE');
-  const deptIdx = headers.findIndex(h => h.includes('DEPT') || h.includes('DEPARTMENT'));
-  const remIdx  = headers.findIndex(h => h.includes('REMARK'));
-  const accIdx  = headers.findIndex(h => h.includes('ACCOUNT') || h.includes('COMMENTS'));
+    steps.forEach(s => {
+      const done    = clState.done.has(s.id);
+      const skip    = clState.skipped.has(s.id);
+      const exp     = clState.expanded.has(s.id);
+      const mc      = clState.miniChecks[s.id] || {};
+      const note    = clState.notes[s.id] || '';
+      const name    = clState.names[s.id] || s.name;
+      const hasNote = note.trim().length > 0;
 
-  if (roomIdx === -1 || nameIdx === -1) return null;
+      const tagHtml = `<span class="cl-tag ${s.tag}">${s.tag}</span>`;
 
-  const rows = [];
-  for (let i = 1; i < lines.length; i++) {
-    const p = parse(lines[i]);
-    const roomRaw = (p[roomIdx] || '').replace(/"/g,'').trim();
-    if (!roomRaw || isNaN(parseInt(roomRaw))) continue;
-    rows.push({
-      room:      parseInt(roomRaw),
-      name:      (p[nameIdx]  || '').replace(/"/g,'').trim(),
-      arrival:   parseExcelDate((p[arrIdx]  || '').replace(/"/g,'').trim()),
-      departure: parseExcelDate((p[depIdx]  || '').replace(/"/g,'').trim()),
-      balance:   parseBalance((p[balIdx]    || '0').replace(/"/g,'').trim()),
-      dept:      deptIdx >= 0 ? (p[deptIdx] || '').replace(/"/g,'').trim() : '',
-      remarks:   remIdx  >= 0 ? (p[remIdx]  || '').replace(/"/g,'').trim() : '',
-      accounts:  accIdx  >= 0 ? (p[accIdx]  || '').replace(/"/g,'').trim() : '',
-    });
-  }
-  return rows.length > 0 ? rows : null;
-}
+      const checksHtml = s.checks.map((c, ci) => `
+        <div class="cl-subtask ${mc[ci] ? 'checked' : ''}" onclick="clToggleMini(${s.id},${ci})">
+          <div class="cl-mini-check">✓</div>
+          <span>${c}</span>
+        </div>`).join('');
 
-/* ── Date helpers ── */
-function parseOperaDate(s) {
-  // "25-03-26" → Date
-  if (!s) return null;
-  const p = s.trim().split('-');
-  if (p.length !== 3) return null;
-  const yr = parseInt(p[2]) + (parseInt(p[2]) < 100 ? 2000 : 0);
-  return new Date(yr, parseInt(p[1])-1, parseInt(p[0]));
-}
+      const editInput = clState.editMode
+        ? `<div class="cl-detail-label">Rename step</div>
+           <input type="text" class="cl-edit-name" value="${name.replace(/"/g,'&quot;')}" 
+             onchange="clRename(${s.id},this.value)" oninput="clRename(${s.id},this.value)" />`
+        : '';
 
-function parseExcelDate(s) {
-  if (!s) return null;
-  // "3/25/2026" or "03/25/2026"
-  const p = s.split('/');
-  if (p.length === 3) return new Date(parseInt(p[2]), parseInt(p[0])-1, parseInt(p[1]));
-  // Try ISO
-  const d = new Date(s);
-  return isNaN(d) ? null : d;
-}
-
-function fmtDate(d) {
-  if (!d) return '—';
-  return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
-}
-
-function fmtDateExcel(d) {
-  // Format for Excel paste: M/D/YYYY
-  if (!d) return '';
-  return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
-}
-
-function parseBalance(s) {
-  if (!s) return 0;
-  return parseFloat(String(s).replace(/,/g,'')) || 0;
-}
-
-function sameDate(a, b) {
-  if (!a || !b) return !a && !b;
-  return a.getFullYear() === b.getFullYear() &&
-         a.getMonth()    === b.getMonth()    &&
-         a.getDate()     === b.getDate();
-}
-
-function fmtBal(n) {
-  if (n === 0) return '0.00';
-  return n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-}
-
-/* ── Main comparison ── */
-function processAudit() {
-  const rawOpera = document.getElementById('naOperaInput').value.trim();
-  const rawExcel = document.getElementById('naExcelInput').value.trim();
-  const errBox = document.getElementById('naError');
-  const errMsg = document.getElementById('naErrorMsg');
-  errBox.classList.remove('show');
-
-  const showErr = msg => { errMsg.textContent = msg; errBox.classList.add('show'); };
-
-  if (!rawOpera) return showErr('Please paste the Opera PM rooms report (gipmbyroom file).');
-  if (!rawExcel) return showErr('Please paste your management Excel report.');
-
-  const operaRooms = parseOperaPM(rawOpera);
-  if (!operaRooms) return showErr('Could not read Opera file. Make sure it is the Delimited Data format with ROOM_CATEGORY_LABEL column containing "PM".');
-
-  const excelRows = parseExcelPM(rawExcel);
-  if (!excelRows) return showErr('Could not read Excel report. Copy the rows from your Excel file (include the header row) and paste here.');
-
-  // Build lookup maps
-  const excelMap = {};
-  excelRows.forEach(r => { excelMap[r.room] = r; });
-
-  // ── Compare ──
-  const diffs     = [];
-  const fixedRows = [];
-  const missing   = [];  // in Opera but not in Excel
-  const changes   = [];  // summary of what was fixed
-
-  operaRooms.forEach(op => {
-    const ex = excelMap[op.room];
-
-    if (!ex) {
-      missing.push(op);
-      // Still add to fixed output with no dept/remarks
-      fixedRows.push({ ...op, dept:'', remarks:'', accounts:'', wasFixed: false, wasMissing: true, fieldDiffs: [] });
-      return;
-    }
-
-    const fieldDiffs = [];
-
-    // Name — Opera always wins
-    if (op.name.toLowerCase().replace(/[.,\s]/g,'') !== ex.name.toLowerCase().replace(/[.,\s]/g,'')) {
-      fieldDiffs.push({ field:'Name', opera: op.name, excel: ex.name });
-    }
-
-    // Arrival
-    if (!sameDate(op.arrival, ex.arrival)) {
-      fieldDiffs.push({ field:'Arrival', opera: fmtDate(op.arrival), excel: fmtDate(ex.arrival) });
-    }
-
-    // Departure
-    if (!sameDate(op.departure, ex.departure)) {
-      fieldDiffs.push({ field:'Departure', opera: fmtDate(op.departure), excel: fmtDate(ex.departure) });
-    }
-
-    // Balance
-    if (Math.abs(op.balance - ex.balance) > 0.005) {
-      fieldDiffs.push({ field:'Balance', opera: fmtBal(op.balance), excel: fmtBal(ex.balance) });
-    }
-
-    const hasDiff = fieldDiffs.length > 0;
-
-    diffs.push({ op, ex, fieldDiffs, hasDiff });
-
-    // Fixed row: always use Opera values for the 5 core fields, preserve dept/remarks from Excel
-    fixedRows.push({
-      room:      op.room,
-      name:      op.name,
-      arrival:   op.arrival,
-      departure: op.departure,
-      balance:   op.balance,
-      dept:      ex.dept,
-      remarks:   ex.remarks,
-      accounts:  ex.accounts,
-      wasFixed:  hasDiff,
-      wasMissing: false,
-      fieldDiffs,
+      html += `<div class="cl-step ${done?'done':''} ${skip?'skipped':''}" id="clStep${s.id}">
+        <div class="cl-step-main" onclick="clToggleDone(${s.id})">
+          <div class="cl-check">✓</div>
+          <div style="flex:1;min-width:0">
+            <div class="cl-step-num">Step ${s.id} ${tagHtml}</div>
+            <div class="cl-step-name">${name}</div>
+            <div class="cl-step-hint">${s.hint}</div>
+          </div>
+          <div class="cl-step-controls" onclick="event.stopPropagation()">
+            <button class="cl-icon-btn note-btn ${hasNote?'has-note':''}" title="${hasNote?'Has notes':'Add notes'}" onclick="clToggleExpand(${s.id})">✎</button>
+            <button class="cl-icon-btn skip-btn" title="${skip?'Restore step':'Skip tonight'}" onclick="clToggleSkip(${s.id})">${skip?'↩':'✕'}</button>
+          </div>
+        </div>
+        <div class="cl-detail ${exp?'open':''}" id="clDetail${s.id}">
+          ${editInput}
+          <div class="cl-detail-label">Sub-tasks</div>
+          ${checksHtml}
+          <div class="cl-detail-label">Notes for tonight</div>
+          <textarea class="cl-notes-area" placeholder="Add any notes, names, or follow-ups for this step…" 
+            onchange="clSaveNote(${s.id},this.value)" 
+            oninput="clSaveNote(${s.id},this.value)">${note}</textarea>
+        </div>
+      </div>`;
     });
 
-    if (hasDiff) {
-      changes.push({ room: op.room, fieldDiffs });
-    }
+    html += `</div>`;
   });
 
-  const totalRooms = operaRooms.length;
-  const diffCount  = diffs.filter(d => d.hasDiff).length + missing.length;
-  const okCount    = totalRooms - diffCount;
-
-  // ── Update KPIs ──
-  document.getElementById('na-kpi-total').textContent = totalRooms;
-  document.getElementById('na-kpi-diff').textContent  = diffCount;
-  document.getElementById('na-kpi-ok').textContent    = okCount;
-
-  document.getElementById('na-pill-total').textContent = `${totalRooms} rooms`;
-  document.getElementById('na-pill-diff').textContent  = `${diffCount} difference${diffCount!==1?'s':''}`;
-  document.getElementById('na-pill-ok').textContent    = `${okCount} match${okCount!==1?'es':''}`;
-
-  // Tab count badge
-  document.getElementById('naTabCount').textContent = diffCount > 0 ? `${diffCount} fixes` : '✓ Clean';
-
-  // ── Build comparison table ──
-  const compTable = document.getElementById('naCompareTable');
-  compTable.innerHTML = diffs.map(({op, ex, fieldDiffs, hasDiff}) => {
-    const fd = {};
-    fieldDiffs.forEach(f => { fd[f.field] = f; });
-
-    const nameHtml = fd['Name']
-      ? `<div class="field-diff"><span class="field-opera">${fd['Name'].opera}</span><span class="field-excel">${fd['Name'].excel}</span></div>`
-      : `<span class="field-same">${op.name}</span>`;
-
-    const arrHtml = fd['Arrival']
-      ? `<div class="field-diff"><span class="field-opera">${fd['Arrival'].opera}</span><span class="field-excel">${fd['Arrival'].excel}</span></div>`
-      : `<span class="field-same">${fmtDate(op.arrival)}</span>`;
-
-    const depHtml = fd['Departure']
-      ? `<div class="field-diff"><span class="field-opera">${fd['Departure'].opera}</span><span class="field-excel">${fd['Departure'].excel}</span></div>`
-      : `<span class="field-same">${fmtDate(op.departure)}</span>`;
-
-    const balHtml = fd['Balance']
-      ? `<div class="field-diff"><span class="field-opera">${fd['Balance'].opera}</span><span class="field-excel">${fd['Balance'].excel}</span></div>`
-      : `<span class="field-same">${fmtBal(op.balance)}</span>`;
-
-    return `<div class="compare-row ${hasDiff ? 'has-diff' : 'clean'}">
-      <div class="cr-room">${op.room}</div>
-      <div class="cr-cell">${nameHtml}</div>
-      <div class="cr-cell">${arrHtml}</div>
-      <div class="cr-cell">${depHtml}</div>
-      <div class="cr-cell">${balHtml}</div>
-      <div class="cr-status">
-        <div class="status-dot ${hasDiff ? 'diff' : 'ok'}" title="${hasDiff ? fieldDiffs.length + ' difference(s)' : 'Perfect match'}"></div>
-      </div>
-    </div>`;
-  }).join('') + missing.map(op => `
-    <div class="compare-row has-diff">
-      <div class="cr-room">${op.room}</div>
-      <div class="cr-cell"><span class="field-opera">${op.name}</span></div>
-      <div class="cr-cell"><span class="field-opera">${fmtDate(op.arrival)}</span></div>
-      <div class="cr-cell"><span class="field-opera">${fmtDate(op.departure)}</span></div>
-      <div class="cr-cell"><span class="field-opera">${fmtBal(op.balance)}</span></div>
-      <div class="cr-status"><span style="font-family:'Geist Mono',monospace;font-size:0.58rem;color:var(--rose);">NOT IN EXCEL</span></div>
-    </div>`).join('');
-
-  // ── Build fixed output table ──
-  const fixedTable = document.getElementById('naFixedTable');
-  fixedTable.innerHTML = fixedRows.map(r => {
-    const balClass = r.balance > 0 ? 'pos' : r.balance < 0 ? 'neg' : 'zero';
-    const fixTag   = r.wasFixed ? '<span class="fr-fixed-tag">FIXED</span>' : '';
-    return `<div class="fixed-row ${r.wasFixed ? 'was-fixed' : 'clean-row'}">
-      <span class="fr-room">${r.room}</span>
-      <span class="fr-name">${r.name}${fixTag}</span>
-      <span class="fr-val">${fmtDate(r.arrival)}</span>
-      <span class="fr-val">${fmtDate(r.departure)}</span>
-      <span class="fr-bal ${balClass}">${fmtBal(r.balance)}</span>
-    </div>`;
-  }).join('');
-
-  document.getElementById('naFixedCount').textContent = `${fixedRows.length} rows`;
-
-  // ── Build changes summary ──
-  const changesList = document.getElementById('naChangesList');
-  if (changes.length === 0 && missing.length === 0) {
-    changesList.innerHTML = '<div class="alert-row ok"><div class="alert-ico">✅</div><div class="alert-content"><strong>No changes needed — everything matches!</strong><span>Opera and your Excel report are identical.</span></div></div>';
-  } else {
-    changesList.innerHTML = changes.map(c => `
-      <div class="change-item">
-        <span class="change-room">Room ${c.room}</span>
-        ${c.fieldDiffs.map(f => `
-          <span class="change-desc">${f.field} corrected</span>
-          <span class="change-old">✗ ${f.excel}</span>
-          <span class="change-new">✓ ${f.opera}</span>
-        `).join('')}
-      </div>`).join('') + missing.map(op => `
-      <div class="change-item">
-        <span class="change-room">Room ${op.room}</span>
-        <span class="change-desc">Not in Excel — added from Opera</span>
-        <span class="change-new">✓ ${op.name}</span>
-      </div>`).join('');
-  }
-
-  // ── Missing rooms card ──
-  const missingCard = document.getElementById('naMissingCard');
-  const missingList = document.getElementById('naMissingList');
-  if (missing.length > 0) {
-    missingCard.style.display = 'block';
-    missingList.innerHTML = missing.map(op => `
-      <div class="change-item">
-        <span class="change-room">Room ${op.room}</span>
-        <span class="change-new">${op.name}</span>
-        <span class="change-desc">Balance: ${fmtBal(op.balance)}</span>
-      </div>`).join('');
-  } else {
-    missingCard.style.display = 'none';
-  }
-
-  // ── Build copy text (tab-separated, matching Excel columns: PM, NAME, ARRIVAL, DEPARTURE, BALANCE, Department, REMARKS, Accounts Comments) ──
-  naCopyText = fixedRows.map(r => [
-    r.room,
-    r.name,
-    fmtDateExcel(r.arrival),
-    fmtDateExcel(r.departure),
-    r.balance,
-    r.dept,
-    r.remarks,
-    r.accounts,
-  ].join('\t')).join('\n');
-
-  document.getElementById('naCompareSection').style.display = 'block';
-  document.getElementById('naCompareSection').scrollIntoView({ behavior:'smooth', block:'start' });
+  list.innerHTML = html;
+  clUpdateProgress();
 }
 
-function copyAudit() {
-  if (!naCopyText) return;
-  copyToClip(naCopyText, document.getElementById('naCopyBtn'), 'Copy All Fixed Rows');
+function clToggleDone(id) {
+  if (clState.skipped.has(id)) return;
+  if (clState.done.has(id)) clState.done.delete(id);
+  else clState.done.add(id);
+  clSave();
+  const el = document.getElementById('clStep' + id);
+  if (el) el.className = `cl-step ${clState.done.has(id)?'done':''} ${clState.skipped.has(id)?'skipped':''}`;
+  clUpdateProgress();
 }
 
-function clearAudit() {
-  document.getElementById('naOperaInput').value = '';
-  document.getElementById('naExcelInput').value = '';
-  document.getElementById('naCompareSection').style.display = 'none';
-  document.getElementById('naError').classList.remove('show');
-  document.getElementById('naTabCount').textContent = 'Compare';
-  naCopyText = '';
+function clToggleSkip(id) {
+  if (clState.skipped.has(id)) { clState.skipped.delete(id); }
+  else { clState.skipped.add(id); clState.done.delete(id); }
+  clSave();
+  clRender();
 }
 
+function clToggleExpand(id) {
+  if (clState.expanded.has(id)) clState.expanded.delete(id);
+  else clState.expanded.add(id);
+  clSave();
+  const detail = document.getElementById('clDetail' + id);
+  if (detail) detail.classList.toggle('open', clState.expanded.has(id));
+}
+
+function clToggleMini(sid, ci) {
+  if (!clState.miniChecks[sid]) clState.miniChecks[sid] = {};
+  clState.miniChecks[sid][ci] = !clState.miniChecks[sid][ci];
+  clSave();
+  const subtasks = document.querySelectorAll(`#clDetail${sid} .cl-subtask`);
+  if (subtasks[ci]) { subtasks[ci].classList.toggle('checked', clState.miniChecks[sid][ci]); }
+}
+
+function clSaveNote(id, val) {
+  clState.notes[id] = val;
+  clSave();
+  const btn = document.querySelector(`#clStep${id} .note-btn`);
+  if (btn) btn.classList.toggle('has-note', val.trim().length > 0);
+}
+
+function clRename(id, val) {
+  clState.names[id] = val;
+  clSave();
+  const nameEl = document.querySelector(`#clStep${id} .cl-step-name`);
+  if (nameEl) nameEl.textContent = val;
+}
+
+function clToggleEdit() {
+  clState.editMode = !clState.editMode;
+  document.getElementById('clEditBar').classList.toggle('show', clState.editMode);
+  clRender();
+}
+
+function clReset() {
+  if (!confirm('Reset all checkboxes for a new night? Notes and custom step names will be kept.')) return;
+  clState.done.clear();
+  clState.skipped.clear();
+  clState.miniChecks = {};
+  clSave();
+  clRender();
+}
+
+// Init checklist date
+document.getElementById('cl-date-label').textContent = new Date().toLocaleDateString('en-GB', {
+  weekday:'long', day:'numeric', month:'long', year:'numeric'
+});
+
+clLoad();
+clRender();
 </script>
-
-<!-- ══════════════════════════════════════════
-     TAB 3 — NIGHT AUDIT · PM ROOMS
-══════════════════════════════════════════ -->
-<div class="tab-panel" id="tab-audit">
-<div class="page-wrap">
-
-  <!-- STEP 1: Upload -->
-  <div class="section-head">
-    <div class="section-icon blue">📥</div>
-    <div>
-      <h2>Night Audit — PM Rooms Comparison</h2>
-      <p>Paste Opera report + upload your management Excel to find and fix differences</p>
-    </div>
-    <span class="step-badge">STEP 1 OF 3</span>
-  </div>
-
-  <div class="card">
-    <div class="na-upload-grid">
-      <div class="upload-zone">
-        <div class="upload-label">
-          <div class="upload-dot blue"></div>
-          <span class="upload-label-text">Opera Cloud — PM Rooms Report</span>
-          <span class="upload-label-sub">gipmbyroom_….txt</span>
-        </div>
-        <textarea id="naOperaInput" placeholder="Open Opera Cloud → Front Desk → In-House Guests by Room&#10;Download as: Delimited Data&#10;Open the .txt file → Select All → Copy → Paste here&#10;&#10;File should contain: ROOM, FULL_NAME, ARRIVAL, DEPARTURE, BALANCE ..."></textarea>
-      </div>
-      <div class="upload-zone file2">
-        <div class="upload-label">
-          <div class="upload-dot mint"></div>
-          <span class="upload-label-text">Management Report — Your Excel File</span>
-          <span class="upload-label-sub">PM_Ibis_DD_….csv or paste from Excel</span>
-        </div>
-        <textarea id="naExcelInput" placeholder="Open your Excel management report&#10;Select all rows (including header) → Copy → Paste here&#10;&#10;OR drag and drop your CSV file content here&#10;&#10;Expected columns: PM, NAME, ARRIVAL, DEPARTURE, BALANCE, Department, REMARKS ..."></textarea>
-      </div>
-    </div>
-
-    <div class="error-box" id="naError">
-      <span>⚠</span>
-      <span id="naErrorMsg"></span>
-    </div>
-
-    <div class="action-bar">
-      <button class="btn btn-process" onclick="processAudit()">
-        <span>🔍</span> Compare &amp; Find Differences
-      </button>
-      <button class="btn btn-clear" onclick="clearAudit()">✕ Clear</button>
-      <span class="info-hint">Opera is always the source of truth</span>
-    </div>
-  </div>
-
-  <!-- STEP 2: Comparison results -->
-  <div id="naCompareSection" style="display:none;">
-
-    <div class="divider">
-      <div class="divider-line"></div>
-      <div class="divider-label">Comparison Results</div>
-      <div class="divider-line"></div>
-    </div>
-
-    <div class="section-head fade-in">
-      <div class="section-icon rose">🔍</div>
-      <div>
-        <h2>Differences Found</h2>
-        <p>Opera vs Management Report — fields highlighted in amber need fixing</p>
-      </div>
-      <span class="step-badge">STEP 2 OF 3</span>
-    </div>
-
-    <!-- KPI strip -->
-    <div class="kpi-strip cols3 fade-in" style="margin-bottom:20px;">
-      <div class="kpi sky">
-        <div class="kpi-glow"></div><div class="kpi-bar"></div>
-        <div class="kpi-label">Total PM Rooms</div>
-        <div class="kpi-value" id="na-kpi-total">—</div>
-        <div class="kpi-sub">Rooms in Opera report</div>
-      </div>
-      <div class="kpi gold">
-        <div class="kpi-glow"></div><div class="kpi-bar"></div>
-        <div class="kpi-label">Rooms with Differences</div>
-        <div class="kpi-value" id="na-kpi-diff">—</div>
-        <div class="kpi-sub">Needs to be corrected</div>
-      </div>
-      <div class="kpi mint">
-        <div class="kpi-glow"></div><div class="kpi-bar"></div>
-        <div class="kpi-label">Rooms Match Perfectly</div>
-        <div class="kpi-value" id="na-kpi-ok">—</div>
-        <div class="kpi-sub">No changes needed</div>
-      </div>
-    </div>
-
-    <!-- Comparison table -->
-    <div class="compare-wrap fade-in-2">
-      <div class="compare-top">
-        <div class="compare-top-left">
-          <h3>Room-by-Room Comparison</h3>
-          <p>Green = Opera (correct) · Red strikethrough = Excel (wrong) · Amber = has difference</p>
-        </div>
-        <div class="compare-pills">
-          <span class="cpill total" id="na-pill-total">— rooms</span>
-          <span class="cpill diff"  id="na-pill-diff">— differences</span>
-          <span class="cpill ok"    id="na-pill-ok">— matches</span>
-        </div>
-      </div>
-
-      <div class="compare-thead">
-        <span class="th">ROOM</span>
-        <span class="th">NAME</span>
-        <span class="th">ARRIVAL</span>
-        <span class="th">DEPARTURE</span>
-        <span class="th">BALANCE</span>
-        <span class="th" style="text-align:right;">STATUS</span>
-      </div>
-
-      <div class="compare-scroll" id="naCompareTable"></div>
-    </div>
-
-    <!-- STEP 3: Fixed output -->
-    <div class="section-head fade-in-3">
-      <div class="section-icon mint">✅</div>
-      <div>
-        <h2>Fixed Output — Ready to Paste into Excel</h2>
-        <p>All rows corrected using Opera as source of truth · Preserves your Department &amp; Remarks</p>
-      </div>
-      <span class="step-badge">STEP 3 OF 3</span>
-    </div>
-
-    <div class="na-output-layout fade-in-4">
-
-      <!-- Fixed data table -->
-      <div class="fixed-table-wrap">
-        <div class="compare-top" style="padding:12px 16px;">
-          <div class="compare-top-left">
-            <h3>Corrected PM Rooms Data</h3>
-            <p>Paste this into your Excel starting from row 2 (after header)</p>
-          </div>
-          <span class="cpill ok" id="naFixedCount">— rows</span>
-        </div>
-        <div class="fixed-thead">
-          <span class="th">ROOM</span>
-          <span class="th">NAME</span>
-          <span class="th">ARRIVAL</span>
-          <span class="th">DEPARTURE</span>
-          <span class="th" style="text-align:right;">BALANCE</span>
-        </div>
-        <div class="fixed-scroll" id="naFixedTable"></div>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-
-        <!-- Copy button -->
-        <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">📋</span>
-            <span class="side-card-head-title">Copy Fixed Data</span>
-          </div>
-          <div class="side-card-body">
-            <div class="copy-btn-wrap">
-              <button class="btn btn-copy" id="naCopyBtn" onclick="copyAudit()">
-                Copy All Fixed Rows
-              </button>
-            </div>
-            <div class="paste-guide">
-              <div class="step-line"><div class="step-circle">1</div><span>Open your Excel management report</span></div>
-              <div class="step-line"><div class="step-circle">2</div><span>Click cell <strong>A2</strong> (first data row)</span></div>
-              <div class="step-line"><div class="step-circle">3</div><span>Press <strong>Ctrl + V</strong></span></div>
-              <div class="step-line"><div class="step-circle">4</div><span>All rows paste with Opera data ✓</span></div>
-            </div>
-            <div style="margin-top:12px; padding:10px; background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.15); border-radius:8px;">
-              <div style="font-family:'Geist Mono',monospace;font-size:0.6rem;color:var(--sky);letter-spacing:1px;margin-bottom:6px;">NOTE</div>
-              <div style="font-family:'Geist Mono',monospace;font-size:0.65rem;color:var(--text3);line-height:1.6;">Department &amp; Remarks columns are preserved from your original Excel — only Room, Name, Arrival, Departure, Balance are updated from Opera.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Changes summary -->
-        <div class="side-card">
-          <div class="side-card-head">
-            <span class="side-card-head-icon">⚠️</span>
-            <span class="side-card-head-title">Changes Made</span>
-          </div>
-          <div class="side-card-body">
-            <div class="changes-list" id="naChangesList">
-              <div style="font-size:0.75rem;color:var(--text3);text-align:center;padding:10px;">Run comparison first</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Missing rooms -->
-        <div class="side-card" id="naMissingCard" style="display:none;">
-          <div class="side-card-head" style="background:rgba(251,113,133,0.06);border-bottom-color:rgba(251,113,133,0.15);">
-            <span class="side-card-head-icon">🔴</span>
-            <span class="side-card-head-title" style="color:var(--rose);">Missing Rooms</span>
-          </div>
-          <div class="side-card-body">
-            <div id="naMissingList" class="changes-list"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div><!-- /naCompareSection -->
-
-</div>
-</div><!-- /tab-audit -->
-
 </body>
 </html>
