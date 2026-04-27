@@ -874,6 +874,11 @@ textarea::placeholder { color: var(--text3); line-height: 1.8; }
     Night Run Checklist
     <span class="tab-count" id="clTabCount">17 steps</span>
   </button>
+  <button class="tab-btn" onclick="switchTab('immig')" id="tabBtn4">
+    <div class="tab-icon">🛂</div>
+    Immigration Check
+    <span class="tab-count" id="immigTabCount">Upload XML</span>
+  </button>
 </nav>
 
 <!-- TAB 1 — NATIONALITY REPORT -->
@@ -1223,7 +1228,7 @@ function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  const map = {nat:0,rent:1,audit:2,checklist:3};
+  const map = {nat:0,rent:1,audit:2,checklist:3,immig:4};
   document.getElementById('tabBtn' + map[name]).classList.add('active');
 }
 
@@ -1600,5 +1605,812 @@ document.getElementById('cl-date-label').textContent = new Date().toLocaleDateSt
 clLoad();
 clRender();
 </script>
+
+<!-- ═══════════════════════════════════════════
+     TAB 5 — IMMIGRATION CHECK
+═══════════════════════════════════════════ -->
+<style>
+/* ── Immigration Tab ── */
+.immig-page { padding: 40px 48px 80px; position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+
+/* Upload area */
+.immig-upload-zone {
+  border: 1.5px dashed var(--border2);
+  border-radius: var(--r-xl);
+  background: var(--bg2);
+  transition: all 0.2s;
+  overflow: hidden;
+}
+.immig-upload-zone.dragging {
+  border-color: var(--sky);
+  background: rgba(56,189,248,0.04);
+  box-shadow: 0 0 0 4px rgba(56,189,248,0.08);
+}
+.immig-drop-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 36px 24px;
+  cursor: pointer;
+  text-align: center;
+}
+.immig-drop-icon {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  background: rgba(56,189,248,0.08);
+  border: 1px solid rgba(56,189,248,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+.immig-drop-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+.immig-drop-sub {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text3);
+  line-height: 1.8;
+}
+.immig-drop-sub strong { color: var(--text2); }
+#immigFileInput { display: none; }
+
+/* Or paste XML */
+.immig-or { display: flex; align-items: center; gap: 14px; margin: 16px 0; }
+.immig-or-line { flex:1; height:1px; background: var(--border); }
+.immig-or-label { font-family:'Geist Mono',monospace; font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--text3); }
+
+/* Results layout */
+.immig-results { display: none; }
+
+/* Hotel meta bar */
+.immig-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.immig-meta-hotel {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.immig-meta-date {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text3);
+  padding: 3px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.immig-meta-total {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--sky);
+  padding: 3px 10px;
+  background: rgba(56,189,248,0.06);
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 10px;
+}
+
+/* KPI strip — already have .kpi styles */
+
+/* Filter bar */
+.immig-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.immig-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.immig-filter-btn:hover { border-color: var(--border2); color: var(--text2); }
+.immig-filter-btn.active-f { border-color: var(--rose); color: var(--rose); background: rgba(251,113,133,0.06); }
+.immig-filter-btn.active-f.nat { border-color: var(--rose); color: var(--rose); background: rgba(251,113,133,0.06); }
+.immig-filter-btn.active-f.gender { border-color: var(--amber); color: var(--amber); background: rgba(251,191,36,0.06); }
+.immig-filter-btn.active-f.passport { border-color: var(--sky); color: var(--sky); background: rgba(56,189,248,0.06); }
+.immig-filter-btn.active-f.fname { border-color: var(--mint); color: var(--mint); background: rgba(52,211,153,0.06); }
+.immig-filter-btn.active-f.all { border-color: var(--text2); color: var(--text2); background: var(--card); }
+.immig-filter-count {
+  font-size: 0.6rem;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--border2);
+  color: var(--text3);
+}
+.immig-filter-btn.active-f .immig-filter-count { background: currentColor; opacity: 0.2; }
+.filter-search {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.filter-search input {
+  height: auto;
+  width: 180px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  padding: 6px 12px;
+  outline: none;
+}
+.filter-search input::placeholder { color: var(--text3); }
+.filter-search-icon { padding: 0 10px; color: var(--text3); font-size: 0.8rem; }
+
+/* Issues table */
+.immig-table-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.immig-table-head {
+  display: grid;
+  grid-template-columns: 72px 36px 1fr 120px 100px 90px 90px 140px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid var(--border);
+  gap: 6px;
+}
+.immig-th {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.immig-scroll { max-height: 560px; overflow-y: auto; }
+
+/* Guest rows */
+.immig-row {
+  display: grid;
+  grid-template-columns: 72px 36px 1fr 120px 100px 90px 90px 140px;
+  padding: 9px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.025);
+  align-items: center;
+  gap: 6px;
+  transition: background 0.1s;
+  font-size: 0.75rem;
+}
+.immig-row:last-child { border-bottom: none; }
+.immig-row:hover { background: rgba(255,255,255,0.02); }
+.immig-row.sev-critical { border-left: 3px solid var(--rose); background: rgba(251,113,133,0.04); }
+.immig-row.sev-critical:hover { background: rgba(251,113,133,0.07); }
+.immig-row.sev-gender { border-left: 3px solid var(--amber); background: rgba(251,191,36,0.03); }
+.immig-row.sev-gender:hover { background: rgba(251,191,36,0.06); }
+.immig-row.sev-passport { border-left: 3px solid var(--sky2); background: rgba(14,165,233,0.03); }
+.immig-row.sev-passport:hover { background: rgba(14,165,233,0.06); }
+.immig-row.sev-minor { border-left: 3px solid var(--mint); background: rgba(52,211,153,0.02); }
+
+.ir-room {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--sky);
+}
+.ir-room.no-room { color: var(--rose); font-size: 0.65rem; }
+
+.ir-sex {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: 'Geist Mono', monospace;
+}
+.ir-sex.M { background: rgba(56,189,248,0.1); color: var(--sky); border: 1px solid rgba(56,189,248,0.2); }
+.ir-sex.F { background: rgba(251,113,133,0.1); color: var(--rose); border: 1px solid rgba(251,113,133,0.2); }
+.ir-sex.U { background: rgba(251,191,36,0.1); color: var(--amber); border: 1px solid rgba(251,191,36,0.25); }
+.ir-sex.empty { background: rgba(251,191,36,0.1); color: var(--amber); border: 1px dashed rgba(251,191,36,0.4); }
+
+.ir-name { color: var(--text2); font-size: 0.75rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ir-nat-val { color: var(--text2); font-size: 0.72rem; }
+.ir-nat-missing {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--rose);
+  background: rgba(251,113,133,0.08);
+  border: 1px dashed rgba(251,113,133,0.4);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.ir-pass {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ir-pass.missing {
+  color: var(--sky);
+  background: rgba(56,189,248,0.06);
+  border: 1px dashed rgba(56,189,248,0.3);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 0.6rem;
+}
+
+.ir-dates { font-family: 'Geist Mono', monospace; font-size: 0.62rem; color: var(--text3); }
+
+/* Issue tags */
+.ir-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ir-tag {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.55rem;
+  padding: 2px 7px;
+  border-radius: 8px;
+  white-space: nowrap;
+  border: 1px solid;
+}
+.ir-tag.t-nat     { color: var(--rose);  border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.08); }
+.ir-tag.t-gender  { color: var(--amber); border-color: rgba(251,191,36,0.3);  background: rgba(251,191,36,0.08); }
+.ir-tag.t-pass    { color: var(--sky);   border-color: rgba(56,189,248,0.3);  background: rgba(56,189,248,0.06); }
+.ir-tag.t-fname   { color: var(--mint);  border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.06); }
+
+/* Room summary sidebar */
+.immig-layout { display: grid; grid-template-columns: 1fr 260px; gap: 20px; align-items: start; }
+
+/* Room priority list */
+.room-priority-list { display: flex; flex-direction: column; gap: 6px; }
+.room-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  transition: border-color 0.15s;
+  cursor: pointer;
+}
+.room-pill:hover { border-color: var(--border2); }
+.room-pill.crit { border-left: 3px solid var(--rose); }
+.room-pill.warn { border-left: 3px solid var(--amber); }
+.room-pill.info { border-left: 3px solid var(--sky2); }
+.rp-num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sky);
+  min-width: 40px;
+}
+.rp-name { color: var(--text2); flex: 1; font-size: 0.72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rp-issues { display: flex; gap: 3px; flex-shrink: 0; }
+.rp-dot { width: 6px; height: 6px; border-radius: 50%; }
+.rp-dot.nat    { background: var(--rose); }
+.rp-dot.gender { background: var(--amber); }
+.rp-dot.pass   { background: var(--sky2); }
+.rp-dot.fname  { background: var(--mint); }
+
+/* No issues state */
+.immig-clean-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  text-align: center;
+}
+.immig-clean-icon { font-size: 3rem; }
+.immig-clean-title { font-family:'Instrument Serif',serif; font-size:1.5rem; color:var(--mint); }
+.immig-clean-sub { font-family:'Geist Mono',monospace; font-size:0.72rem; color:var(--text3); }
+
+/* Legend */
+.immig-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text3);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  .immig-page { padding: 24px 20px 60px; }
+  .immig-table-head, .immig-row { grid-template-columns: 60px 28px 1fr 90px 140px; }
+  .immig-row > *:nth-child(5),
+  .immig-row > *:nth-child(6),
+  .immig-row > *:nth-child(7) { display: none; }
+  .immig-table-head > *:nth-child(5),
+  .immig-table-head > *:nth-child(6),
+  .immig-table-head > *:nth-child(7) { display: none; }
+  .immig-layout { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="tab-panel" id="tab-immig">
+<div class="immig-page">
+
+  <!-- Upload section -->
+  <div class="section-head">
+    <div class="section-icon blue">🛂</div>
+    <div>
+      <h2>Immigration Data Quality Check</h2>
+      <p>Upload Opera XML · Flags missing nationality, gender, passport & name</p>
+    </div>
+    <span class="step-badge">IN-HOUSE ONLY</span>
+  </div>
+
+  <div class="card" id="immigUploadCard">
+    <!-- Drag & drop zone -->
+    <div class="immig-upload-zone" id="immigDropZone">
+      <div class="immig-drop-area" onclick="document.getElementById('immigFileInput').click()" id="immigDropArea">
+        <div class="immig-drop-icon">📋</div>
+        <div class="immig-drop-title">Drop your XML file here or click to browse</div>
+        <div class="immig-drop-sub">
+          Opera Cloud → Front Desk → <strong>Immigration Report</strong><br>
+          Export format: <strong>XML</strong> · File name: <strong>immigration_report_….XML</strong>
+        </div>
+        <input type="file" id="immigFileInput" accept=".xml,.XML" onchange="immigLoadFile(this)">
+      </div>
+    </div>
+
+    <div class="immig-or">
+      <div class="immig-or-line"></div>
+      <div class="immig-or-label">or paste XML directly</div>
+      <div class="immig-or-line"></div>
+    </div>
+
+    <div class="upload-zone" style="border-radius:var(--r-lg)">
+      <div class="upload-label">
+        <div class="upload-dot blue"></div>
+        <span class="upload-label-text">Paste XML content</span>
+        <span class="upload-label-sub">immigration_report_….XML</span>
+      </div>
+      <textarea id="immigPasteInput" style="height:110px" placeholder="Open the XML file in Notepad → Ctrl+A → Ctrl+C → paste here&#10;&#10;Or use the drag-and-drop zone above to upload the file directly."></textarea>
+    </div>
+
+    <div class="error-box" id="immigError"><span>⚠</span><span id="immigErrorMsg"></span></div>
+
+    <div class="action-bar">
+      <button class="btn btn-process" onclick="processImmig()"><span>🔍</span> Analyse Report</button>
+      <button class="btn btn-clear" onclick="clearImmig()">✕ Clear</button>
+      <span class="info-hint">Only in-house guests shown · Opera is source of truth</span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="immig-results" id="immigResults">
+
+    <div class="divider"><div class="divider-line"></div><div class="divider-label">Analysis Results</div><div class="divider-line"></div></div>
+
+    <!-- Hotel meta -->
+    <div class="immig-meta fade-in" id="immigMeta"></div>
+
+    <!-- KPIs -->
+    <div class="kpi-strip fade-in" id="immigKpiStrip" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px;"></div>
+
+    <!-- Main layout -->
+    <div class="immig-layout">
+
+      <!-- Left: table -->
+      <div>
+        <!-- Filter bar -->
+        <div class="immig-filter-bar fade-in-2" id="immigFilterBar">
+          <button class="immig-filter-btn active-f all" data-filter="all" onclick="immigFilter('all',this)">All issues <span class="immig-filter-count" id="fc-all">0</span></button>
+          <button class="immig-filter-btn nat" data-filter="nationality" onclick="immigFilter('nationality',this)">🔴 Nationality <span class="immig-filter-count" id="fc-nat">0</span></button>
+          <button class="immig-filter-btn gender" data-filter="gender" onclick="immigFilter('gender',this)">🟡 Gender <span class="immig-filter-count" id="fc-gen">0</span></button>
+          <button class="immig-filter-btn passport" data-filter="passport" onclick="immigFilter('passport',this)">🔵 Passport <span class="immig-filter-count" id="fc-pass">0</span></button>
+          <button class="immig-filter-btn fname" data-filter="first_name" onclick="immigFilter('first_name',this)">🟢 First Name <span class="immig-filter-count" id="fc-fname">0</span></button>
+          <div class="filter-search">
+            <span class="filter-search-icon">⌕</span>
+            <input type="text" id="immigSearch" placeholder="Search room or name…" oninput="immigSearch()">
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="immig-legend fade-in-2">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--rose)"></div>Critical — missing nationality or gender (UAE immigration requirement)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--sky2)"></div>Passport / name only</div>
+        </div>
+
+        <!-- Table -->
+        <div class="immig-table-wrap fade-in-3">
+          <div class="immig-table-head">
+            <span class="immig-th">Room</span>
+            <span class="immig-th">Sex</span>
+            <span class="immig-th">Guest Name</span>
+            <span class="immig-th">Nationality</span>
+            <span class="immig-th">Passport</span>
+            <span class="immig-th">Arrival</span>
+            <span class="immig-th">Departure</span>
+            <span class="immig-th">Issues</span>
+          </div>
+          <div class="immig-scroll" id="immigTableBody"></div>
+        </div>
+      </div>
+
+      <!-- Right: sidebar -->
+      <div class="sidebar">
+
+        <!-- Priority rooms card -->
+        <div class="side-card">
+          <div class="side-card-head">
+            <span class="side-card-head-icon">🚨</span>
+            <span class="side-card-head-title">Action Required · Rooms</span>
+          </div>
+          <div class="side-card-body">
+            <div class="room-priority-list" id="immigRoomList"></div>
+          </div>
+        </div>
+
+        <!-- Stats card -->
+        <div class="side-card">
+          <div class="side-card-head">
+            <span class="side-card-head-icon">📊</span>
+            <span class="side-card-head-title">Issue Breakdown</span>
+          </div>
+          <div class="side-card-body">
+            <div class="sum-grid" id="immigStatGrid"></div>
+          </div>
+        </div>
+
+        <!-- How to fix card -->
+        <div class="side-card" style="background:rgba(56,189,248,0.02);border-color:rgba(56,189,248,0.15)">
+          <div class="side-card-head" style="background:rgba(56,189,248,0.05);border-color:rgba(56,189,248,0.15)">
+            <span class="side-card-head-icon">💡</span>
+            <span class="side-card-head-title" style="color:var(--sky)">How to Fix in Opera</span>
+          </div>
+          <div class="side-card-body">
+            <div class="paste-guide" style="line-height:2.2">
+              <div class="step-line"><div class="step-circle" style="background:rgba(251,113,133,0.15);color:var(--rose)">N</div><span>Front Desk → <strong style="color:var(--text2)">In-House</strong> → find room → open profile → add Nationality</span></div>
+              <div class="step-line"><div class="step-circle" style="background:rgba(251,191,36,0.15);color:var(--amber)">G</div><span>Same profile → <strong style="color:var(--text2)">Title / Salutation</strong> field sets gender</span></div>
+              <div class="step-line"><div class="step-circle" style="background:rgba(56,189,248,0.15);color:var(--sky)">P</div><span>Travel Documents tab → add <strong style="color:var(--text2)">Passport number</strong></span></div>
+              <div class="step-line"><div class="step-circle" style="background:rgba(52,211,153,0.15);color:var(--mint)">F</div><span>Name tab → split the name into <strong style="color:var(--text2)">First / Last</strong> correctly</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /immigResults -->
+</div>
+</div><!-- /tab-immig -->
+
+<script>
+// ═══════════════════════════════════════════════════
+// TAB 5 — IMMIGRATION REPORT
+// ═══════════════════════════════════════════════════
+let immigAllRows  = [];
+let immigFilter_  = 'all';
+
+/* ── File drag & drop ── */
+const dropZone = document.getElementById('immigDropZone');
+['dragenter','dragover'].forEach(e => dropZone.addEventListener(e, ev => { ev.preventDefault(); dropZone.classList.add('dragging'); }));
+['dragleave','drop'].forEach(e => dropZone.addEventListener(e, ev => { ev.preventDefault(); dropZone.classList.remove('dragging'); }));
+dropZone.addEventListener('drop', ev => {
+  const file = ev.dataTransfer.files[0];
+  if (file) immigReadFile(file);
+});
+
+function immigLoadFile(input) {
+  if (input.files[0]) immigReadFile(input.files[0]);
+}
+
+function immigReadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('immigPasteInput').value = e.target.result;
+    processImmig();
+  };
+  reader.readAsText(file);
+}
+
+/* ── Parse & analyse ── */
+function processImmig() {
+  const raw = document.getElementById('immigPasteInput').value.trim();
+  const errBox = document.getElementById('immigError');
+  const errMsg = document.getElementById('immigErrorMsg');
+  errBox.classList.remove('show');
+  const showErr = m => { errMsg.textContent = m; errBox.classList.add('show'); };
+
+  if (!raw) return showErr('Please upload or paste the immigration XML report first.');
+  if (!raw.includes('<G_IMMIGRATION>')) return showErr('This does not look like an Opera immigration XML. Make sure you exported as XML format.');
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(raw, 'text/xml');
+  if (doc.querySelector('parsererror')) return showErr('XML parse error — the file may be incomplete. Try copying from Notepad instead of a browser.');
+
+  const hotel = doc.querySelector('P_RESORT1')?.textContent?.trim() || 'Hotel';
+  const bizDateStr = doc.querySelector('P_BUSINESS_DATE')?.textContent?.trim() || '';
+  const reportDate = doc.querySelector('P_DATE')?.textContent?.trim() || '';
+  const reportTime = doc.querySelector('P_TIME')?.textContent?.trim() || '';
+
+  // Parse business date
+  let bizDate = null;
+  if (bizDateStr) {
+    const d = new Date(bizDateStr.split('T')[0]);
+    if (!isNaN(d)) bizDate = d;
+  }
+
+  const get = (el, tag) => (el.querySelector(tag)?.textContent || '').trim();
+
+  const guests = [...doc.querySelectorAll('G_IMMIGRATION')].map(el => ({
+    rowno:     get(el,'ROWNO'),
+    fname:     get(el,'FIRST_NAME'),
+    lname:     get(el,'LAST_NAME'),
+    sex:       get(el,'SEX'),
+    nat:       get(el,'NATIONALITY'),
+    passport:  get(el,'PASSPORT'),
+    arrival:   get(el,'ARRIVAL_DATE'),
+    departure: get(el,'DEPARTURE_DATE'),
+    room:      get(el,'ROOM'),
+  }));
+
+  // Determine in-house
+  function parseDate(s) {
+    if (!s) return null;
+    const [m,d,y] = s.split('/');
+    return m && d && y ? new Date(parseInt(y), parseInt(m)-1, parseInt(d)) : null;
+  }
+
+  const rows = [];
+  guests.forEach(g => {
+    const arr = parseDate(g.arrival);
+    const dep = parseDate(g.departure);
+    const inhouse = bizDate && arr && dep ? (arr <= bizDate && dep > bizDate) : true;
+    if (!inhouse) return;
+
+    const fullName = g.fname ? `${g.fname} ${g.lname}`.trim() : g.lname;
+    const issues = [];
+    const noNat   = !g.nat  || ['u','unknown',''].includes(g.nat.toLowerCase());
+    const noSex   = !g.sex  || ['u','unknown',''].includes(g.sex.toLowerCase());
+    const noPass  = !g.passport;
+    const noFname = !g.fname;
+
+    if (noNat)   issues.push('nationality');
+    if (noSex)   issues.push('gender');
+    if (noPass)  issues.push('passport');
+    if (noFname) issues.push('first_name');
+
+    if (issues.length === 0) return; // clean guests excluded
+
+    rows.push({
+      room: g.room || '',
+      name: fullName,
+      sex: g.sex,
+      nat: g.nat,
+      passport: g.passport,
+      arrival: g.arrival,
+      departure: g.departure,
+      issues,
+      noNat, noSex, noPass, noFname,
+      critical: noNat || noSex,
+    });
+  });
+
+  if (rows.length === 0) {
+    // Show clean state
+    document.getElementById('immigResults').style.display = 'block';
+    document.getElementById('immigMeta').innerHTML = `<div class="immig-meta-hotel">${hotel}</div><span class="immig-meta-date">${reportDate} · ${reportTime}</span><span class="immig-meta-total">${guests.length} guests in report</span>`;
+    document.getElementById('immigKpiStrip').innerHTML = `<div class="kpi mint" style="grid-column:span 4"><div class="kpi-glow"></div><div class="kpi-bar"></div><div class="kpi-label">Data Quality</div><div class="kpi-value">100%</div><div class="kpi-sub">All in-house guests have complete data ✓</div></div>`;
+    document.getElementById('immigTableBody').innerHTML = `<div class="immig-clean-state"><div class="immig-clean-icon">✅</div><div class="immig-clean-title">All clear!</div><div class="immig-clean-sub">Every in-house guest has nationality, gender, passport and name on file.</div></div>`;
+    document.getElementById('immigRoomList').innerHTML = `<div style="font-size:0.78rem;color:var(--mint);text-align:center;padding:12px">No action required</div>`;
+    return;
+  }
+
+  // Sort: critical first, then by room
+  rows.sort((a,b) => {
+    if (a.critical && !b.critical) return -1;
+    if (!a.critical && b.critical) return 1;
+    return (a.room || 'ZZZ').localeCompare(b.room || 'ZZZ');
+  });
+
+  immigAllRows = rows;
+  immigFilter_ = 'all';
+
+  // Counts
+  const crit  = rows.filter(r => r.critical).length;
+  const noNatC  = rows.filter(r => r.noNat).length;
+  const noSexC  = rows.filter(r => r.noSex).length;
+  const noPassC = rows.filter(r => r.noPass).length;
+  const noFnameC= rows.filter(r => r.noFname).length;
+  const inhouse_total = guests.filter(g => { const arr=parseDate(g.arrival); const dep=parseDate(g.departure); return bizDate&&arr&&dep ? arr<=bizDate&&dep>bizDate : true; }).length;
+
+  // Meta bar
+  document.getElementById('immigMeta').innerHTML =
+    `<div class="immig-meta-hotel">${hotel}</div>
+     <span class="immig-meta-date">Report: ${reportDate} · ${reportTime}</span>
+     <span class="immig-meta-total">${inhouse_total} in-house guests</span>
+     <span class="immig-meta-date" style="margin-left:auto">${rows.length} need attention</span>`;
+
+  // KPI strip
+  document.getElementById('immigKpiStrip').innerHTML = `
+    <div class="kpi rose"><div class="kpi-glow"></div><div class="kpi-bar"></div>
+      <div class="kpi-label">Critical Issues</div>
+      <div class="kpi-value">${crit}</div>
+      <div class="kpi-sub">Missing nationality or gender</div>
+    </div>
+    <div class="kpi amber"><div class="kpi-glow"></div><div class="kpi-bar"></div>
+      <div class="kpi-label">Missing Nationality</div>
+      <div class="kpi-value">${noNatC}</div>
+      <div class="kpi-sub">No country on file</div>
+    </div>
+    <div class="kpi sky"><div class="kpi-glow"></div><div class="kpi-bar"></div>
+      <div class="kpi-label">Missing Passport</div>
+      <div class="kpi-value">${noPassC}</div>
+      <div class="kpi-sub">Travel doc not entered</div>
+    </div>
+    <div class="kpi mint"><div class="kpi-glow"></div><div class="kpi-bar"></div>
+      <div class="kpi-label">Missing Gender</div>
+      <div class="kpi-value">${noSexC}</div>
+      <div class="kpi-sub">Sex field blank or U</div>
+    </div>`;
+
+  // Filter counts
+  document.getElementById('fc-all').textContent   = rows.length;
+  document.getElementById('fc-nat').textContent   = noNatC;
+  document.getElementById('fc-gen').textContent   = noSexC;
+  document.getElementById('fc-pass').textContent  = noPassC;
+  document.getElementById('fc-fname').textContent = noFnameC;
+
+  // Stat grid (sidebar)
+  document.getElementById('immigStatGrid').innerHTML = [
+    ['Critical (nat or gender)', crit, 'var(--rose)'],
+    ['Missing nationality',      noNatC, 'var(--rose)'],
+    ['Missing gender',           noSexC, 'var(--amber)'],
+    ['Missing passport',         noPassC, 'var(--sky)'],
+    ['Missing first name',       noFnameC, 'var(--mint)'],
+    ['Total in-house checked',   inhouse_total, 'var(--text2)'],
+  ].map(([k,v,c]) => `<div class="sum-row"><span class="sum-key">${k}</span><span class="sum-val" style="color:${c}">${v}</span></div>`).join('');
+
+  // Room priority list (sidebar) — only critical rooms
+  const byRoom = {};
+  rows.forEach(r => {
+    const key = r.room || '—';
+    if (!byRoom[key]) byRoom[key] = { room:key, names:[], issues:new Set() };
+    byRoom[key].names.push(r.name);
+    r.issues.forEach(i => byRoom[key].issues.add(i));
+  });
+  const roomList = Object.values(byRoom).sort((a,b) => {
+    const ac = a.issues.has('nationality')||a.issues.has('gender');
+    const bc = b.issues.has('nationality')||b.issues.has('gender');
+    if (ac&&!bc) return -1; if (!ac&&bc) return 1;
+    return (a.room||'ZZZ').localeCompare(b.room||'ZZZ');
+  });
+
+  document.getElementById('immigRoomList').innerHTML = roomList.slice(0,30).map(r => {
+    const crit = r.issues.has('nationality') || r.issues.has('gender');
+    const hasPass = r.issues.has('passport');
+    const dots = [...r.issues].map(i => `<div class="rp-dot ${i==='nationality'?'nat':i==='gender'?'gender':i==='passport'?'pass':'fname'}"></div>`).join('');
+    return `<div class="room-pill ${crit?'crit':hasPass?'info':'warn'}" onclick="immigHighlightRoom('${r.room}')">
+      <div class="rp-num">${r.room}</div>
+      <div class="rp-name">${r.names.slice(0,2).join(', ')}${r.names.length>2?` +${r.names.length-2}`:''}</div>
+      <div class="rp-issues">${dots}</div>
+    </div>`;
+  }).join('') + (roomList.length > 30 ? `<div style="font-size:0.7rem;color:var(--text3);text-align:center;padding:8px">+${roomList.length-30} more rooms</div>` : '');
+
+  // Tab count badge
+  document.getElementById('immigTabCount').textContent = crit > 0 ? `${crit} critical` : `${rows.length} issues`;
+
+  // Reset filter UI
+  document.querySelectorAll('.immig-filter-btn').forEach(b => b.classList.remove('active-f'));
+  document.querySelector('.immig-filter-btn[data-filter="all"]').classList.add('active-f', 'all');
+
+  // Render table
+  immigRenderTable(rows);
+
+  document.getElementById('immigResults').style.display = 'block';
+  document.getElementById('immigResults').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function immigRenderTable(rows) {
+  const search = (document.getElementById('immigSearch')?.value || '').toLowerCase();
+  let filtered = rows;
+  if (immigFilter_ !== 'all') filtered = filtered.filter(r => r.issues.includes(immigFilter_));
+  if (search) filtered = filtered.filter(r => r.room.toLowerCase().includes(search) || r.name.toLowerCase().includes(search));
+
+  const body = document.getElementById('immigTableBody');
+  if (!filtered.length) {
+    body.innerHTML = `<div style="padding:32px;text-align:center;font-family:'Geist Mono',monospace;font-size:0.72rem;color:var(--text3)">No guests match this filter.</div>`;
+    return;
+  }
+
+  body.innerHTML = filtered.map(r => {
+    const sev = r.noNat || r.noSex ? 'sev-critical' : r.noPass ? 'sev-passport' : 'sev-minor';
+    const roomHtml = r.room
+      ? `<div class="ir-room">${r.room}</div>`
+      : `<div class="ir-room no-room">No room</div>`;
+
+    const sexClass = !r.sex || r.sex.toUpperCase()==='U' ? 'U' : r.sex.toUpperCase();
+    const sexDisplay = !r.sex ? '?' : r.sex;
+    const sexHtml = `<div class="ir-sex ${sexClass==='M'?'M':sexClass==='F'?'F':r.sex===''?'empty':'U'}">${sexDisplay || '?'}</div>`;
+
+    const natHtml = r.noNat
+      ? `<span class="ir-nat-missing">NOT SET</span>`
+      : `<span class="ir-nat-val">${r.nat}</span>`;
+
+    const passHtml = r.noPass
+      ? `<span class="ir-pass missing">MISSING</span>`
+      : `<span class="ir-pass">${r.passport}</span>`;
+
+    const tagHtml = r.issues.map(i => {
+      const map = { nationality:['t-nat','Nationality'], gender:['t-gender','Gender'], passport:['t-pass','Passport'], first_name:['t-fname','First Name'] };
+      const [cls, lbl] = map[i] || ['t-fname', i];
+      return `<span class="ir-tag ${cls}">${lbl}</span>`;
+    }).join('');
+
+    return `<div class="immig-row ${sev}" id="imrow-${r.room}">
+      ${roomHtml}
+      ${sexHtml}
+      <div class="ir-name" title="${r.name}">${r.name}</div>
+      <div>${natHtml}</div>
+      <div>${passHtml}</div>
+      <div class="ir-dates">${r.arrival}</div>
+      <div class="ir-dates">${r.departure}</div>
+      <div class="ir-tags">${tagHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function immigFilter(type, btn) {
+  immigFilter_ = type;
+  document.querySelectorAll('.immig-filter-btn').forEach(b => b.classList.remove('active-f'));
+  btn.classList.add('active-f', type);
+  immigRenderTable(immigAllRows);
+}
+
+function immigSearch() { immigRenderTable(immigAllRows); }
+
+function immigHighlightRoom(room) {
+  // Scroll to that room row in the table
+  const el = document.getElementById('imrow-' + room);
+  if (el) {
+    el.scrollIntoView({ behavior:'smooth', block:'center' });
+    el.style.outline = '2px solid var(--gold)';
+    setTimeout(() => el.style.outline = '', 2000);
+  }
+}
+
+function clearImmig() {
+  document.getElementById('immigPasteInput').value = '';
+  document.getElementById('immigResults').style.display = 'none';
+  document.getElementById('immigError').classList.remove('show');
+  document.getElementById('immigTabCount').textContent = 'Upload XML';
+  document.getElementById('immigFileInput').value = '';
+  immigAllRows = [];
+}
+</script>
+
 </body>
 </html>
